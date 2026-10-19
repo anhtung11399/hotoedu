@@ -146,6 +146,34 @@ svg text { font-size: 11px; fill: var(--muted); }
 .streak div i.ok { background: var(--good-soft); }
 .streak div i.miss { background: var(--bad-soft); }
 
+/* seat map */
+.seatwrap { display: grid; grid-template-columns: minmax(0, 560px) 1fr; gap: 16px; align-items: start; }
+.plane { background: var(--card); border-radius: 44px 44px 18px 18px; padding: 22px 18px 16px; box-shadow: var(--shadow); border: 2px solid var(--line); }
+.front { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 18px; }
+.board { width: 80%; background: #2f4f3f; color: #d8eadf; text-align: center; border-radius: 6px; padding: 6px; font-weight: 700; letter-spacing: .25em; font-size: 12px; }
+.tdesk { background: var(--warn-soft); color: var(--warn); border-radius: 8px; padding: 5px 16px; font-size: 12px; font-weight: 700; }
+.srow, .cols { display: grid; grid-template-columns: 1fr 1fr 30px 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.cols { margin-bottom: 6px; }
+.cols span { text-align: center; font-size: 12px; font-weight: 700; color: var(--muted); }
+.aisle { display: grid; place-items: center; font-size: 12px; color: var(--muted); font-weight: 700; }
+.seat { position: relative; border: 0; background: #eef1f7; border-radius: 14px 14px 8px 8px; padding: 14px 2px 8px; box-shadow: inset 0 6px 0 #d4dae8; min-height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; transition: transform .12s; min-width: 0; }
+.seat:hover { transform: translateY(-2px); }
+.seat .code { font-size: 10px; color: var(--muted); font-weight: 700; }
+.seat .nm { font-size: 13px; font-weight: 700; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0 2px; }
+.seat.mine { background: var(--brand-soft); box-shadow: inset 0 6px 0 var(--brand), 0 0 0 2px var(--brand); }
+.seat.absent { background: var(--bad-soft); box-shadow: inset 0 6px 0 var(--bad); }
+.seat.absent .nm, .seat.absent .code { color: var(--bad); }
+.seat.mine.absent { box-shadow: inset 0 6px 0 var(--bad), 0 0 0 2px var(--brand); }
+.seat.sel { box-shadow: inset 0 6px 0 var(--warn), 0 0 0 3px var(--warn); background: var(--warn-soft); }
+.seat .flag { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; background: var(--bad); color: #fff; font-size: 11px; font-weight: 800; line-height: 20px; }
+.seat .me-tag { position: absolute; top: -9px; left: 50%; transform: translateX(-50%); background: var(--brand); color: #fff; font-size: 10px; font-weight: 800; padding: 0 7px; border-radius: 6px; }
+.door { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 4px; }
+.stat4 { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; gap: 6px; }
+.stat4 b { display: block; font-size: 22px; }
+.stat4 span { font-size: 12px; color: var(--muted); }
+.datebar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; }
+.datebar input { border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; background: var(--card); font-size: 13px; }
+
 /* phone */
 @media (max-width: 860px) {
   .layout { grid-template-columns: 1fr; }
@@ -162,6 +190,10 @@ svg text { font-size: 11px; fill: var(--muted); }
   .roles button { padding: 6px 10px; font-size: 13px; }
   .kpi .val { font-size: 24px; }
   .msg { max-width: 88%; }
+  .seatwrap { grid-template-columns: 1fr; }
+  .plane { padding: 18px 10px 12px; border-radius: 34px 34px 14px 14px; }
+  .srow, .cols { grid-template-columns: 1fr 1fr 18px 1fr 1fr; gap: 6px; }
+  .seat .nm { font-size: 12px; }
 }
 </style>
 </head>
@@ -229,6 +261,14 @@ const NAMES = ['Nguyễn Minh An', 'Trần Bảo Ngọc', 'Lê Gia Huy', 'Phạm
 const CLASS = { name: 'Lớp 5A', school: 'Trường Tiểu học Nguyễn Du', teacher: 'Cô Nguyễn Thu Lan' };
 const PARENT = { name: 'Anh Tùng', child: 's0' };
 const STUDENT_ME = 's0';
+const isSchoolDay = d => d.getDay() >= 1 && d.getDay() <= 5;
+const LEAVE_CATS = ['Ốm', 'Khám bệnh', 'Việc gia đình', 'Khác'];
+const ABSENCE_SAMPLES = [
+  ['Ốm', 'Sốt từ tối qua, mẹ đã gọi điện xin phép cô.'], ['Ốm', 'Đau bụng, bố xin cho con nghỉ buổi sáng.'],
+  ['Khám bệnh', 'Đi khám răng theo lịch hẹn của nha sĩ.'], ['Khám bệnh', 'Tái khám mắt ở bệnh viện.'],
+  ['Việc gia đình', 'Về quê dự đám cưới cô ruột.'], ['Việc gia đình', 'Gia đình có việc đột xuất.'],
+];
+const SEAT_COLS = 'ABCD';
 const AVATAR_COLORS = ['#3b6cf6', '#e0677f', '#16a3a3', '#e59a16', '#7a5cf6', '#1f9d63', '#d64545', '#5b6b8c'];
 
 const TASKS = {
@@ -326,8 +366,29 @@ function buildDemo() {
       }
     }
   }
+  // Seating: shuffled, with An in row 3 seat B so the parent's view has a clear story.
+  const seats = students.map(s => s.id);
+  for (let i = seats.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [seats[i], seats[j]] = [seats[j], seats[i]]; }
+  const ai = seats.indexOf('s0'); [seats[ai], seats[9]] = [seats[9], seats[ai]];
+  // Attendance for the last four weeks of school days.
+  const absences = {};
+  for (let i = -27; i <= 0; i++) {
+    const d = addDays(TODAY, i); if (!isSchoolDay(d)) continue;
+    const day = absences[key(d)] = {};
+    const r = rnd(), n = i === 0 ? 2 : r < 0.3 ? 0 : r < 0.7 ? 1 : r < 0.9 ? 2 : 3;
+    for (let k = 0; k < n; k++) {
+      const st = students[1 + Math.floor(rnd() * (students.length - 1))];
+      const unexcused = rnd() < 0.2;
+      const [cat, reason] = unexcused ? ['Chưa rõ lý do', 'Chưa có thông tin, cô đã gọi điện cho phụ huynh.'] : pick(ABSENCE_SAMPLES);
+      day[st.id] = { type: unexcused ? 'kp' : 'p', cat, reason, by: unexcused ? 'teacher' : 'parent', at: '0' + (6 + Math.floor(rnd() * 2)) + ':' + String(Math.floor(rnd() * 60)).padStart(2, '0') };
+    }
+  }
+  // An was off sick on Wednesday last week.
+  const anDay = key(addDays(THIS_MON, -5));
+  if (absences[anDay]) absences[anDay].s0 = { type: 'p', cat: 'Ốm', reason: 'Sốt nhẹ 38°C, bố đã xin phép cô qua ứng dụng.', by: 'parent', at: '06:42' };
   const stamp = (n, h) => key(addDays(TODAY, -n)) + ' ' + h;
   return {
+    seats, absences,
     students: students.map(({ id, name }) => ({ id, name })),
     assignments, subs,
     messages: [
@@ -347,7 +408,7 @@ function buildDemo() {
 const STORE = 'so-bai-tap-v1';
 let DB;
 function load() {
-  try { const raw = localStorage.getItem(STORE); if (raw) { DB = JSON.parse(raw); if (DB.today === TODAY_KEY) return; } } catch (e) {}
+  try { const raw = localStorage.getItem(STORE); if (raw) { DB = JSON.parse(raw); if (DB.today === TODAY_KEY && DB.seats) return; } } catch (e) {}
   DB = buildDemo(); DB.today = TODAY_KEY; save();
 }
 function save() { try { localStorage.setItem(STORE, JSON.stringify(DB)); } catch (e) {} }
@@ -507,8 +568,8 @@ function heatmap(topics) {
 
 // ---------------------------------------------------------------- app shell
 const ROLES = {
-  parent: { who: PARENT.name, sub: 'Phụ huynh em ' + NAMES[0].split(' ').pop(), nav: [['overview', '📊', 'Tổng quan'], ['homework', '📝', 'Bài tập'], ['messages', '💬', 'Trao đổi']] },
-  teacher: { who: CLASS.teacher, sub: 'Chủ nhiệm ' + CLASS.name, nav: [['class', '🏫', 'Lớp học'], ['assign', '➕', 'Giao bài'], ['grade', '✅', 'Chấm bài'], ['messages', '💬', 'Trao đổi']] },
+  parent: { who: PARENT.name, sub: 'Phụ huynh em ' + NAMES[0].split(' ').pop(), nav: [['overview', '📊', 'Tổng quan'], ['homework', '📝', 'Bài tập'], ['seats', '💺', 'Chỗ ngồi'], ['messages', '💬', 'Trao đổi']] },
+  teacher: { who: CLASS.teacher, sub: 'Chủ nhiệm ' + CLASS.name, nav: [['class', '🏫', 'Lớp học'], ['assign', '➕', 'Giao bài'], ['grade', '✅', 'Chấm bài'], ['seats', '💺', 'Sơ đồ lớp'], ['messages', '💬', 'Trao đổi']] },
   student: { who: NAMES[0], sub: CLASS.name, nav: [['todo', '🎒', 'Bài cần làm'], ['done', '⭐', 'Đã làm'], ['messages', '📢', 'Thông báo']] },
 };
 let state = { role: 'parent', view: 'overview', param: null, filter: 'week', subj: 'all' };
@@ -516,7 +577,7 @@ try { const s = JSON.parse(localStorage.getItem(STORE + '-ui')); if (s && ROLES[
 const saveUI = () => { try { localStorage.setItem(STORE + '-ui', JSON.stringify({ role: state.role, view: state.view })); } catch (e) {} };
 
 function go(view, param = null) { state.view = view; state.param = param; saveUI(); render(); window.scrollTo(0, 0); }
-function setRole(role) { state.role = role; state.view = ROLES[role].nav[0][0]; state.param = null; saveUI(); render(); }
+function setRole(role) { state.role = role; state.swap = false; state.swapSel = null; state.view = ROLES[role].nav[0][0]; state.param = null; saveUI(); render(); }
 
 function badge(view) {
   if (view === 'grade') return DB.assignments.reduce((n, a) => n + DB.students.filter(st => { const s = sub(a.id, st.id); return s && (s.status === 'done' || s.status === 'late') && s.score == null; }).length, 0);
@@ -534,7 +595,7 @@ function render() {
   document.getElementById('ctx').innerHTML = `<strong>${CLASS.name}</strong>${CLASS.school}<br>${R.sub}`;
   document.getElementById('nav').innerHTML = R.nav.map(([v, i, l]) => { const c = badge(v); return `<button data-view="${v}" class="${state.view === v ? 'on' : ''}"><span class="ico">${i}</span>${l}${c ? `<span class="cnt">${c}</span>` : ''}</button>`; }).join('');
   const n = unseen(); document.getElementById('bell').innerHTML = '🔔' + (n ? `<b>${n}</b>` : '');
-  const views = { overview: viewParentOverview, homework: viewHomework, messages: viewMessages, class: viewClass, assign: viewAssign, grade: viewGrade, student: viewStudentDetail, assignment: viewAssignmentDetail, todo: viewTodo, done: viewDone };
+  const views = { overview: viewParentOverview, homework: viewHomework, messages: viewMessages, class: viewClass, assign: viewAssign, grade: viewGrade, student: viewStudentDetail, assignment: viewAssignmentDetail, todo: viewTodo, done: viewDone, seats: viewSeats };
   document.getElementById('main').innerHTML = (views[state.view] || views[R.nav[0][0]])();
   bindView();
 }
@@ -784,13 +845,136 @@ function viewDone() {
       <div class="m">${subjTag(r.a.subject)} · ${fmt(r.a.assigned)}${r.s.comment ? ' · “' + esc(r.s.comment) + '”' : ''}</div></div>${statusPill(r.s, r.a)}</div>`).join('')}</div>`;
 }
 
+// ---------------------------------------------------------------- seat map (parent + teacher)
+function lastSchoolDays(n) { const out = []; let d = new Date(TODAY); while (out.length < n) { if (isSchoolDay(d)) out.unshift(key(d)); d = addDays(d, -1); } return out; }
+function nextSchoolDay(from) { let d = new Date(from); while (!isSchoolDay(d)) d = addDays(d, 1); return key(d); }
+const seatDate = () => state.seatDate || (isSchoolDay(TODAY) ? TODAY_KEY : lastSchoolDays(1)[0]);
+const seatCode = i => (Math.floor(i / 4) + 1) + SEAT_COLS[i % 4];
+const firstName = n => n.split(' ').pop();
+const neighbour = i => DB.seats[i % 2 ? i - 1 : i + 1];
+
+function viewSeats() {
+  const date = seatDate(), school = isSchoolDay(parse(date));
+  const abs = school ? (DB.absences[date] || {}) : {};
+  const isT = state.role === 'teacher', child = PARENT.child;
+  const ids = Object.keys(abs);
+  const seatBtn = i => {
+    const sid = DB.seats[i], st = student(sid), a = abs[sid], mine = !isT && sid === child;
+    const cls = ['seat', a ? 'absent' : '', mine ? 'mine' : '', state.swapSel === i ? 'sel' : ''].join(' ');
+    return `<button class="${cls}" data-seat="${i}" title="${st.name}${a ? ' – nghỉ' : ''}">${mine ? '<span class="me-tag">Con</span>' : ''}
+      <span class="code">${seatCode(i)}</span><span class="nm">${firstName(st.name)}</span>${a ? `<span class="flag">${a.type === 'p' ? 'P' : '!'}</span>` : ''}</button>`;
+  };
+  const rows = Array.from({ length: Math.ceil(DB.seats.length / 4) }, (_, r) =>
+    `<div class="srow">${seatBtn(r * 4)}${seatBtn(r * 4 + 1)}<div class="aisle">${r + 1}</div>${seatBtn(r * 4 + 2)}${seatBtn(r * 4 + 3)}</div>`).join('');
+  const days = lastSchoolDays(5);
+  const p = ids.filter(id => abs[id].type === 'p').length;
+  const ci = DB.seats.indexOf(child);
+  const monthAbs = Object.entries(DB.absences).filter(([k, v]) => v[child] && parse(k) >= addDays(TODAY, -30)).length;
+
+  const side = isT ? `
+    <div class="card"><div class="stat4"><div><b>${DB.students.length}</b><span>Sĩ số</span></div><div><b class="up">${DB.students.length - ids.length}</b><span>Có mặt</span></div>
+      <div><b class="${p ? 'down' : ''}">${p}</b><span>Có phép</span></div><div><b class="${ids.length - p ? 'down' : ''}">${ids.length - p}</b><span>Không phép</span></div></div></div>
+    <div class="card mt"><h2>Vắng ${fmtLong(date)}</h2>
+      ${ids.length ? `<div class="list">${ids.map(id => { const a = abs[id], st = student(id); return `<div class="item" data-seat="${DB.seats.indexOf(id)}" style="cursor:pointer">${avatar(st.name, DB.students.indexOf(st))}
+        <div class="main"><div class="t">${st.name} <span style="color:var(--muted);font-weight:600;font-size:12px">· ${seatCode(DB.seats.indexOf(id))}</span></div><div class="m">${esc(a.reason)}</div>
+        <div class="m">${a.by === 'parent' ? 'Phụ huynh báo' : 'Cô ghi'} lúc ${a.at}</div></div><span class="pill ${a.type === 'p' ? 'p-warn' : 'p-bad'}">${a.type === 'p' ? 'Có phép' : 'Không phép'}</span></div>`; }).join('')}</div>`
+        : `<div class="empty">${school ? 'Cả lớp đi học đủ 🎉' : 'Không phải ngày học'}</div>`}</div>
+    <div class="card mt"><h3>Điểm danh & xếp chỗ</h3><p style="margin:0 0 10px;font-size:14px;color:var(--muted)">Bấm vào một chỗ để điểm danh. Bật đổi chỗ rồi bấm lần lượt hai chỗ để hoán đổi.</p>
+      <button class="btn ${state.swap ? '' : 'ghost'} sm" id="swapMode">${state.swap ? '✓ Đang đổi chỗ (bấm để tắt)' : '⇄ Đổi chỗ'}</button></div>`
+  : `
+    <div class="card"><h2>${firstName(student(child).name)} ngồi ở ${seatCode(ci)}</h2>
+      <p style="margin:0">Bàn ${Math.floor(ci / 4) + 1}, dãy ${ci % 4 < 2 ? 'trái' : 'phải'}, ngồi cạnh bạn <b>${student(neighbour(ci)).name}</b>.</p>
+      <p style="margin:8px 0 0;color:var(--muted);font-size:14px">${fmtLong(date)}: ${abs[child] ? `<b class="down">con nghỉ</b> (${esc(abs[child].cat)})` : school ? '<b class="up">con có mặt</b>' : 'không có tiết'} · nghỉ ${monthAbs} buổi trong 30 ngày qua</p>
+      <button class="btn sm mt" id="leaveBtn">Xin cho con nghỉ</button></div>
+    <div class="card mt"><h3>Lớp hôm ${fmt(date)}</h3><p style="margin:0">${school ? `Có mặt <b>${DB.students.length - ids.length}/${DB.students.length}</b>${ids.length ? `, nghỉ ${ids.length} bạn` : ''}.` : 'Không phải ngày học.'}</p>
+      <p style="margin:8px 0 0;font-size:13px;color:var(--muted)">Bấm vào chỗ màu đỏ để xem lý do. Chi tiết đầy đủ chỉ cô giáo và phụ huynh của bạn đó xem được.</p></div>`;
+
+  return `<h1>${isT ? 'Sơ đồ lớp' : 'Chỗ ngồi trong lớp'}</h1><p class="sub">${CLASS.name} · ${fmtLong(date)}${school ? '' : ' · không có tiết'}</p>
+    <div class="datebar">${days.map(k => `<button class="chip ${k === date ? 'on' : ''}" data-sdate="${k}">${k === TODAY_KEY ? 'Hôm nay' : fmtLong(k)}</button>`).join('')}
+      <input type="date" id="sdate" value="${date}" max="${key(addDays(TODAY, 14))}"></div>
+    <div class="seatwrap">
+      <div class="plane"><div class="front"><div class="board">BẢNG</div><div class="tdesk">Bàn cô giáo</div></div>
+        <div class="cols"><span>A</span><span>B</span><span></span><span>C</span><span>D</span></div>${rows}
+        <div class="door"><span>🪟 Cửa sổ</span><span>Cửa ra vào 🚪</span></div>
+        <div class="legend" style="justify-content:center;margin-top:10px">${isT ? '' : '<span><i style="background:var(--brand)"></i>Con</span>'}<span><i style="background:#d4dae8"></i>Có mặt</span><span><i style="background:var(--bad)"></i>Nghỉ (P = có phép, ! = không phép)</span></div>
+      </div>
+      <div>${side}</div>
+    </div>`;
+}
+
+function seatClick(i) {
+  const sid = DB.seats[i], st = student(sid), date = seatDate(), school = isSchoolDay(parse(date));
+  const a = school && (DB.absences[date] || {})[sid];
+  if (state.role === 'teacher' && state.swap) {
+    if (state.swapSel == null) state.swapSel = i;
+    else {
+      const j = state.swapSel; state.swapSel = null;
+      if (j !== i) { const other = student(DB.seats[j]); [DB.seats[i], DB.seats[j]] = [DB.seats[j], DB.seats[i]]; save(); toast(`Đã đổi chỗ ${firstName(other.name)} (${seatCode(j)}) ↔ ${firstName(st.name)} (${seatCode(i)})`); }
+    }
+    return render();
+  }
+  const head = `<div style="display:flex;gap:12px;align-items:center">${avatar(st.name, DB.students.indexOf(st))}<div><h2 style="margin:0">${st.name}</h2>
+    <div class="sub" style="margin:0">Chỗ ${seatCode(i)} · cạnh ${firstName(student(neighbour(i)).name)} · ${fmtLong(date)}</div></div></div>`;
+  if (state.role === 'teacher') {
+    const m = modal(`${head}
+      ${a ? `<div class="card mt" style="background:var(--bad-soft);box-shadow:none"><b>${a.type === 'p' ? 'Nghỉ có phép' : 'Nghỉ không phép'} · ${esc(a.cat)}</b><div>${esc(a.reason)}</div>
+        <div style="font-size:12px;color:var(--muted)">${a.by === 'parent' ? 'Phụ huynh báo' : 'Cô ghi'} lúc ${a.at}</div></div>` : ''}
+      ${school ? `<div class="row mt"><div class="field"><label>Điểm danh</label><select id="aType"><option value="present">Có mặt</option><option value="p">Nghỉ có phép</option><option value="kp">Nghỉ không phép</option></select></div>
+        <div class="field"><label>Lý do</label><select id="aCat">${[...LEAVE_CATS, 'Chưa rõ lý do'].map(c => `<option>${c}</option>`).join('')}</select></div></div>
+        <div class="field"><label>Ghi chú</label><input id="aReason" placeholder="VD: mẹ gọi điện báo sốt"></div>` : '<p class="sub mt">Ngày này không có tiết học.</p>'}
+      <div style="display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap;margin-top:8px"><button class="btn ghost" id="aReport">Xem kết quả học tập</button>
+        <div style="display:flex;gap:8px"><button class="btn ghost" data-close>Đóng</button>${school ? '<button class="btn" id="aSave">Lưu</button>' : ''}</div></div>`);
+    if (a) { m.querySelector('#aType').value = a.type; m.querySelector('#aCat').value = a.cat; m.querySelector('#aReason').value = a.reason; }
+    m.querySelector('#aReport').onclick = () => { m.remove(); go('student', sid); };
+    if (school) m.querySelector('#aSave').onclick = () => {
+      const type = m.querySelector('#aType').value, day = DB.absences[date] = DB.absences[date] || {};
+      if (type === 'present') delete day[sid];
+      else { const now = new Date(); day[sid] = { type, cat: m.querySelector('#aCat').value, reason: m.querySelector('#aReason').value.trim() || m.querySelector('#aCat').value, by: a ? a.by : 'teacher', at: a ? a.at : String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') }; }
+      save(); m.remove(); toast(type === 'present' ? 'Đã điểm danh có mặt' : 'Đã ghi nghỉ, phụ huynh sẽ nhận thông báo'); render();
+    };
+    return;
+  }
+  if (sid !== PARENT.child) {
+    return modal(`${head}<div class="card mt" style="background:${a ? 'var(--bad-soft)' : 'var(--good-soft)'};box-shadow:none">
+      ${a ? `<b class="down">Nghỉ học</b> · ${a.type === 'p' ? 'có phép' : 'chưa báo phép'}<div>Lý do: <b>${esc(a.cat)}</b></div>` : school ? '<b class="up">Có mặt</b>' : 'Không có tiết học'}</div>
+      ${a ? '<p style="font-size:12px;color:var(--muted)">Chi tiết chỉ cô giáo và phụ huynh của bạn xem được.</p>' : ''}
+      <div style="text-align:right;margin-top:12px"><button class="btn ghost" data-close>Đóng</button></div>`);
+  }
+  leaveModal(i);
+}
+// The parent's own child: status for the viewed day, plus a leave request.
+function leaveModal(i) {
+  const sid = PARENT.child, st = student(sid), date = seatDate(), a = isSchoolDay(parse(date)) && (DB.absences[date] || {})[sid];
+  const def = parse(date) >= TODAY ? nextSchoolDay(parse(date)) : nextSchoolDay(TODAY);
+  const m = modal(`<div style="display:flex;gap:12px;align-items:center">${avatar(st.name, 0)}<div><h2 style="margin:0">${st.name}</h2>
+      <div class="sub" style="margin:0">Chỗ ${seatCode(i)} · cạnh ${student(neighbour(i)).name}</div></div></div>
+    ${a ? `<div class="card mt" style="background:var(--bad-soft);box-shadow:none"><b>${fmtLong(date)}: nghỉ ${a.type === 'p' ? 'có phép' : 'không phép'}</b><div>${esc(a.reason)}</div>
+      <div style="font-size:12px;color:var(--muted)">${a.by === 'parent' ? 'Bố/mẹ báo' : 'Cô ghi'} lúc ${a.at}</div></div>` : ''}
+    <h3 class="mt">Xin cho con nghỉ</h3>
+    <div class="row"><div class="field"><label>Ngày nghỉ</label><input type="date" id="lDate" value="${def}" min="${TODAY_KEY}"></div>
+      <div class="field"><label>Lý do</label><select id="lCat">${LEAVE_CATS.map(c => `<option>${c}</option>`).join('')}</select></div></div>
+    <div class="field"><label>Lời nhắn cho cô</label><input id="lReason" placeholder="VD: con sốt từ tối qua"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn ghost" data-close>Đóng</button><button class="btn" id="lGo">Gửi cô</button></div>`);
+  m.querySelector('#lGo').onclick = () => {
+    const d = m.querySelector('#lDate').value;
+    if (!d || d < TODAY_KEY) return toast('Chọn ngày từ hôm nay trở đi');
+    if (!isSchoolDay(parse(d))) return toast('Ngày đó không có tiết học');
+    const cat = m.querySelector('#lCat').value, reason = m.querySelector('#lReason').value.trim() || cat;
+    const now = new Date(), at = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+    (DB.absences[d] = DB.absences[d] || {})[sid] = { type: 'p', cat, reason, by: 'parent', at };
+    DB.messages.push({ from: 'parent', text: `Em xin phép cho ${firstName(st.name)} nghỉ ${fmtLong(d)}. Lý do: ${reason}`, at: TODAY_KEY + ' ' + at });
+    DB.seen.parent = DB.messages.length + DB.announcements.length;
+    save(); m.remove(); state.seatDate = d; toast('Đã gửi đơn xin nghỉ cho cô'); render();
+  };
+}
+
 // ---------------------------------------------------------------- modal / toast
 function modal(html) {
   const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="box">${html}</div>`;
   m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) m.remove(); });
   document.body.appendChild(m); return m;
 }
-function toast(t) { const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 2200); }
+function toast(t) { document.querySelectorAll('.toast').forEach(e => e.remove()); const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 2200); }
 
 // ---------------------------------------------------------------- events
 function bindView() {
@@ -798,6 +982,7 @@ function bindView() {
   const fSubj = document.getElementById('fSubj');
   if (fSubj) { const fill = () => { document.getElementById('fTopic').innerHTML = SUBJ[fSubj.value].topics.map(t => `<option>${t}</option>`).join(''); }; fSubj.onchange = fill; fill(); }
   const chat = document.getElementById('chat'); if (chat) chat.scrollTop = chat.scrollHeight;
+  const sd = document.getElementById('sdate'); if (sd) sd.onchange = () => { if (sd.value) { state.seatDate = sd.value; state.swapSel = null; render(); } };
   const msgIn = document.getElementById('msgIn'); if (msgIn) msgIn.onkeydown = e => { if (e.key === 'Enter') document.getElementById('msgSend').click(); };
 }
 
@@ -816,6 +1001,10 @@ document.getElementById('main').addEventListener('click', e => {
   if ((x = el('[data-filter]'))) { state.filter = x.dataset.filter; return render(); }
   if ((x = el('[data-subj]'))) { state.subj = x.dataset.subj; return render(); }
   if ((x = el('[data-sort]'))) { state.param = x.dataset.sort; return render(); }
+  if ((x = el('[data-seat]'))) return seatClick(+x.dataset.seat);
+  if ((x = el('[data-sdate]'))) { state.seatDate = x.dataset.sdate; state.swapSel = null; return render(); }
+  if (t.id === 'swapMode') { state.swap = !state.swap; state.swapSel = null; return render(); }
+  if (t.id === 'leaveBtn') return leaveModal(DB.seats.indexOf(PARENT.child));
   if ((x = el('[data-open]'))) return openAssignmentModal(x.dataset.open, state.role === 'student' ? STUDENT_ME : PARENT.child);
   if ((x = el('.ask button'))) {
     const sid = x.parentElement.dataset.sid;
