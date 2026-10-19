@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sổ Bài Tập</title>
+<style>
+:root {
+  --bg: #f4f6fb; --card: #fff; --ink: #1d2433; --muted: #6b7489; --line: #e3e7ef;
+  --brand: #3b6cf6; --brand-soft: #e8eefe;
+  --good: #1f9d63; --good-soft: #e3f6ec; --warn: #d98a00; --warn-soft: #fff3da;
+  --bad: #d64545; --bad-soft: #fde8e8;
+  --toan: #3b6cf6; --tv: #e0677f; --anh: #16a3a3; --kh: #e59a16;
+  --radius: 14px; --shadow: 0 1px 2px rgba(20,30,60,.05), 0 4px 16px rgba(20,30,60,.05);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: var(--brand); }
+
+/* ---------- shell ---------- */
+.top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; padding: 10px 20px; background: var(--card); border-bottom: 1px solid var(--line); }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; }
+.logo .mark { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, #3b6cf6, #7a5cf6); display: grid; place-items: center; color: #fff; font-size: 18px; }
+.top .grow { flex: 1; }
+.roles { display: flex; background: var(--bg); border-radius: 999px; padding: 3px; gap: 2px; }
+.roles button { border: 0; background: none; padding: 6px 14px; border-radius: 999px; color: var(--muted); font-weight: 600; font-size: 14px; }
+.roles button.on { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+.bell { position: relative; border: 0; background: var(--bg); width: 38px; height: 38px; border-radius: 50%; font-size: 17px; }
+.bell b { position: absolute; top: -2px; right: -2px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--bad); color: #fff; font-size: 11px; line-height: 18px; }
+.who { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: #fff; flex: none; font-size: 13px; }
+
+.layout { display: grid; grid-template-columns: 230px 1fr; min-height: calc(100vh - 59px); }
+.side { padding: 18px 12px; border-right: 1px solid var(--line); background: var(--card); }
+.side .ctx { padding: 4px 10px 14px; font-size: 13px; color: var(--muted); }
+.side .ctx strong { display: block; color: var(--ink); font-size: 15px; }
+.nav button { display: flex; width: 100%; align-items: center; gap: 10px; border: 0; background: none; padding: 10px 12px; border-radius: 10px; color: var(--muted); font-weight: 600; text-align: left; }
+.nav button:hover { background: var(--bg); }
+.nav button.on { background: var(--brand-soft); color: var(--brand); }
+.nav .ico { width: 22px; text-align: center; }
+.nav .cnt { margin-left: auto; background: var(--bad); color: #fff; border-radius: 9px; font-size: 11px; padding: 0 7px; }
+.side .demo { margin-top: 24px; padding: 12px; border-radius: 12px; background: var(--bg); font-size: 12px; color: var(--muted); }
+.side .demo button { margin-top: 8px; }
+main { padding: 24px; max-width: 1200px; width: 100%; }
+
+/* ---------- pieces ---------- */
+h1 { font-size: 24px; margin: 0 0 4px; }
+h2 { font-size: 17px; margin: 0 0 12px; }
+h3 { font-size: 15px; margin: 0 0 8px; }
+.sub { color: var(--muted); margin: 0 0 20px; }
+.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; }
+.grid { display: grid; gap: 16px; }
+.g4 { grid-template-columns: repeat(4, 1fr); }
+.g2 { grid-template-columns: repeat(2, 1fr); }
+.g3 { grid-template-columns: 2fr 1fr; }
+.mt { margin-top: 16px; }
+.kpi .label { color: var(--muted); font-size: 13px; }
+.kpi .val { font-size: 28px; font-weight: 800; margin: 2px 0; }
+.kpi .val small { font-size: 15px; color: var(--muted); font-weight: 600; }
+.kpi .foot { font-size: 13px; }
+.up { color: var(--good); } .down { color: var(--bad); } .flat { color: var(--muted); }
+.bar { height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; margin-top: 8px; }
+.bar i { display: block; height: 100%; background: var(--brand); border-radius: 4px; }
+.pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.p-good { background: var(--good-soft); color: var(--good); }
+.p-warn { background: var(--warn-soft); color: var(--warn); }
+.p-bad { background: var(--bad-soft); color: var(--bad); }
+.p-info { background: var(--brand-soft); color: var(--brand); }
+.p-mute { background: var(--bg); color: var(--muted); }
+.subj { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px; }
+.subj::before { content: ""; width: 9px; height: 9px; border-radius: 3px; background: var(--c); }
+.btn { border: 0; background: var(--brand); color: #fff; padding: 9px 16px; border-radius: 10px; font-weight: 700; }
+.btn:hover { filter: brightness(1.07); }
+.btn.ghost { background: var(--bg); color: var(--ink); }
+.btn.sm { padding: 6px 12px; font-size: 13px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.chip { border: 1px solid var(--line); background: var(--card); padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.chip.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 700; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+tr.click { cursor: pointer; }
+tr.click:hover td { background: #f8f9fd; }
+.tbl { overflow-x: auto; }
+.list .item { display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.list .item:last-child { border-bottom: 0; }
+.list .item .main { flex: 1; min-width: 0; }
+.list .item .t { font-weight: 600; }
+.list .item .m { font-size: 13px; color: var(--muted); }
+.score { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-weight: 800; flex: none; }
+.empty { color: var(--muted); text-align: center; padding: 26px 0; }
+.field { display: grid; gap: 6px; margin-bottom: 14px; }
+.field label { font-size: 13px; font-weight: 700; color: var(--muted); }
+.field input, .field select, .field textarea { border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; background: var(--card); width: 100%; }
+.field textarea { min-height: 90px; resize: vertical; }
+.row { display: flex; gap: 12px; flex-wrap: wrap; }
+.row > * { flex: 1; min-width: 160px; }
+.back { border: 0; background: none; color: var(--brand); font-weight: 700; padding: 0; margin-bottom: 12px; }
+
+/* AI card */
+.ai { background: linear-gradient(135deg, #f3f0ff, #eef4ff); border: 1px solid #dfe4ff; }
+.ai .head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.ai .spark { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, #7a5cf6, #3b6cf6); color: #fff; display: grid; place-items: center; }
+.ai .verdict { font-size: 20px; font-weight: 800; }
+.ai p { margin: 8px 0; }
+.ai ul { margin: 8px 0; padding-left: 20px; }
+.ai li { margin: 4px 0; }
+.ai .note { font-size: 12px; color: var(--muted); margin-top: 10px; }
+.ask { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.ask button { border: 1px solid #d4dafc; background: #fff; border-radius: 999px; padding: 6px 12px; font-size: 13px; color: #4b50c8; font-weight: 600; }
+.answer { margin-top: 10px; background: #fff; border-radius: 12px; padding: 12px 14px; border: 1px solid #e3e6fb; }
+.weak { display: grid; gap: 10px; }
+.weak .w { background: #fff; border-radius: 12px; padding: 10px 12px; border: 1px solid #ebedf8; }
+.weak .w .top2 { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+
+/* charts */
+svg text { font-size: 11px; fill: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); margin-top: 6px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.heat td { text-align: center; font-weight: 700; font-size: 13px; border: 2px solid var(--card); border-radius: 8px; padding: 8px 4px; }
+.heat td.lab { text-align: left; font-weight: 600; color: var(--ink); background: none; white-space: nowrap; }
+.heat .topic { font-size: 11px; font-weight: 600; display: block; opacity: .85; }
+
+/* messages */
+.chat { display: flex; flex-direction: column; gap: 10px; max-height: 420px; overflow-y: auto; padding: 4px; }
+.msg { max-width: 75%; padding: 10px 14px; border-radius: 14px; background: var(--bg); }
+.msg.me { align-self: flex-end; background: var(--brand); color: #fff; }
+.msg .meta { font-size: 11px; opacity: .7; margin-top: 4px; }
+.compose { display: flex; gap: 8px; margin-top: 12px; }
+.compose input { flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; }
+.ann { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.ann:last-child { border-bottom: 0; }
+.ann .m { font-size: 12px; color: var(--muted); }
+
+/* modal & toast */
+.modal { position: fixed; inset: 0; background: rgba(15,20,35,.45); display: grid; place-items: center; z-index: 50; padding: 16px; }
+.modal .box { background: var(--card); border-radius: 18px; padding: 22px; width: min(520px, 100%); max-height: 90vh; overflow-y: auto; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 10px 18px; border-radius: 12px; z-index: 60; font-weight: 600; }
+.streak { display: flex; gap: 6px; margin-top: 10px; }
+.streak div { flex: 1; text-align: center; font-size: 11px; color: var(--muted); }
+.streak div i { display: block; height: 30px; border-radius: 8px; background: var(--line); margin-bottom: 4px; font-style: normal; line-height: 30px; font-size: 15px; }
+.streak div i.ok { background: var(--good-soft); }
+.streak div i.miss { background: var(--bad-soft); }
+
+/* phone */
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  .side { position: fixed; bottom: 0; left: 0; right: 0; z-index: 30; padding: 4px 6px; border-right: 0; border-top: 1px solid var(--line); }
+  .side .ctx, .side .demo { display: none; }
+  .nav { display: flex; }
+  .nav button { flex-direction: column; gap: 2px; font-size: 11px; padding: 6px 2px; text-align: center; justify-content: center; position: relative; }
+  .nav .cnt { position: absolute; top: 2px; right: 18%; }
+  main { padding: 16px 16px 90px; }
+  .g4 { grid-template-columns: repeat(2, 1fr); }
+  .g2, .g3 { grid-template-columns: 1fr; }
+  .top { padding: 8px 12px; flex-wrap: wrap; }
+  .logo span.name, .who { display: none; }
+  .roles button { padding: 6px 10px; font-size: 13px; }
+  .kpi .val { font-size: 24px; }
+  .msg { max-width: 88%; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><div class="mark">📘</div><span class="name">Sổ Bài Tập</span></div>
+  <div class="grow"></div>
+  <div class="roles" id="roles">
+    <button data-role="parent">Phụ huynh</button>
+    <button data-role="teacher">Giáo viên</button>
+    <button data-role="student">Học sinh</button>
+  </div>
+  <button class="bell" id="bell" title="Thông báo">🔔</button>
+  <div class="who" id="who"></div>
+</header>
+<div class="layout">
+  <aside class="side">
+    <div class="ctx" id="ctx"></div>
+    <nav class="nav" id="nav"></nav>
+    <div class="demo">Bản xem giao diện. Dữ liệu là dữ liệu mẫu, lưu ngay trong trình duyệt này.
+      <br><button class="btn ghost sm" id="reset">Tạo lại dữ liệu mẫu</button></div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<script>
+/* =====================================================================
+   Sổ Bài Tập - one-file prototype.
+   Three roles share one data set: the teacher assigns and grades, the
+   parent watches their child, the student submits. All state lives in
+   localStorage; "Tạo lại dữ liệu mẫu" regenerates it.
+   The "AI" analysis here is hand-written rules over the scores, so the
+   prototype runs offline; a real build would send the same numbers to
+   a language model for the wording.
+   ===================================================================== */
+
+// ---------------------------------------------------------------- dates
+const DAY_MS = 864e5;
+const TODAY = (() => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; })();
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const key = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const parse = k => { const [y, m, d] = k.split('-').map(Number); return new Date(y, m - 1, d); };
+const mondayOf = d => addDays(d, -((d.getDay() + 6) % 7));
+const WD = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+const fmt = k => { const d = parse(k); return d.getDate() + '/' + (d.getMonth() + 1); };
+const fmtLong = k => { const d = parse(k); return WD[d.getDay()] + ', ' + d.getDate() + '/' + (d.getMonth() + 1); };
+const TODAY_KEY = key(TODAY);
+const THIS_MON = mondayOf(TODAY);
+const WEEKS = 8;                    // week 7 is the current one
+const weekLabel = w => w === WEEKS - 1 ? 'Tuần này' : fmt(key(addDays(THIS_MON, 7 * (w - WEEKS + 1))));
+
+// ---------------------------------------------------------------- catalogue
+const SUBJECTS = [
+  { id: 'toan', name: 'Toán', color: '#3b6cf6', topics: ['Phân số', 'Số thập phân', 'Hình học', 'Đo lường', 'Toán có lời văn'] },
+  { id: 'tv', name: 'Tiếng Việt', color: '#e0677f', topics: ['Chính tả', 'Luyện từ và câu', 'Tập làm văn', 'Đọc hiểu'] },
+  { id: 'anh', name: 'Tiếng Anh', color: '#16a3a3', topics: ['Từ vựng', 'Thì quá khứ', 'Nghe hiểu', 'Đọc hiểu'] },
+  { id: 'kh', name: 'Khoa học', color: '#e59a16', topics: ['Vật chất', 'Năng lượng', 'Thực vật & động vật', 'Cơ thể người'] },
+];
+const SUBJ = Object.fromEntries(SUBJECTS.map(s => [s.id, s]));
+// Which subjects get homework on each weekday (0 = Sunday).
+const SCHEDULE = { 1: ['toan', 'tv'], 2: ['anh', 'kh'], 3: ['toan', 'tv'], 4: ['anh', 'toan'], 5: ['tv', 'kh'], 6: ['toan'], 0: ['anh'] };
+const NAMES = ['Nguyễn Minh An', 'Trần Bảo Ngọc', 'Lê Gia Huy', 'Phạm Khánh Linh', 'Hoàng Đức Minh', 'Vũ Thảo Vy', 'Đặng Quốc Bảo',
+  'Bùi Ngọc Hân', 'Đỗ Tuấn Kiệt', 'Ngô Phương Anh', 'Dương Hải Đăng', 'Lý Mai Chi', 'Phan Nhật Nam', 'Trịnh Bảo Châu', 'Võ Minh Khôi',
+  'Hồ Thu Trang', 'Mai Anh Tuấn', 'Tạ Diệu Linh', 'Lâm Gia Bảo', 'Chu Thanh Hà', 'Kiều Đức Anh', 'Cao Yến Nhi', 'Tôn Thất Phong', 'La Khánh Vân'];
+const CLASS = { name: 'Lớp 5A', school: 'Trường Tiểu học Nguyễn Du', teacher: 'Cô Nguyễn Thu Lan' };
+const PARENT = { name: 'Anh Tùng', child: 's0' };
+const STUDENT_ME = 's0';
+const AVATAR_COLORS = ['#3b6cf6', '#e0677f', '#16a3a3', '#e59a16', '#7a5cf6', '#1f9d63', '#d64545', '#5b6b8c'];
+
+const TASKS = {
+  toan: ['Làm bài 1–4 trang {p} SGK', 'Phiếu bài tập {t} số {n}', 'Giải {n} bài toán trong vở bài tập'],
+  tv: ['Viết đoạn văn 6–8 câu', 'Làm bài tập {t} trang {p}', 'Đọc bài và trả lời câu hỏi'],
+  anh: ['Workbook Unit {n}, trang {p}', 'Học {n} từ mới và đặt câu', 'Bài nghe Unit {n} (file của cô)'],
+  kh: ['Trả lời câu hỏi cuối bài trang {p}', 'Vẽ sơ đồ {t}', 'Phiếu quan sát ở nhà'],
+};
+const COMMENTS = {
+  hi: ['Làm bài rất tốt, trình bày sạch đẹp!', 'Chính xác và đầy đủ, cô khen.', 'Bài làm tốt, tiếp tục phát huy nhé.'],
+  mid: ['Bài làm khá, cần cẩn thận hơn ở câu cuối.', 'Đúng phần lớn, xem lại lỗi sai cô đã đánh dấu.', 'Khá tốt, chú ý trình bày rõ hơn.'],
+  lo: ['Con còn nhầm nhiều, xem lại lý thuyết phần này.', 'Cần luyện thêm, cô gửi thêm phiếu ôn tập.', 'Sai nhiều ở phần cơ bản, phụ huynh kèm con thêm nhé.'],
+};
+// What to suggest for a weak topic. Unlisted topics fall back to a generic line.
+const TIPS = {
+  'Phân số': 'Ôn quy đồng mẫu số trước, rồi mới đến cộng trừ phân số; dùng hình tròn chia phần để con hình dung.',
+  'Số thập phân': 'Luyện đặt tính thẳng cột dấu phẩy; mỗi ngày 5 phép tính ngắn.',
+  'Hình học': 'Cho con tự vẽ hình và ghi công thức diện tích bên cạnh.',
+  'Đo lường': 'Làm bảng đổi đơn vị dán ở góc học tập, đổi thử với đồ vật thật trong nhà.',
+  'Toán có lời văn': 'Tập tóm tắt đề bằng sơ đồ trước khi giải; đọc to đề bài.',
+  'Chính tả': 'Nghe-viết 10 phút mỗi tối, ghi lại các từ hay sai vào sổ.',
+  'Luyện từ và câu': 'Chơi trò tìm từ đồng nghĩa/trái nghĩa trong bữa tối.',
+  'Tập làm văn': 'Lập dàn ý 3 phần trước khi viết; đọc thêm văn mẫu ngắn.',
+  'Thì quá khứ': 'Ôn bảng động từ bất quy tắc (10 từ/ngày) và kể lại "hôm qua con đã làm gì" bằng tiếng Anh.',
+  'Từ vựng': 'Thẻ từ (flashcard) 10 phút/ngày, ôn lại sau 1, 3, 7 ngày.',
+  'Nghe hiểu': 'Nghe lại file bài học 2 lần, lần sau che phần chữ.',
+  'Năng lượng': 'Làm thí nghiệm nhỏ ở nhà (pin, bóng đèn) để con nhớ lâu hơn.',
+};
+
+// ---------------------------------------------------------------- demo data
+function mulberry32(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+function buildDemo() {
+  const rnd = mulberry32(20261018);
+  const pick = arr => arr[Math.floor(rnd() * arr.length)];
+  const students = NAMES.map((name, i) => {
+    const base = {}, trend = {}, weak = {};
+    SUBJECTS.forEach(s => { base[s.id] = 5.8 + rnd() * 3.2; trend[s.id] = (rnd() - 0.5) * 0.3; });
+    const ws = pick(SUBJECTS); weak[pick(ws.topics)] = -1.2 - rnd();
+    return { id: 's' + i, name, base, trend, weak, diligence: 0.82 + rnd() * 0.16 };
+  });
+  // The parent's own child gets a clear story: Toán rising, Tiếng Anh falling,
+  // two weak topics, and English homework starting to slip lately.
+  Object.assign(students[0], {
+    base: { toan: 6.6, tv: 7.6, anh: 7.9, kh: 7.6 },
+    trend: { toan: 0.28, tv: 0.04, anh: -0.3, kh: 0.0 },
+    weak: { 'Phân số': -1.6, 'Thì quá khứ': -2.0 },
+    diligence: 0.95,
+  });
+  // A couple of classmates who need attention, so the teacher's list has flags.
+  Object.assign(students[6], { diligence: 0.68 });
+  students[11].trend = { toan: -0.25, tv: -0.2, anh: -0.15, kh: -0.2 };
+
+  const assignments = [], subs = {};
+  const counter = {};
+  for (let w = 0; w < WEEKS; w++) {
+    const mon = addDays(THIS_MON, 7 * (w - WEEKS + 1));
+    for (let d = 0; d < 7; d++) {
+      const date = addDays(mon, d);
+      if (date > TODAY) continue;
+      for (const sid of SCHEDULE[date.getDay()]) {
+        const s = SUBJ[sid];
+        counter[sid] = (counter[sid] || 0) + 1;
+        const topic = s.topics[Math.floor(counter[sid] / 2) % s.topics.length];
+        const n = counter[sid];
+        const title = pick(TASKS[sid]).replace('{p}', 20 + n * 3).replace('{t}', topic.toLowerCase()).replace('{n}', (n % 12) + 1);
+        const due = addDays(date, date.getDay() === 5 ? 3 : 1);
+        const a = { id: 'a' + assignments.length, subject: sid, topic, title, assigned: key(date), due: key(due), week: w,
+          note: date.getDay() === 6 || date.getDay() === 0 ? 'Bài cuối tuần, nhẹ thôi.' : '' };
+        assignments.push(a);
+        students.forEach(st => {
+          let dil = st.diligence;
+          if (st.id === 's0' && sid === 'anh' && w >= WEEKS - 3) dil -= 0.35;
+          let status, score = null, submitted = null;
+          const r = rnd();
+          if (due < TODAY) {
+            if (r < dil * 0.93) status = 'done'; else if (r < dil) status = 'late'; else status = 'missing';
+            // An's English slip has to show up as missed homework, not only lower scores.
+            if (st.id === 's0' && sid === 'anh' && w >= WEEKS - 2 && counter[sid] % 2) status = 'missing';
+          } else {
+            status = r < 0.55 ? 'done' : 'pending';
+          }
+          if (status === 'done' || status === 'late') {
+            submitted = key(status === 'late' ? addDays(due, 1) : date);
+            const recent = (TODAY - date) / DAY_MS <= 1.5;
+            if (!recent) {
+              let v = st.base[sid] + st.trend[sid] * (w - 3.5) * 2 + (st.weak[topic] || 0) + (rnd() - 0.5) * 1.8;
+              if (status === 'late') v -= 0.5;
+              score = Math.max(2, Math.min(10, Math.round(v * 2) / 2));
+            }
+          }
+          const comment = score == null ? '' : pick(score >= 8.5 ? COMMENTS.hi : score >= 6.5 ? COMMENTS.mid : COMMENTS.lo);
+          subs[a.id + '|' + st.id] = { status, score, submitted, comment, answer: status === 'done' || status === 'late' ? 'Bài làm trong vở, đã chụp ảnh gửi cô.' : '' };
+        });
+      }
+    }
+  }
+  const stamp = (n, h) => key(addDays(TODAY, -n)) + ' ' + h;
+  return {
+    students: students.map(({ id, name }) => ({ id, name })),
+    assignments, subs,
+    messages: [
+      { from: 'teacher', text: 'Chào anh, mấy tuần nay An hay quên nộp bài Tiếng Anh, anh nhắc con giúp cô nhé.', at: stamp(3, '19:42') },
+      { from: 'parent', text: 'Dạ cảm ơn cô, tối nay em sẽ kèm cháu ôn lại ạ.', at: stamp(3, '20:05') },
+      { from: 'teacher', text: 'Phần thì quá khứ con còn nhầm nhiều, cô đã gửi thêm phiếu ôn tập trên ứng dụng.', at: stamp(1, '17:10') },
+    ],
+    announcements: [
+      { title: 'Họp phụ huynh giữa kỳ I', body: 'Lớp họp phụ huynh lúc 8h sáng Chủ nhật tuần sau tại phòng 5A. Kính mong quý phụ huynh sắp xếp thời gian.', at: stamp(2, '08:00') },
+      { title: 'Kiểm tra giữa kỳ môn Toán', body: 'Thứ Tư tuần sau kiểm tra giữa kỳ Toán: phân số, số thập phân, hình học. Các con ôn theo đề cương đã phát.', at: stamp(4, '16:30') },
+      { title: 'Nhắc mang đồ thí nghiệm', body: 'Thứ Sáu này môn Khoa học thực hành, mỗi con mang 1 chai nhựa nhỏ và 1 cục pin AA.', at: stamp(6, '15:00') },
+    ],
+    seen: { parent: 0, teacher: 0, student: 0 },
+  };
+}
+
+const STORE = 'so-bai-tap-v1';
+let DB;
+function load() {
+  try { const raw = localStorage.getItem(STORE); if (raw) { DB = JSON.parse(raw); if (DB.today === TODAY_KEY) return; } } catch (e) {}
+  DB = buildDemo(); DB.today = TODAY_KEY; save();
+}
+function save() { try { localStorage.setItem(STORE, JSON.stringify(DB)); } catch (e) {} }
+
+// ---------------------------------------------------------------- queries
+const student = id => DB.students.find(s => s.id === id);
+const sub = (aid, sid) => DB.subs[aid + '|' + sid];
+const avg = arr => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : null;
+const r1 = v => v == null ? '–' : (Math.round(v * 10) / 10).toFixed(1).replace('.', ',');
+const signed = v => (v > 0 ? '+' : v < 0 ? '−' : '±') + r1(Math.abs(v));
+const isPastDue = a => parse(a.due) < TODAY;
+
+function rowsFor(sid) { return DB.assignments.map(a => ({ a, s: sub(a.id, sid) })).filter(r => r.s); }
+
+function statusPill(s, a) {
+  if (s.status === 'missing') return '<span class="pill p-bad">Chưa nộp</span>';
+  if (s.status === 'pending') return a && a.due === TODAY_KEY ? '<span class="pill p-warn">Hạn hôm nay</span>' : '<span class="pill p-warn">Chưa làm</span>';
+  if (s.score == null) return '<span class="pill p-info">Chờ chấm</span>';
+  return s.status === 'late' ? '<span class="pill p-warn">Nộp muộn</span>' : '<span class="pill p-good">Đã nộp</span>';
+}
+function scoreBox(v) {
+  if (v == null) return '<div class="score" style="background:var(--bg);color:var(--muted)">–</div>';
+  const [bg, fg] = v >= 8 ? ['var(--good-soft)', 'var(--good)'] : v >= 6.5 ? ['var(--brand-soft)', 'var(--brand)'] : v >= 5 ? ['var(--warn-soft)', 'var(--warn)'] : ['var(--bad-soft)', 'var(--bad)'];
+  return `<div class="score" style="background:${bg};color:${fg}">${r1(v)}</div>`;
+}
+const subjTag = sid => `<span class="subj" style="--c:${SUBJ[sid].color}">${SUBJ[sid].name}</span>`;
+const initials = n => n.split(' ').slice(-2).map(w => w[0]).join('');
+const avatar = (n, i) => `<div class="avatar" style="background:${AVATAR_COLORS[i % AVATAR_COLORS.length]}">${initials(n)}</div>`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+// Weekly series for one student.
+function weekly(sid) {
+  const rows = rowsFor(sid);
+  return Array.from({ length: WEEKS }, (_, w) => {
+    const rs = rows.filter(r => r.a.week === w);
+    const cnt = st => rs.filter(r => r.s.status === st).length;
+    const bySubj = {};
+    SUBJECTS.forEach(s => { bySubj[s.id] = avg(rs.filter(r => r.a.subject === s.id && r.s.score != null).map(r => r.s.score)); });
+    return { w, done: cnt('done'), late: cnt('late'), missing: cnt('missing'), pending: cnt('pending'), total: rs.length,
+      avg: avg(rs.filter(r => r.s.score != null).map(r => r.s.score)), bySubj };
+  });
+}
+
+// ---------------------------------------------------------------- "AI" analysis
+// Compares the last three weeks with the three before, per subject and per
+// topic, and turns the gaps into plain sentences.
+function analyze(sid) {
+  const st = student(sid), first = st.name.split(' ').pop();
+  const rows = rowsFor(sid), graded = rows.filter(r => r.s.score != null);
+  const inW = (rs, a, b) => rs.filter(r => r.a.week >= a && r.a.week <= b).map(r => r.s.score);
+  const R = [WEEKS - 3, WEEKS - 1], P = [WEEKS - 6, WEEKS - 4];
+  const recent = avg(inW(graded, ...R)), prev = avg(inW(graded, ...P));
+  const delta = recent - prev;
+  const mixedUp = SUBJECTS.length && delta > -0.3 && delta < 0.3;
+  let verdict = delta >= 0.3 ? { t: 'đang tiến bộ', c: 'up', e: '📈' } : delta <= -0.3 ? { t: 'đang thụt lùi', c: 'down', e: '📉' } : { t: 'ổn định', c: 'flat', e: '➖' };
+
+  const subjects = SUBJECTS.map(s => {
+    const g = graded.filter(r => r.a.subject === s.id);
+    const rc = avg(inW(g, ...R)), pv = avg(inW(g, ...P));
+    const pastRecent = rows.filter(r => r.a.subject === s.id && isPastDue(r.a) && r.a.week >= WEEKS - 2);
+    return { ...s, recent: rc, prev: pv, delta: rc - pv, all: avg(g.map(r => r.s.score)), missing: pastRecent.filter(r => r.s.status === 'missing').length };
+  });
+  const topics = [];
+  SUBJECTS.forEach(s => s.topics.forEach(t => {
+    const sc = graded.filter(r => r.a.subject === s.id && r.a.topic === t).map(r => r.s.score);
+    if (sc.length) topics.push({ subject: s.id, topic: t, avg: avg(sc), n: sc.length });
+  }));
+  const weak = topics.filter(t => t.avg < 6.8).sort((a, b) => a.avg - b.avg).slice(0, 3);
+  const strong = topics.filter(t => t.avg >= 8.3).sort((a, b) => b.avg - a.avg).slice(0, 3);
+  const past = rows.filter(r => isPastDue(r.a));
+  const onTime = past.filter(r => r.s.status === 'done').length / Math.max(1, past.length);
+  const missingTotal = past.filter(r => r.s.status === 'missing' && r.a.week >= WEEKS - 2).length;
+
+  const rising = subjects.filter(s => s.delta >= 0.4).sort((a, b) => b.delta - a.delta);
+  const falling = subjects.filter(s => s.delta <= -0.4).sort((a, b) => a.delta - b.delta);
+  if (mixedUp && rising.length && falling.length) verdict = { t: 'tiến ở ' + rising[0].name + ', lùi ở ' + falling[0].name, c: 'down', e: '↕️' };
+  const worst = [...subjects].sort((a, b) => (a.recent ?? 10) - (b.recent ?? 10))[0];
+
+  const parts = [];
+  parts.push(`Điểm trung bình 3 tuần gần đây của ${first} là <b>${r1(recent)}</b>, ${delta >= 0 ? 'tăng' : 'giảm'} <b>${r1(Math.abs(delta))}</b> điểm so với 3 tuần trước đó.`);
+  if (rising.length) parts.push(`Tiến bộ rõ ở ${rising.map(s => `<b>${s.name}</b> (${signed(s.delta)})`).join(', ')}.`);
+  if (falling.length) parts.push(`Đi xuống ở ${falling.map(s => `<b>${s.name}</b> (${signed(s.delta)})`).join(', ')}${falling[0].missing ? `, kèm ${falling[0].missing} bài ${falling[0].name} chưa nộp trong 2 tuần qua` : ''}.`);
+  if (!rising.length && !falling.length) parts.push('Các môn đều giữ mức ổn định, chưa có môn nào thay đổi đáng kể.');
+
+  const recs = [];
+  if (falling.length) recs.push(`Ưu tiên <b>${falling[0].name}</b> tuần tới: kiểm tra bài mỗi tối và nhắc con nộp đúng hạn.`);
+  weak.forEach(w => recs.push(`<b>${w.topic}</b> (${SUBJ[w.subject].name}): ${TIPS[w.topic] || 'Ôn lại lý thuyết và làm thêm vài bài cơ bản cùng con.'}`));
+  if (onTime < 0.85) recs.push(`Tỉ lệ nộp đúng hạn mới ${Math.round(onTime * 100)}%. Thử đặt một khung giờ làm bài cố định mỗi tối.`);
+  if (strong.length) recs.push(`Khen con ở phần <b>${strong[0].topic}</b> (${r1(strong[0].avg)} điểm) để giữ động lực.`);
+
+  return { st, first, recent, prev, delta, verdict, subjects, topics, weak, strong, onTime, missingTotal, summary: parts.join(' '), recs, worst, rising, falling };
+}
+
+// Canned questions a parent can tap; answered from the same analysis.
+function askAI(sid, q) {
+  const A = analyze(sid), W = weekly(sid), cur = W[WEEKS - 1], last = W[WEEKS - 2];
+  switch (q) {
+    case 'weak':
+      return A.weak.length ? `${A.first} cần cải thiện nhất ở: ` + A.weak.map(w => `<b>${w.topic}</b> – ${SUBJ[w.subject].name} (TB ${r1(w.avg)} qua ${w.n} bài)`).join('; ') + '. Môn có điểm gần đây thấp nhất là <b>' + A.worst.name + '</b>.'
+        : `Hiện chưa có phần kiến thức nào dưới 6,8 điểm. Môn thấp nhất là <b>${A.worst.name}</b> (${r1(A.worst.recent)}).`;
+    case 'week':
+      return `Tuần này ${A.first} có <b>${cur.total}</b> bài: đã nộp ${cur.done + cur.late}, còn ${cur.pending} bài chưa làm${cur.missing ? `, ${cur.missing} bài quá hạn` : ''}. Tuần trước: nộp ${last.done + last.late}/${last.total} bài, điểm TB ${r1(last.avg)}.`;
+    case 'compare': {
+      const ds = A.subjects.map(s => `${s.name} ${s.delta >= 0 ? '↑' : '↓'} ${signed(s.delta)}`).join(', ');
+      return `So với 3 tuần trước: ${ds}. Tổng thể: <b>${A.verdict.t}</b>.`;
+    }
+    case 'plan':
+      return 'Gợi ý lịch tuần tới (mỗi buổi 20–30 phút):<ul>' +
+        ['T2', 'T4', 'T6'].map((d, i) => { const w = A.weak[i % Math.max(1, A.weak.length)]; return `<li>${d}: ${w ? `ôn <b>${w.topic}</b> (${SUBJ[w.subject].name})` : 'ôn bài trên lớp'}</li>`; }).join('') +
+        `<li>T3, T5: làm bài về nhà ngay sau bữa tối, bố mẹ xem lại${A.falling[0] ? ` phần ${A.falling[0].name}` : ''}</li><li>Cuối tuần: đọc sách 20 phút, không học thêm</li></ul>`;
+  }
+}
+
+// ---------------------------------------------------------------- charts (plain SVG)
+function stackedBars(data, series) {
+  const W = 600, H = 220, pl = 30, pb = 26, pt = 10, n = data.length, slot = (W - pl) / n, bw = slot * 0.55;
+  const max = Math.max(1, ...data.map(d => series.reduce((a, s) => a + d[s.key], 0)));
+  const y = v => pt + (H - pt - pb) * (1 - v / max);
+  let g = '';
+  for (let i = 0; i <= 4; i++) { const v = Math.round(max * i / 4); g += `<line x1="${pl}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="#eef0f5"/><text x="${pl - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`; }
+  data.forEach((d, i) => {
+    let acc = 0; const x = pl + slot * i + (slot - bw) / 2;
+    series.forEach(s => { const v = d[s.key]; if (!v) return; g += `<rect x="${x}" y="${y(acc + v)}" width="${bw}" height="${y(acc) - y(acc + v)}" fill="${s.color}" rx="3"><title>${s.name}: ${v}</title></rect>`; acc += v; });
+    g += `<text x="${x + bw / 2}" y="${H - 8}" text-anchor="middle">${d.label}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%">${g}</svg>` + legend(series);
+}
+function lines(labels, series, min = 0, max = 10) {
+  const W = 600, H = 220, pl = 30, pb = 26, pt = 10, pr = 28, n = labels.length;
+  const x = i => pl + (W - pl - pr) * (n === 1 ? 0.5 : i / (n - 1));
+  const y = v => pt + (H - pt - pb) * (1 - (v - min) / (max - min));
+  let g = '';
+  for (let v = min; v <= max; v += 2) g += `<line x1="${pl}" x2="${W - pr}" y1="${y(v)}" y2="${y(v)}" stroke="#eef0f5"/><text x="${pl - 6}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+  labels.forEach((l, i) => { g += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle">${l}</text>`; });
+  series.forEach(s => {
+    let d = '', pen = false;
+    s.values.forEach((v, i) => { if (v == null) { pen = false; return; } d += (pen ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1); pen = true; });
+    g += `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.width || 2.5}" stroke-linejoin="round" stroke-linecap="round" ${s.dash ? 'stroke-dasharray="5 5"' : ''}/>`;
+    s.values.forEach((v, i) => { if (v != null) g += `<circle cx="${x(i)}" cy="${y(v)}" r="3.5" fill="#fff" stroke="${s.color}" stroke-width="2"><title>${s.name} – ${labels[i]}: ${r1(v)}</title></circle>`; });
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%">${g}</svg>` + legend(series);
+}
+const legend = series => `<div class="legend">${series.map(s => `<span><i style="background:${s.color}"></i>${s.name}</span>`).join('')}</div>`;
+function heatColor(v) {
+  if (v >= 8.5) return ['#c9efd9', '#13804e']; if (v >= 7.5) return ['#e1f5e9', '#1f9d63'];
+  if (v >= 6.5) return ['#fff3da', '#a86b00']; if (v >= 5.5) return ['#ffe2cc', '#c35a00']; return ['#fbd5d5', '#b42323'];
+}
+function heatmap(topics) {
+  return `<div class="tbl"><table class="heat">${SUBJECTS.map(s => `<tr><td class="lab">${subjTag(s.id)}</td>${s.topics.map(t => {
+    const x = topics.find(z => z.subject === s.id && z.topic === t);
+    if (!x) return `<td style="background:var(--bg);color:var(--muted)"><span class="topic">${t}</span>–</td>`;
+    const [bg, fg] = heatColor(x.avg);
+    return `<td style="background:${bg};color:${fg}" title="${t}: ${r1(x.avg)} (${x.n} bài)"><span class="topic">${t}</span>${r1(x.avg)}</td>`;
+  }).join('')}</tr>`).join('')}</table></div>
+  <div class="legend"><span><i style="background:#c9efd9"></i>Giỏi ≥ 8,5</span><span><i style="background:#fff3da"></i>Khá 6,5–7,5</span><span><i style="background:#ffe2cc"></i>Cần cố gắng</span><span><i style="background:#fbd5d5"></i>Yếu &lt; 5,5</span></div>`;
+}
+
+// ---------------------------------------------------------------- app shell
+const ROLES = {
+  parent: { who: PARENT.name, sub: 'Phụ huynh em ' + NAMES[0].split(' ').pop(), nav: [['overview', '📊', 'Tổng quan'], ['homework', '📝', 'Bài tập'], ['messages', '💬', 'Trao đổi']] },
+  teacher: { who: CLASS.teacher, sub: 'Chủ nhiệm ' + CLASS.name, nav: [['class', '🏫', 'Lớp học'], ['assign', '➕', 'Giao bài'], ['grade', '✅', 'Chấm bài'], ['messages', '💬', 'Trao đổi']] },
+  student: { who: NAMES[0], sub: CLASS.name, nav: [['todo', '🎒', 'Bài cần làm'], ['done', '⭐', 'Đã làm'], ['messages', '📢', 'Thông báo']] },
+};
+let state = { role: 'parent', view: 'overview', param: null, filter: 'week', subj: 'all' };
+try { const s = JSON.parse(localStorage.getItem(STORE + '-ui')); if (s && ROLES[s.role]) state = { ...state, ...s, param: null }; } catch (e) {}
+const saveUI = () => { try { localStorage.setItem(STORE + '-ui', JSON.stringify({ role: state.role, view: state.view })); } catch (e) {} };
+
+function go(view, param = null) { state.view = view; state.param = param; saveUI(); render(); window.scrollTo(0, 0); }
+function setRole(role) { state.role = role; state.view = ROLES[role].nav[0][0]; state.param = null; saveUI(); render(); }
+
+function badge(view) {
+  if (view === 'grade') return DB.assignments.reduce((n, a) => n + DB.students.filter(st => { const s = sub(a.id, st.id); return s && (s.status === 'done' || s.status === 'late') && s.score == null; }).length, 0);
+  if (view === 'todo') return rowsFor(STUDENT_ME).filter(r => r.s.status === 'pending').length;
+  if (view === 'messages') return unseen();
+  return 0;
+}
+function unseen() { return Math.max(0, DB.messages.length + DB.announcements.length - (DB.seen[state.role] || 0)); }
+
+function render() {
+  const R = ROLES[state.role];
+  document.querySelectorAll('#roles button').forEach(b => b.classList.toggle('on', b.dataset.role === state.role));
+  const idx = state.role === 'teacher' ? 4 : state.role === 'parent' ? 7 : 0;
+  document.getElementById('who').innerHTML = avatar(R.who, idx) + `<span class="nm"><b>${R.who}</b></span>`;
+  document.getElementById('ctx').innerHTML = `<strong>${CLASS.name}</strong>${CLASS.school}<br>${R.sub}`;
+  document.getElementById('nav').innerHTML = R.nav.map(([v, i, l]) => { const c = badge(v); return `<button data-view="${v}" class="${state.view === v ? 'on' : ''}"><span class="ico">${i}</span>${l}${c ? `<span class="cnt">${c}</span>` : ''}</button>`; }).join('');
+  const n = unseen(); document.getElementById('bell').innerHTML = '🔔' + (n ? `<b>${n}</b>` : '');
+  const views = { overview: viewParentOverview, homework: viewHomework, messages: viewMessages, class: viewClass, assign: viewAssign, grade: viewGrade, student: viewStudentDetail, assignment: viewAssignmentDetail, todo: viewTodo, done: viewDone };
+  document.getElementById('main').innerHTML = (views[state.view] || views[R.nav[0][0]])();
+  bindView();
+}
+
+// ---------------------------------------------------------------- report (parent overview + teacher's student page)
+function report(sid) {
+  const A = analyze(sid), W = weekly(sid), cur = W[WEEKS - 1];
+  const rows = rowsFor(sid);
+  const today = rows.filter(r => r.a.assigned === TODAY_KEY || r.a.due === TODAY_KEY);
+  const todayDone = today.filter(r => r.s.status === 'done' || r.s.status === 'late').length;
+  const labels = W.map(w => weekLabel(w.w));
+  const recentGraded = rows.filter(r => r.s.score != null).sort((a, b) => b.a.assigned.localeCompare(a.a.assigned)).slice(0, 6);
+  return `
+  <div class="grid g4">
+    <div class="card kpi"><div class="label">Hôm nay</div><div class="val">${todayDone}<small> / ${today.length} bài</small></div>
+      <div class="foot ${today.length && todayDone < today.length ? 'down' : 'up'}">${today.length ? (todayDone < today.length ? `Còn ${today.length - todayDone} bài chưa làm` : 'Đã xong hết 🎉') : 'Không có bài hôm nay'}</div></div>
+    <div class="card kpi"><div class="label">Tuần này</div><div class="val">${cur.done + cur.late}<small> / ${cur.total} bài</small></div>
+      <div class="bar"><i style="width:${cur.total ? (cur.done + cur.late) / cur.total * 100 : 0}%"></i></div></div>
+    <div class="card kpi"><div class="label">Điểm TB 3 tuần gần</div><div class="val">${r1(A.recent)}</div>
+      <div class="foot ${A.verdict.c}">${A.delta >= 0 ? '▲' : '▼'} ${r1(Math.abs(A.delta))} so với 3 tuần trước</div></div>
+    <div class="card kpi"><div class="label">Nộp đúng hạn</div><div class="val">${Math.round(A.onTime * 100)}%</div>
+      <div class="foot ${A.missingTotal ? 'down' : 'flat'}">${A.missingTotal ? A.missingTotal + ' bài bỏ lỡ trong 2 tuần' : 'Không bỏ bài nào gần đây'}</div></div>
+  </div>
+
+  <div class="grid g3 mt">
+    <div class="card ai">
+      <div class="head"><div class="spark">✦</div><div><div style="font-size:13px;color:var(--muted)">Phân tích của trợ lý AI</div>
+        <div class="verdict ${A.verdict.c}">${A.verdict.e} ${A.first} ${A.verdict.t}</div></div></div>
+      <p>${A.summary}</p>
+      <h3 style="margin-top:14px">Gợi ý cho bố mẹ</h3>
+      <ul>${A.recs.map(r => `<li>${r}</li>`).join('')}</ul>
+      <div class="ask" data-sid="${sid}">
+        <button data-q="weak">Con yếu phần nào?</button><button data-q="week">Tuần này con làm được bao nhiêu bài?</button>
+        <button data-q="compare">So với trước thế nào?</button><button data-q="plan">Lên lịch ôn tuần tới</button>
+      </div>
+      <div id="answer"></div>
+      <div class="note">Bản xem giao diện: phân tích dựng bằng quy tắc trên điểm số. Bản thật sẽ gửi số liệu này cho AI để viết nhận xét.</div>
+    </div>
+    <div class="card">
+      <h2>Kiến thức cần cải thiện</h2>
+      <div class="weak">${A.weak.length ? A.weak.map(w => `<div class="w"><div class="top2"><b>${w.topic}</b>${scoreBox(w.avg).replace('class="score"', 'class="score" style="width:38px;height:38px"')}</div>
+        <div style="margin-top:2px">${subjTag(w.subject)} <span style="font-size:12px;color:var(--muted)">· ${w.n} bài</span></div></div>`).join('') : '<div class="empty">Chưa có phần nào đáng lo 👍</div>'}</div>
+      <h3 style="margin-top:16px">Làm tốt</h3>
+      ${A.strong.map(s => `<div style="display:flex;justify-content:space-between;font-size:14px;margin:6px 0"><span>${s.topic} · <span style="color:var(--muted)">${SUBJ[s.subject].name}</span></span><b class="up">${r1(s.avg)}</b></div>`).join('') || '<div class="empty">–</div>'}
+    </div>
+  </div>
+
+  <div class="grid g2 mt">
+    <div class="card"><h2>Điểm trung bình theo môn</h2>
+      ${lines(labels, SUBJECTS.map(s => ({ name: s.name, color: s.color, values: W.map(w => w.bySubj[s.id]) })))}</div>
+    <div class="card"><h2>Bài tập theo tuần</h2>
+      ${stackedBars(W.map(w => ({ ...w, label: weekLabel(w.w) })), [
+        { key: 'done', name: 'Đúng hạn', color: '#1f9d63' }, { key: 'late', name: 'Nộp muộn', color: '#e5b13a' },
+        { key: 'missing', name: 'Không nộp', color: '#d64545' }, { key: 'pending', name: 'Chưa đến hạn', color: '#c9d2e6' }])}</div>
+  </div>
+
+  <div class="grid g2 mt">
+    <div class="card"><h2>Bản đồ kiến thức</h2>${heatmap(A.topics)}</div>
+    <div class="card"><h2>Từng môn</h2>
+      <div class="tbl"><table><tr><th>Môn</th><th>3 tuần gần</th><th>Thay đổi</th><th>Bỏ bài</th></tr>
+      ${A.subjects.map(s => `<tr><td>${subjTag(s.id)}</td><td><b>${r1(s.recent)}</b></td>
+        <td class="${s.delta >= 0.3 ? 'up' : s.delta <= -0.3 ? 'down' : 'flat'}">${s.delta >= 0.3 ? '▲' : s.delta <= -0.3 ? '▼' : '●'} ${signed(s.delta)}</td>
+        <td>${s.missing ? `<span class="pill p-bad">${s.missing}</span>` : '<span class="pill p-mute">0</span>'}</td></tr>`).join('')}</table></div>
+      <h3 style="margin-top:18px">Nhận xét gần đây của cô</h3>
+      <div class="list">${recentGraded.slice(0, 4).map(r => `<div class="item">${scoreBox(r.s.score)}<div class="main"><div class="t">${esc(r.a.title)}</div>
+        <div class="m">${SUBJ[r.a.subject].name} · ${fmt(r.a.assigned)} · “${esc(r.s.comment)}”</div></div></div>`).join('')}</div>
+    </div>
+  </div>`;
+}
+
+function viewParentOverview() {
+  const st = student(PARENT.child);
+  return `<h1>Chào ${PARENT.name} 👋</h1><p class="sub">Tình hình học tập của ${st.name} · ${CLASS.name} · ${fmtLong(TODAY_KEY)}</p>` + report(st.id);
+}
+function viewStudentDetail() {
+  const st = student(state.param), i = DB.students.indexOf(st);
+  return `<button class="back" data-go="class">← Danh sách lớp</button>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">${avatar(st.name, i)}<div><h1 style="margin:0">${st.name}</h1><div class="sub" style="margin:0">${CLASS.name} · xem như phụ huynh của em đang thấy</div></div></div>` + report(st.id);
+}
+
+// ---------------------------------------------------------------- homework list (parent)
+function viewHomework() {
+  const rows = rowsFor(PARENT.child).filter(r => {
+    if (state.subj !== 'all' && r.a.subject !== state.subj) return false;
+    if (state.filter === 'today') return r.a.assigned === TODAY_KEY || r.a.due === TODAY_KEY || r.s.status === 'pending';
+    if (state.filter === 'week') return r.a.week === WEEKS - 1;
+    if (state.filter === 'missing') return r.s.status === 'missing';
+    return true;
+  }).sort((a, b) => b.a.assigned.localeCompare(a.a.assigned));
+  const f = [['today', 'Hôm nay & cần làm'], ['week', 'Tuần này'], ['missing', 'Chưa nộp'], ['all', 'Tất cả']];
+  return `<h1>Bài tập của ${student(PARENT.child).name.split(' ').pop()}</h1><p class="sub">Cô giao trên lớp, cập nhật ngay khi con nộp hoặc cô chấm.</p>
+    <div class="chips">${f.map(([k, l]) => `<button class="chip ${state.filter === k ? 'on' : ''}" data-filter="${k}">${l}</button>`).join('')}</div>
+    <div class="chips">${[['all', 'Mọi môn'], ...SUBJECTS.map(s => [s.id, s.name])].map(([k, l]) => `<button class="chip ${state.subj === k ? 'on' : ''}" data-subj="${k}">${l}</button>`).join('')}</div>
+    <div class="card list">${rows.length ? rows.map(r => `<div class="item" data-open="${r.a.id}" style="cursor:pointer">${scoreBox(r.s.score)}
+      <div class="main"><div class="t">${esc(r.a.title)}</div><div class="m">${subjTag(r.a.subject)} · ${r.a.topic} · giao ${fmt(r.a.assigned)} · hạn ${fmtLong(r.a.due)}</div></div>${statusPill(r.s, r.a)}</div>`).join('')
+      : '<div class="empty">Không có bài nào ở mục này.</div>'}</div>`;
+}
+
+function openAssignmentModal(aid, sid) {
+  const a = DB.assignments.find(x => x.id === aid), s = sub(aid, sid);
+  modal(`<div style="display:flex;justify-content:space-between;align-items:start;gap:12px"><div>${subjTag(a.subject)}<h2 style="margin:6px 0 2px">${esc(a.title)}</h2>
+    <div class="sub" style="margin:0">${a.topic} · giao ${fmtLong(a.assigned)} · hạn ${fmtLong(a.due)}</div></div>${scoreBox(s.score)}</div>
+    ${a.note ? `<p>${esc(a.note)}</p>` : ''}
+    <p>Trạng thái: ${statusPill(s, a)} ${s.submitted ? `<span style="color:var(--muted);font-size:13px">· nộp ${fmtLong(s.submitted)}</span>` : ''}</p>
+    ${s.answer ? `<div class="card" style="background:var(--bg);box-shadow:none"><b>Bài làm:</b> ${esc(s.answer)}</div>` : ''}
+    ${s.comment ? `<div class="card mt" style="background:var(--good-soft);box-shadow:none"><b>Cô nhận xét:</b> ${esc(s.comment)}</div>` : ''}
+    <div style="text-align:right;margin-top:16px"><button class="btn ghost" data-close>Đóng</button></div>`);
+}
+
+// ---------------------------------------------------------------- messages (all roles)
+function viewMessages() {
+  DB.seen[state.role] = DB.messages.length + DB.announcements.length; save();
+  setTimeout(() => { const n = unseen(); document.getElementById('bell').innerHTML = '🔔' + (n ? `<b>${n}</b>` : ''); document.querySelectorAll('.nav [data-view=messages] .cnt').forEach(e => e.remove()); }, 0);
+  const anns = `<div class="card"><h2>📢 Thông báo của lớp</h2>
+    ${state.role === 'teacher' ? `<div class="field"><input id="annTitle" placeholder="Tiêu đề thông báo"></div><div class="field"><textarea id="annBody" placeholder="Nội dung gửi tới toàn bộ phụ huynh lớp…"></textarea></div><button class="btn" id="annPost">Gửi cả lớp</button>` : ''}
+    ${DB.announcements.map(a => `<div class="ann"><b>${esc(a.title)}</b><div>${esc(a.body)}</div><div class="m">${CLASS.teacher} · ${fmt(a.at.slice(0, 10))} ${a.at.slice(11)}</div></div>`).join('')}</div>`;
+  if (state.role === 'student') return `<h1>Thông báo</h1><p class="sub">Tin cô gửi cả lớp.</p>` + anns;
+  const me = state.role;
+  const other = me === 'teacher' ? `Phụ huynh em ${NAMES[0]}` : CLASS.teacher;
+  return `<h1>Trao đổi</h1><p class="sub">Thay cho nhóm Zalo: tin riêng giữa cô và từng phụ huynh, thông báo chung cho cả lớp.</p>
+    <div class="grid g2">
+      <div class="card"><h2>💬 ${other}</h2>
+        <div class="chat" id="chat">${DB.messages.map(m => `<div class="msg ${m.from === me ? 'me' : ''}">${esc(m.text)}<div class="meta">${fmt(m.at.slice(0, 10))} ${m.at.slice(11)}</div></div>`).join('')}</div>
+        <div class="compose"><input id="msgIn" placeholder="Nhắn tin…"><button class="btn" id="msgSend">Gửi</button></div></div>
+      ${anns}
+    </div>`;
+}
+
+// ---------------------------------------------------------------- teacher: class
+function classTable() {
+  return DB.students.map((st, i) => {
+    const A = analyze(st.id), rows = rowsFor(st.id), past = rows.filter(r => isPastDue(r.a));
+    const handed = past.filter(r => r.s.status !== 'missing').length / Math.max(1, past.length);
+    const flag = A.delta <= -0.5 || handed < 0.82 || (A.recent ?? 10) < 6.5;
+    return { st, i, A, handed, flag };
+  });
+}
+function viewClass() {
+  const T = classTable();
+  const cur = DB.assignments.filter(a => a.week === WEEKS - 1);
+  const subsCur = cur.flatMap(a => DB.students.map(st => sub(a.id, st.id)));
+  const handedCur = subsCur.filter(s => s.status === 'done' || s.status === 'late').length;
+  const classAvg = avg(T.map(t => t.A.recent).filter(v => v != null));
+  const classPrev = avg(T.map(t => t.A.prev).filter(v => v != null));
+  const flagged = T.filter(t => t.flag);
+  const toGrade = badge('grade');
+  const weeks = Array.from({ length: WEEKS }, (_, w) => w);
+  const rateFor = w => { const as = DB.assignments.filter(a => a.week === w && isPastDue(a)); const ss = as.flatMap(a => DB.students.map(st => sub(a.id, st.id))); return ss.length ? ss.filter(s => s.status !== 'missing').length / ss.length * 10 : null; };
+  const subjAvg = (sid, w) => avg(DB.assignments.filter(a => a.week === w && a.subject === sid).flatMap(a => DB.students.map(st => sub(a.id, st.id).score)).filter(v => v != null));
+  const sort = state.param || 'flag';
+  const sorted = [...T].sort((a, b) => sort === 'name' ? a.st.name.split(' ').pop().localeCompare(b.st.name.split(' ').pop(), 'vi') : sort === 'avg' ? (b.A.recent ?? 0) - (a.A.recent ?? 0) : (b.flag - a.flag) || (a.A.delta - b.A.delta));
+  return `<h1>${CLASS.name}</h1><p class="sub">${DB.students.length} học sinh · ${fmtLong(TODAY_KEY)}</p>
+  <div class="grid g4">
+    <div class="card kpi"><div class="label">Bài giao tuần này</div><div class="val">${cur.length}</div><div class="foot flat">${SUBJECTS.map(s => cur.filter(a => a.subject === s.id).length + ' ' + s.name).join(' · ')}</div></div>
+    <div class="card kpi"><div class="label">Đã nộp tuần này</div><div class="val">${Math.round(handedCur / Math.max(1, subsCur.length) * 100)}%</div><div class="bar"><i style="width:${handedCur / Math.max(1, subsCur.length) * 100}%"></i></div></div>
+    <div class="card kpi"><div class="label">Điểm TB lớp (3 tuần)</div><div class="val">${r1(classAvg)}</div><div class="foot ${classAvg - classPrev >= 0 ? 'up' : 'down'}">${classAvg - classPrev >= 0 ? '▲' : '▼'} ${r1(Math.abs(classAvg - classPrev))} so với trước</div></div>
+    <div class="card kpi"><div class="label">Cần chấm</div><div class="val">${toGrade}</div><div class="foot"><a href="#" data-go="grade">Chấm ngay →</a></div></div>
+  </div>
+  <div class="grid g2 mt">
+    <div class="card"><h2>Điểm TB lớp theo môn</h2>${lines(weeks.map(weekLabel), SUBJECTS.map(s => ({ name: s.name, color: s.color, values: weeks.map(w => subjAvg(s.id, w)) })))}</div>
+    <div class="card ai"><div class="head"><div class="spark">✦</div><div><div style="font-size:13px;color:var(--muted)">Trợ lý AI · cả lớp</div><div class="verdict">${flagged.length} em cần chú ý</div></div></div>
+      <ul>${flagged.slice(0, 5).map(t => `<li><a href="#" data-student="${t.st.id}"><b>${t.st.name}</b></a>: ${[t.A.delta <= -0.3 ? `điểm giảm ${r1(Math.abs(t.A.delta))}${t.A.falling[0] ? ` (nhất là ${t.A.falling[0].name})` : ''}` : '', t.handed < 0.85 ? `chỉ nộp ${Math.round(t.handed * 100)}% bài` : '', (t.A.recent ?? 10) < 6 ? `điểm TB ${r1(t.A.recent)}` : ''].filter(Boolean).join(', ')}${t.A.weak[0] ? `; yếu phần ${t.A.weak[0].topic}` : ''}.</li>`).join('')}</ul>
+      <p>${(() => { const all = {}; T.forEach(t => t.A.weak.forEach(w => { all[w.topic] = (all[w.topic] || 0) + 1; })); const top = Object.entries(all).sort((a, b) => b[1] - a[1]).slice(0, 2); return top.length ? `Phần kiến thức nhiều em yếu nhất: ${top.map(([t, n]) => `<b>${t}</b> (${n} em)`).join(', ')}. Có thể dành một tiết ôn chung.` : ''; })()}</p>
+      <div class="legend" style="margin-top:6px">Tỉ lệ nộp bài theo tuần: ${weeks.map(w => { const r = rateFor(w); return r == null ? '' : `<span>${weekLabel(w)} <b style="color:var(--ink)">${Math.round(r * 10)}%</b></span>`; }).join('')}</div>
+    </div>
+  </div>
+  <div class="card mt"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><h2 style="margin:0">Học sinh</h2>
+    <div class="chips" style="margin:0">${[['flag', 'Cần chú ý trước'], ['avg', 'Điểm cao'], ['name', 'Tên A–Z']].map(([k, l]) => `<button class="chip ${sort === k ? 'on' : ''}" data-sort="${k}">${l}</button>`).join('')}</div></div>
+    <div class="tbl"><table><tr><th>Học sinh</th><th>Đã nộp</th><th>Điểm TB</th><th>Xu hướng</th><th>Yếu nhất</th><th></th></tr>
+    ${sorted.map(t => `<tr class="click" data-student="${t.st.id}"><td><div style="display:flex;align-items:center;gap:10px">${avatar(t.st.name, t.i)}<b>${t.st.name}</b></div></td>
+      <td>${Math.round(t.handed * 100)}%</td><td><b>${r1(t.A.recent)}</b></td>
+      <td class="${t.A.verdict.c}">${t.A.delta >= 0.3 ? '▲' : t.A.delta <= -0.3 ? '▼' : '●'} ${signed(t.A.delta)}</td>
+      <td>${t.A.weak[0] ? `${t.A.weak[0].topic} <span style="color:var(--muted);font-size:12px">${SUBJ[t.A.weak[0].subject].name}</span>` : '<span style="color:var(--muted)">–</span>'}</td>
+      <td>${t.flag ? '<span class="pill p-bad">Cần chú ý</span>' : ''}</td></tr>`).join('')}</table></div></div>`;
+}
+
+// ---------------------------------------------------------------- teacher: assign
+function viewAssign() {
+  const recent = [...DB.assignments].sort((a, b) => b.assigned.localeCompare(a.assigned) || b.id.localeCompare(a.id)).slice(0, 12);
+  return `<h1>Giao bài tập</h1><p class="sub">Bài giao ở đây hiện ngay cho học sinh và phụ huynh, không cần gửi lại lên Zalo.</p>
+  <div class="grid g2">
+    <div class="card"><h2>Bài mới</h2>
+      <div class="row"><div class="field"><label>Môn</label><select id="fSubj">${SUBJECTS.map(s => `<option value="${s.id}">${s.name}</option>`).join('')}</select></div>
+        <div class="field"><label>Phần kiến thức</label><select id="fTopic"></select></div></div>
+      <div class="field"><label>Nội dung bài</label><input id="fTitle" placeholder="VD: Làm bài 1–4 trang 45 SGK"></div>
+      <div class="field"><label>Ghi chú cho học sinh / phụ huynh</label><textarea id="fNote" placeholder="Không bắt buộc"></textarea></div>
+      <div class="row"><div class="field"><label>Ngày giao</label><input id="fDate" type="date" value="${TODAY_KEY}"></div>
+        <div class="field"><label>Hạn nộp</label><input id="fDue" type="date" value="${key(addDays(TODAY, 1))}"></div></div>
+      <div class="field"><label>Đính kèm</label><input type="file" id="fFile"></div>
+      <button class="btn" id="fSave">Giao cho cả lớp (${DB.students.length} em)</button>
+    </div>
+    <div class="card"><h2>Đã giao gần đây</h2><div class="list">${recent.map(a => {
+      const ss = DB.students.map(st => sub(a.id, st.id)); const h = ss.filter(s => s.status === 'done' || s.status === 'late').length;
+      return `<div class="item" data-assignment="${a.id}" style="cursor:pointer"><div class="main"><div class="t">${esc(a.title)}</div>
+        <div class="m">${subjTag(a.subject)} · ${a.topic} · hạn ${fmtLong(a.due)}</div><div class="bar"><i style="width:${h / ss.length * 100}%;background:${SUBJ[a.subject].color}"></i></div></div>
+        <div style="text-align:right;font-size:13px"><b>${h}/${ss.length}</b><div style="color:var(--muted)">đã nộp</div></div></div>`; }).join('')}</div></div>
+  </div>`;
+}
+function viewAssignmentDetail() {
+  const a = DB.assignments.find(x => x.id === state.param);
+  const rows = DB.students.map((st, i) => ({ st, i, s: sub(a.id, st.id) }));
+  const c = k => rows.filter(r => r.s.status === k).length;
+  return `<button class="back" data-go="assign">← Giao bài</button>
+    <h1>${esc(a.title)}</h1><p class="sub">${SUBJ[a.subject].name} · ${a.topic} · giao ${fmtLong(a.assigned)} · hạn ${fmtLong(a.due)}</p>
+    <div class="chips"><span class="pill p-good">Đúng hạn ${c('done')}</span><span class="pill p-warn">Muộn ${c('late')}</span><span class="pill p-bad">Không nộp ${c('missing')}</span><span class="pill p-mute">Chưa làm ${c('pending')}</span></div>
+    ${c('pending') + c('missing') ? `<button class="btn sm" id="remind" data-aid="${a.id}">🔔 Nhắc ${c('pending') + c('missing')} phụ huynh chưa thấy con nộp</button>` : ''}
+    <div class="card mt tbl"><table><tr><th>Học sinh</th><th>Trạng thái</th><th>Điểm</th><th>Nhận xét</th></tr>
+    ${rows.map(r => `<tr><td><div style="display:flex;align-items:center;gap:10px">${avatar(r.st.name, r.i)}${r.st.name}</div></td><td>${statusPill(r.s, a)}</td><td><b>${r.s.score == null ? '–' : r1(r.s.score)}</b></td><td style="color:var(--muted);font-size:13px">${esc(r.s.comment)}</td></tr>`).join('')}</table></div>`;
+}
+
+// ---------------------------------------------------------------- teacher: grade
+function viewGrade() {
+  const q = [];
+  DB.assignments.forEach(a => DB.students.forEach((st, i) => { const s = sub(a.id, st.id); if ((s.status === 'done' || s.status === 'late') && s.score == null) q.push({ a, st, i, s }); }));
+  q.sort((x, y) => x.a.assigned.localeCompare(y.a.assigned));
+  return `<h1>Chấm bài</h1><p class="sub">${q.length} bài đang chờ. Điểm và nhận xét gửi thẳng tới phụ huynh.</p>
+  ${q.length ? q.slice(0, 20).map(r => `<div class="card" style="margin-bottom:12px" data-card="${r.a.id}|${r.st.id}">
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">${avatar(r.st.name, r.i)}<div style="flex:1;min-width:180px"><b>${r.st.name}</b>
+      <div style="font-size:13px;color:var(--muted)">${subjTag(r.a.subject)} · ${esc(r.a.title)} · nộp ${fmtLong(r.s.submitted)}</div></div>${statusPill(r.s, r.a)}</div>
+    <div style="margin:10px 0;padding:10px 12px;background:var(--bg);border-radius:10px;font-size:14px">📎 ${esc(r.s.answer || 'Ảnh bài làm')}</div>
+    <div class="row" style="align-items:end"><div class="field" style="max-width:120px;min-width:100px;margin:0"><label>Điểm (0–10)</label><input type="number" min="0" max="10" step="0.5" class="gScore"></div>
+      <div class="field" style="flex:3;margin:0"><label>Nhận xét</label><input class="gComment" placeholder="Nhận xét ngắn cho con và phụ huynh"></div>
+      <div style="flex:0;min-width:auto"><button class="btn gSave">Lưu</button></div></div>
+    <div class="chips" style="margin:10px 0 0">${['Rất tốt!', 'Cần cẩn thận hơn', 'Xem lại lý thuyết'].map(c => `<button class="chip gQuick">${c}</button>`).join('')}</div>
+  </div>`).join('') : '<div class="card empty">Đã chấm hết 🎉</div>'}`;
+}
+
+// ---------------------------------------------------------------- student
+function viewTodo() {
+  const rows = rowsFor(STUDENT_ME), todo = rows.filter(r => r.s.status === 'pending').sort((a, b) => a.a.due.localeCompare(b.a.due));
+  const days = Array.from({ length: 7 }, (_, i) => addDays(TODAY, i - 6));
+  const streak = days.map(d => { const k = key(d); const due = rows.filter(r => r.a.due === k && parse(k) < TODAY); return { d, ok: due.length ? due.every(r => r.s.status === 'done') : null }; });
+  const stars = rows.filter(r => r.s.score >= 9).length;
+  return `<h1>Chào ${NAMES[0].split(' ').pop()}! 🎒</h1><p class="sub">${todo.length ? `Con còn ${todo.length} bài cần làm.` : 'Con đã làm hết bài rồi, giỏi quá!'}</p>
+  <div class="grid g2">
+    <div class="card"><h2>Bài cần làm</h2><div class="list">${todo.map(r => `<div class="item"><div class="main"><div class="t">${esc(r.a.title)}</div>
+      <div class="m">${subjTag(r.a.subject)} · hạn ${fmtLong(r.a.due)}</div></div>${r.a.due === TODAY_KEY ? '<span class="pill p-warn">Hôm nay</span>' : ''}<button class="btn sm" data-submit="${r.a.id}">Nộp bài</button></div>`).join('') || '<div class="empty">Hết bài rồi 🎉</div>'}</div></div>
+    <div class="card"><h2>7 ngày qua</h2><div class="streak">${streak.map(s => `<div><i class="${s.ok == null ? '' : s.ok ? 'ok' : 'miss'}">${s.ok == null ? '·' : s.ok ? '✓' : '✗'}</i>${WD[s.d.getDay()]}</div>`).join('')}</div>
+      <div class="kpi" style="margin-top:18px"><div class="label">Bài được 9 điểm trở lên</div><div class="val">⭐ ${stars}</div></div></div>
+  </div>`;
+}
+function viewDone() {
+  const rows = rowsFor(STUDENT_ME).filter(r => r.s.status === 'done' || r.s.status === 'late').sort((a, b) => b.a.assigned.localeCompare(a.a.assigned));
+  return `<h1>Bài đã làm</h1><p class="sub">Điểm và lời nhận xét của cô.</p>
+    <div class="chips">${[['all', 'Mọi môn'], ...SUBJECTS.map(s => [s.id, s.name])].map(([k, l]) => `<button class="chip ${state.subj === k ? 'on' : ''}" data-subj="${k}">${l}</button>`).join('')}</div>
+    <div class="card list">${rows.filter(r => state.subj === 'all' || r.a.subject === state.subj).slice(0, 40).map(r => `<div class="item" data-open="${r.a.id}" style="cursor:pointer">${scoreBox(r.s.score)}<div class="main"><div class="t">${esc(r.a.title)}</div>
+      <div class="m">${subjTag(r.a.subject)} · ${fmt(r.a.assigned)}${r.s.comment ? ' · “' + esc(r.s.comment) + '”' : ''}</div></div>${statusPill(r.s, r.a)}</div>`).join('')}</div>`;
+}
+
+// ---------------------------------------------------------------- modal / toast
+function modal(html) {
+  const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="box">${html}</div>`;
+  m.addEventListener('click', e => { if (e.target === m || e.target.closest('[data-close]')) m.remove(); });
+  document.body.appendChild(m); return m;
+}
+function toast(t) { const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 2200); }
+
+// ---------------------------------------------------------------- events
+function bindView() {
+  const main = document.getElementById('main');
+  const fSubj = document.getElementById('fSubj');
+  if (fSubj) { const fill = () => { document.getElementById('fTopic').innerHTML = SUBJ[fSubj.value].topics.map(t => `<option>${t}</option>`).join(''); }; fSubj.onchange = fill; fill(); }
+  const chat = document.getElementById('chat'); if (chat) chat.scrollTop = chat.scrollHeight;
+  const msgIn = document.getElementById('msgIn'); if (msgIn) msgIn.onkeydown = e => { if (e.key === 'Enter') document.getElementById('msgSend').click(); };
+}
+
+document.getElementById('roles').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setRole(b.dataset.role); });
+document.getElementById('nav').addEventListener('click', e => { const b = e.target.closest('button'); if (b) go(b.dataset.view); });
+document.getElementById('bell').addEventListener('click', () => go('messages'));
+document.getElementById('reset').addEventListener('click', () => { DB = buildDemo(); DB.today = TODAY_KEY; save(); toast('Đã tạo lại dữ liệu mẫu'); render(); });
+
+document.getElementById('main').addEventListener('click', e => {
+  const t = e.target;
+  const el = sel => t.closest(sel);
+  let x;
+  if ((x = el('[data-go]'))) { e.preventDefault(); return go(x.dataset.go); }
+  if ((x = el('[data-student]'))) { e.preventDefault(); return go('student', x.dataset.student); }
+  if ((x = el('[data-assignment]'))) return go('assignment', x.dataset.assignment);
+  if ((x = el('[data-filter]'))) { state.filter = x.dataset.filter; return render(); }
+  if ((x = el('[data-subj]'))) { state.subj = x.dataset.subj; return render(); }
+  if ((x = el('[data-sort]'))) { state.param = x.dataset.sort; return render(); }
+  if ((x = el('[data-open]'))) return openAssignmentModal(x.dataset.open, state.role === 'student' ? STUDENT_ME : PARENT.child);
+  if ((x = el('.ask button'))) {
+    const sid = x.parentElement.dataset.sid;
+    const box = document.getElementById('answer');
+    box.innerHTML = `<div class="answer">…</div>`;
+    setTimeout(() => { box.innerHTML = `<div class="answer"><b>${esc(x.textContent)}</b><br>${askAI(sid, x.dataset.q)}</div>`; }, 450);
+    return;
+  }
+  if (t.id === 'msgSend') {
+    const inp = document.getElementById('msgIn'); const v = inp.value.trim(); if (!v) return;
+    const now = new Date(); DB.messages.push({ from: state.role, text: v, at: TODAY_KEY + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') });
+    DB.seen[state.role] = DB.messages.length + DB.announcements.length; save(); render(); document.getElementById('msgIn').focus(); return;
+  }
+  if (t.id === 'annPost') {
+    const ti = document.getElementById('annTitle').value.trim(), bo = document.getElementById('annBody').value.trim();
+    if (!ti || !bo) return toast('Nhập tiêu đề và nội dung');
+    const now = new Date(); DB.announcements.unshift({ title: ti, body: bo, at: TODAY_KEY + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') });
+    DB.seen.teacher = DB.messages.length + DB.announcements.length; save(); toast('Đã gửi tới ' + DB.students.length + ' phụ huynh'); return render();
+  }
+  if (t.id === 'fSave') {
+    const title = document.getElementById('fTitle').value.trim(); if (!title) return toast('Nhập nội dung bài');
+    const assigned = document.getElementById('fDate').value, due = document.getElementById('fDue').value;
+    if (!assigned || !due || due < assigned) return toast('Hạn nộp phải sau ngày giao');
+    const w = Math.max(0, Math.min(WEEKS - 1, WEEKS - 1 + Math.round((mondayOf(parse(assigned)) - THIS_MON) / (7 * DAY_MS))));
+    const a = { id: 'a' + DB.assignments.length + 'n' + Date.now() % 1e5, subject: document.getElementById('fSubj').value, topic: document.getElementById('fTopic').value, title, assigned, due, week: w, note: document.getElementById('fNote').value.trim() };
+    DB.assignments.push(a);
+    DB.students.forEach(st => { DB.subs[a.id + '|' + st.id] = { status: 'pending', score: null, submitted: null, comment: '', answer: '' }; });
+    save(); toast('Đã giao bài cho ' + DB.students.length + ' học sinh'); return render();
+  }
+  if (t.id === 'remind') { toast('Đã gửi nhắc nhở tới phụ huynh'); t.disabled = true; t.textContent = '✓ Đã nhắc'; return; }
+  if (t.classList.contains('gQuick')) { t.closest('[data-card]').querySelector('.gComment').value = t.textContent; return; }
+  if (t.classList.contains('gSave')) {
+    const card = t.closest('[data-card]'), v = parseFloat(card.querySelector('.gScore').value);
+    if (isNaN(v) || v < 0 || v > 10) return toast('Điểm từ 0 đến 10');
+    const s = DB.subs[card.dataset.card]; s.score = Math.round(v * 2) / 2; s.comment = card.querySelector('.gComment').value.trim() || pickComment(s.score);
+    save(); toast('Đã gửi điểm cho phụ huynh'); return render();
+  }
+  if ((x = el('[data-submit]'))) {
+    const a = DB.assignments.find(y => y.id === x.dataset.submit);
+    const m = modal(`<h2>Nộp bài: ${esc(a.title)}</h2><div class="field"><label>Ảnh bài làm</label><input type="file" accept="image/*" multiple id="sFile"></div>
+      <div class="field"><label>Lời nhắn cho cô (không bắt buộc)</label><textarea id="sText" placeholder="VD: Câu 3 con chưa hiểu lắm ạ"></textarea></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn ghost" data-close>Huỷ</button><button class="btn" id="sGo">Nộp bài</button></div>`);
+    m.querySelector('#sGo').onclick = () => {
+      const f = m.querySelector('#sFile').files, txt = m.querySelector('#sText').value.trim();
+      const s = sub(a.id, STUDENT_ME); s.status = parse(a.due) < TODAY ? 'late' : 'done'; s.submitted = TODAY_KEY;
+      s.answer = (f.length ? f.length + ' ảnh bài làm' : 'Bài làm trong vở') + (txt ? ' · “' + txt + '”' : '');
+      save(); m.remove(); toast('Đã nộp! Bố mẹ và cô đều thấy rồi 👍'); render();
+    };
+  }
+});
+function pickComment(v) { const l = v >= 8.5 ? COMMENTS.hi : v >= 6.5 ? COMMENTS.mid : COMMENTS.lo; return l[0]; }
+
+load();
+render();
+</script>
+</body>
+</html>
