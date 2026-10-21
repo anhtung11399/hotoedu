@@ -396,12 +396,12 @@ CLAUDE.md    quy ước + việc còn lại</pre>
   <section class="block" id="goi">
     <div class="eyebrow">Gói & giá</div>
     <h2>Thu tiền ai, bao nhiêu</h2>
-    <p class="lead">Thanh toán trên web bằng VietQR chuyển khoản (sau thêm ZaloPay / MoMo). Gói không tự gia hạn (chuyển khoản không trừ tiền định kỳ được) nên đẩy mạnh gói năm học. "Năm học" = 9 tháng.</p>
+    <p class="lead">Thanh toán trên web bằng VietQR chuyển khoản (sau thêm ZaloPay / MoMo). Gói không tự gia hạn (chuyển khoản không trừ tiền định kỳ được) nên đẩy mạnh gói năm. Gói năm = 12 tháng tính từ ngày kích hoạt (trước đây: năm học 9 tháng).</p>
     <div class="grid g4">
       <div class="card plan"><h3>Giáo viên miễn phí</h3><div class="price">0đ</div><p class="small muted"><b>1 lớp</b> đang hoạt động, đầy đủ chức năng kể cả báo cáo AI của lớp. Lớp thứ 2 trở đi chưa kích hoạt (chỉ xem).</p></div>
-      <div class="card plan"><h3>Giáo viên Pro</h3><div class="price">49.000đ <small>/tháng</small></div><p class="small muted">hoặc <b>399.000đ/năm học</b>. Không giới hạn số lớp.</p></div>
+      <div class="card plan"><h3>Giáo viên Pro</h3><div class="price">49.000đ <small>/tháng</small></div><p class="small muted">hoặc <b>399.000đ/năm</b> (12 tháng). Không giới hạn số lớp.</p></div>
       <div class="card plan g"><h3>Phụ huynh miễn phí</h3><div class="price">0đ</div><p class="small muted">Danh sách bài + trạng thái nộp ("đã làm a/N bài"), tổng hợp hôm nay/tuần/tháng. <b>Không nhận thông báo.</b></p></div>
-      <div class="card plan y"><h3>Phụ huynh Plus</h3><div class="price">29.000đ <small>/tháng</small></div><p class="small muted">hoặc <b>199.000đ/năm học</b>, tính cho <b>tài khoản bố/mẹ</b>: mọi con đều có Plus, ở mọi lớp; bố/mẹ còn lại của bé cũng xem được.</p></div>
+      <div class="card plan y"><h3>Phụ huynh Plus</h3><div class="price">39.000đ <small>/tháng</small></div><p class="small muted">hoặc <b>269.000đ/năm</b> (12 tháng), tính cho <b>tài khoản bố/mẹ</b>: mọi con đều có Plus, ở mọi lớp; bố/mẹ còn lại của bé cũng xem được.</p></div>
     </div>
     <div class="card mt">
       <div class="tbl"><table>
@@ -431,6 +431,8 @@ CLAUDE.md    quy ước + việc còn lại</pre>
       <h3>Thay đổi so với bản tính trước (cập nhật 21/10/2026)</h3>
       <div class="tbl"><table>
         <tr><th>Thay đổi</th><th>Ảnh hưởng</th></tr>
+        <tr><td>Giá Plus: <b>39.000đ/tháng</b> (trước 29.000đ), <b>269.000đ/năm</b> (trước 199.000đ)</td><td>Doanh thu mỗi gia đình Plus tăng ~35% (gói tháng)</td></tr>
+        <tr><td>Gói năm = <b>12 tháng</b> từ ngày kích hoạt (trước: năm học 9 tháng, hết 31/05)</td><td>Gói năm tính ra ~22.400đ/tháng (Plus) và ~33.250đ/tháng (Pro); gói trung tâm năm = 12 × giá tháng</td></tr>
         <tr><td>Plus tính cho <b>tài khoản bố/mẹ</b> (mọi con), bỏ giảm 50% bé thứ 2</td><td>Doanh thu tính theo <b>gia đình</b>: với ~1,2 con/gia đình, cùng số bé Plus thì doanh thu Plus thấp hơn ~17%. Chi phí AI vẫn tính theo bé.</td></tr>
         <tr><td>Báo cáo AI <b>của lớp</b> (cả lớp + từng môn) — bản trước chưa tính</td><td>+~825đ / lớp / tháng (lớp ~30 HS, 4 môn: 5 báo cáo × ~5,5 kỳ/tháng × ~30đ)</td></tr>
         <tr><td>Nút "Cập nhật báo cáo" cho cô và phụ huynh Plus (≤ 3 lần/ngày)</td><td>Ước tính +60đ / bé Plus và +600đ / lớp mỗi tháng (giả định bấm 1–2 lần/tháng)</td></tr>
@@ -447,8 +449,8 @@ CLAUDE.md    quy ước + việc còn lại</pre>
         <label>Số học sinh <span class="v" id="o-students"></span><input type="range" id="i-students" min="50" max="20000" step="50" value="1000"></label>
         <label>Tỉ lệ bé có Plus <span class="v" id="o-plus"></span><input type="range" id="i-plus" min="0" max="60" step="1" value="5">
           <span class="note">Plus mua theo gia đình: số gia đình Plus ≈ số bé Plus ÷ 1,2 con</span></label>
-        <label>Tỉ lệ chọn gói năm học <span class="v" id="o-yearly"></span><input type="range" id="i-yearly" min="0" max="100" step="5" value="60">
-          <span class="note">Gói năm 199.000đ/9 tháng ≈ 22.100đ/tháng, rẻ hơn gói tháng 29.000đ</span></label>
+        <label>Tỉ lệ chọn gói năm <span class="v" id="o-yearly"></span><input type="range" id="i-yearly" min="0" max="100" step="5" value="60">
+          <span class="note">Gói năm 269.000đ/12 tháng ≈ 22.400đ/tháng, rẻ hơn gói tháng 39.000đ</span></label>
         <label>Số giáo viên Pro <span class="v" id="o-pro"></span><input type="range" id="i-pro" min="0" max="500" step="1" value="5"></label>
         <label>Phụ huynh nhận ZNS mỗi gia đình Plus <span class="v" id="o-zns"></span><input type="range" id="i-zns" min="0" max="2" step="1" value="1">
           <span class="note">~1.300đ/phụ huynh/tháng (tin vắng không phép, quên nộp bài, báo cáo tuần)</span></label>
@@ -805,7 +807,7 @@ function diagram(id) {
     [250, 'Hằng tuần', 'Giao bài, chấm, báo cáo tuần', 'user'],
     [420, '16/01', 'Hết HK1 → báo cáo kỳ', 'orange'],
     [590, '25/05', 'Hết HK2 → báo cáo kỳ', 'orange'],
-    [760, '31/05', 'Hết hạn gói năm học', 'warn'],
+    [760, '31/05', 'Gói năm: 12 tháng từ ngày mua', 'warn'],
     [900, '01/07', 'Báo trước 30 ngày, tải bản lưu', 'warn'],
     [1040, '31/07', 'Dọn dữ liệu lớp', 'bad'],
   ];
@@ -860,7 +862,7 @@ function diagram(id) {
 const $ = (id) => document.getElementById(id);
 const vnd = (n) => Math.round(n).toLocaleString('vi-VN') + 'đ';
 const short = (n) => (Math.abs(n) >= 1e6 ? (n / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' tr' : Math.round(n / 1000).toLocaleString('vi-VN') + 'k');
-const PRICE = { plusMonth: 29000, plusYear: 199000 / 9, proMonth: 49000, proYear: 399000 / 9 };
+const PRICE = { plusMonth: 39000, plusYear: 269000 / 12, proMonth: 49000, proYear: 399000 / 12 };
 /* Đơn giá (cập nhật 21/10/2026):
    - AI ~30đ/báo cáo. Bé Plus: ~5,5 báo cáo/tháng (4,3 tuần + 1 tháng + kỳ) ≈ 165đ. Lớp ~30 HS, 4 môn: 5 báo cáo × 5,5 ≈ 825đ.
    - Bấm "Cập nhật báo cáo": ~1 lần/bé Plus/tháng (2 báo cáo) ≈ 60đ; ~2 lần/lớp/tháng (10 báo cáo/lần) ≈ 600đ.
