@@ -433,26 +433,28 @@ CLAUDE.md    quy ước + việc còn lại</pre>
         <tr><th>Thay đổi</th><th>Ảnh hưởng</th></tr>
         <tr><td>Giá Plus: <b>39.000đ/tháng</b> (trước 29.000đ), <b>269.000đ/năm</b> (trước 199.000đ)</td><td>Doanh thu mỗi gia đình Plus tăng ~35% (gói tháng)</td></tr>
         <tr><td>Gói năm = <b>12 tháng</b> từ ngày kích hoạt (trước: năm học 9 tháng, hết 31/05)</td><td>Gói năm tính ra ~22.400đ/tháng (Plus) và ~33.250đ/tháng (Pro); gói trung tâm năm = 12 × giá tháng</td></tr>
-        <tr><td>Plus tính cho <b>tài khoản bố/mẹ</b> (mọi con), bỏ giảm 50% bé thứ 2</td><td>Doanh thu và tỉ lệ mua tính theo <b>gia đình</b> (≈ số học sinh ÷ 1,2 con); chi phí AI vẫn tính theo số bé được Plus.</td></tr>
+        <tr><td>Plus tính cho <b>tài khoản bố/mẹ</b> (mọi con), bỏ giảm 50% bé thứ 2</td><td>Doanh thu và tỉ lệ mua tính theo <b>tài khoản phụ huynh</b>; mỗi tài khoản tính 2 con (tối đa) nên chi phí AI nhân 2.</td></tr>
         <tr><td>Báo cáo AI <b>của lớp</b> (cả lớp + từng môn) — bản trước chưa tính</td><td>+~825đ / lớp / tháng (lớp ~30 HS, 4 môn: 5 báo cáo × ~5,5 kỳ/tháng × ~30đ)</td></tr>
         <tr><td>Nút "Cập nhật báo cáo" cho cô và phụ huynh Plus (≤ 3 lần/ngày)</td><td>Ước tính +60đ / bé Plus và +600đ / lớp mỗi tháng (giả định bấm 1–2 lần/tháng)</td></tr>
         <tr><td>Chuông thông báo của cô (hỏi 3 phút/lần khi đang mở web)</td><td>Thêm ~3.500 lượt gọi / cô / tháng, đọc ≤ 125 dòng/lần — vẫn trong 10 triệu request và 25 tỉ dòng đọc đã gồm</td></tr>
         <tr><td>Phụ huynh miễn phí không nhận thông báo; thông báo gửi theo lô</td><td>Không đổi chi phí (Web Push miễn phí), giảm số câu truy vấn khi gửi</td></tr>
         <tr><td>Sửa vòng lặp gọi API ở trang lớp, thêm chỉ mục, số "Chấm bài" dùng API nhẹ</td><td>Bản demo từng đọc ~109 triệu dòng/ngày chỉ với 1 người dùng; nay về mức bình thường — tránh vượt hạn mức D1 khi đông người</td></tr>
-        <tr><td>Giới hạn file: ảnh nộp bài ≤ 5MB (nén còn ~200–400KB), tối đa 5 ảnh/bài con; file cô giao ≤ 25MB/lần</td><td>Chi phí R2 giữ trong khoảng cũ (15–70k / 1.000 HS / tháng); chặn được trường hợp tải file rất lớn</td></tr>
+        <tr><td>Giới hạn file: ảnh nộp bài ≤ 5MB (nén còn ~200–400KB), tối đa 5 ảnh/bài con; file cô giao ≤ 25MB/lần</td><td>Chi phí R2 ~80.000đ / 1.000 tài khoản phụ huynh / tháng (tính 2 con mỗi tài khoản); chặn được trường hợp tải file rất lớn</td></tr>
       </table></div>
-      <p class="small muted" style="margin:10px 0 0">Kết luận: chi phí cố định vẫn là gói Cloudflare $5/tháng đến khoảng 20.000 học sinh. Ở 1.000 HS, tổng chi phí tăng ~40.000đ/tháng (chủ yếu do tính thêm báo cáo AI của lớp), doanh thu Plus tính theo gia đình nên hoà vốn cần nhiều gia đình hơn một chút.</p>
+      <p class="small muted" style="margin:10px 0 0">Kết luận: chi phí cố định vẫn là gói Cloudflare $5/tháng đến khoảng 15.000 tài khoản phụ huynh. Với 1.000 tài khoản phụ huynh và 40 giáo viên, tổng chi phí khoảng 340.000đ/tháng; chi phí tăng thêm chủ yếu do tính báo cáo AI của lớp.</p>
     </div>
 
     <div class="calc">
       <div class="card inputs">
-        <label>Số học sinh <span class="v" id="o-students"></span><input type="range" id="i-students" min="50" max="20000" step="50" value="1000"></label>
-        <label>Tỉ lệ gia đình mua Plus <span class="v" id="o-plus"></span><input type="range" id="i-plus" min="0" max="60" step="1" value="5">
-          <span class="note">Plus mua cho tài khoản bố/mẹ (mọi con đều có). Số gia đình ≈ số học sinh ÷ 1,2 con</span></label>
+        <label>Số tài khoản phụ huynh <span class="v" id="o-parents"></span><input type="range" id="i-parents" min="50" max="20000" step="50" value="1000"></label>
+        <label>Tỉ lệ phụ huynh mua Plus <span class="v" id="o-plus"></span><input type="range" id="i-plus" min="0" max="60" step="1" value="5">
+          <span class="note">Plus mua cho tài khoản phụ huynh; tính mỗi tài khoản 2 con (tối đa), cả 2 đều có Plus</span></label>
+        <label>Số tài khoản giáo viên <span class="v" id="o-teachers"></span><input type="range" id="i-teachers" min="1" max="1000" step="1" value="40"></label>
         <label>Tỉ lệ chọn gói năm <span class="v" id="o-yearly"></span><input type="range" id="i-yearly" min="0" max="100" step="5" value="60">
           <span class="note">Gói năm 269.000đ/12 tháng ≈ 22.400đ/tháng, rẻ hơn gói tháng 39.000đ</span></label>
-        <label>Số giáo viên Pro <span class="v" id="o-pro"></span><input type="range" id="i-pro" min="0" max="500" step="1" value="5"></label>
-        <label>Phụ huynh nhận ZNS mỗi gia đình Plus <span class="v" id="o-zns"></span><input type="range" id="i-zns" min="0" max="2" step="1" value="1">
+        <label>Số giáo viên mua Pro <span class="v" id="o-pro"></span><input type="range" id="i-pro" min="0" max="500" step="1" value="5">
+          <span class="note">Không vượt quá số tài khoản giáo viên</span></label>
+        <label>Số người nhận ZNS mỗi tài khoản Plus <span class="v" id="o-zns"></span><input type="range" id="i-zns" min="0" max="2" step="1" value="1">
           <span class="note">~1.300đ/phụ huynh/tháng (tin vắng không phép, quên nộp bài, báo cáo tuần)</span></label>
         <label>Tỉ giá USD <input type="number" id="i-fx" min="20000" max="30000" step="100" value="26000"></label>
       </div>
@@ -471,7 +473,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     </div>
 
     <div class="card mt">
-      <h3>Các kịch bản (5% gia đình mua Plus, 60% chọn gói năm, 1 phụ huynh nhận ZNS mỗi gia đình)</h3>
+      <h3>Các kịch bản (5% phụ huynh mua Plus, 1 giáo viên / 25 phụ huynh, 10% giáo viên mua Pro, 60% chọn gói năm)</h3>
       <div class="tbl"><table id="scenarios"></table></div>
     </div>
 
@@ -488,14 +490,14 @@ CLAUDE.md    quy ước + việc còn lại</pre>
           <tr><td>Workers AI</td><td>10.000 neuron / ngày</td><td>$0,011 / 1.000 neuron</td></tr>
           <tr><td>Cron Triggers</td><td>Đã gồm</td><td>—</td></tr>
         </table></div>
-        <p class="small muted" style="margin:10px 0 0">Giá tham khảo theo trang giá Cloudflare, có thể thay đổi. 1.000 học sinh dùng thường xuyên vẫn nằm trong hạn mức đã gồm.</p>
+        <p class="small muted" style="margin:10px 0 0">Giá tham khảo theo trang giá Cloudflare, có thể thay đổi. 1.000 tài khoản phụ huynh và 40 giáo viên dùng thường xuyên vẫn nằm trong hạn mức đã gồm.</p>
       </div>
       <div class="card">
         <h3>Chi phí ngoài Cloudflare</h3>
         <div class="tbl"><table>
           <tr><th>Khoản</th><th>Đơn giá ước tính</th><th>Ghi chú</th></tr>
           <tr><td>Tên miền</td><td>~25.000đ / tháng</td><td>Trả theo năm</td></tr>
-          <tr><td>OTP (ZNS mẫu OTP, dự phòng SMS)</td><td>~30.000–40.000đ / 1.000 HS / tháng</td><td>Chỉ khi kích hoạt và quên mật khẩu; đăng nhập thường dùng mật khẩu</td></tr>
+          <tr><td>OTP (ZNS mẫu OTP, dự phòng SMS)</td><td>~35.000đ / 1.000 tài khoản phụ huynh / tháng</td><td>Chỉ khi kích hoạt và quên mật khẩu; đăng nhập thường dùng mật khẩu</td></tr>
           <tr><td>Zalo ZNS cho Plus</td><td>~1.300đ / phụ huynh Plus / tháng</td><td>Chỉ gửi cho gia đình có Plus</td></tr>
           <tr><td>Cổng thanh toán VietQR + SePay</td><td>~0đ / giao dịch</td><td>Sau này: payOS rất thấp; ZaloPay/MoMo ~1–2,5%</td></tr>
           <tr><td>Thuế hộ kinh doanh dịch vụ</td><td>~7% doanh thu</td><td>Hỏi lại kế toán</td></tr>
@@ -872,86 +874,92 @@ const $ = (id) => document.getElementById(id);
 const vnd = (n) => Math.round(n).toLocaleString('vi-VN') + 'đ';
 const short = (n) => (Math.abs(n) >= 1e6 ? (n / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' tr' : Math.round(n / 1000).toLocaleString('vi-VN') + 'k');
 const PRICE = { plusMonth: 39000, plusYear: 269000 / 12, proMonth: 49000, proYear: 399000 / 12 };
-/* Đơn giá (cập nhật 21/10/2026):
-   - AI ~30đ/báo cáo. Bé Plus: ~5,5 báo cáo/tháng (4,3 tuần + 1 tháng + kỳ) ≈ 165đ. Lớp ~30 HS, 4 môn: 5 báo cáo × 5,5 ≈ 825đ.
-   - Bấm "Cập nhật báo cáo": ~1 lần/bé Plus/tháng (2 báo cáo) ≈ 60đ; ~2 lần/lớp/tháng (10 báo cáo/lần) ≈ 600đ.
-   - Workers: ~350 request/HS/tháng (kể cả chuông của cô); gói $5 đã gồm 10 triệu, vượt $0,30/triệu.
-   - Plus mua theo tài khoản bố/mẹ: ~1,2 con/gia đình. */
-const UNIT = { aiPerPlus: 165, aiPerClass: 825, manualPerPlus: 60, manualPerClass: 600, studentsPerClass: 30, kidsPerFamily: 1.2, reqPerStudent: 350, reqIncluded: 10e6, reqPerMillionUsd: 0.3, r2PerStudent: 40, otpPerStudent: 35, domain: 25000, znsPerParent: 1300, tax: 0.07 };
+/* Đơn giá (cập nhật 21/10/2026). Đơn vị đầu vào: TÀI KHOẢN (phụ huynh, giáo viên).
+   - Mỗi tài khoản phụ huynh (một SĐT) tính 2 con — mức tối đa, để chi phí không bị ước thấp. Mỗi giáo viên ~1,3 lớp.
+   - AI ~30đ/báo cáo. Một con có Plus: ~5,5 báo cáo/tháng ≈ 165đ. Một lớp (cả lớp + 4 môn): 5 báo cáo × 5,5 ≈ 825đ.
+   - Bấm "Cập nhật báo cáo": ~60đ / con có Plus, ~600đ / lớp mỗi tháng.
+   - Workers: ~420 request / tài khoản phụ huynh, ~5.500 / giáo viên (kể cả chuông) mỗi tháng; gói $5 gồm 10 triệu, vượt $0,30/triệu.
+   - R2 ảnh bài làm ~40đ / con → ~80đ; OTP ~35đ / tài khoản phụ huynh / tháng. */
+const UNIT = { aiPerKid: 165, aiPerClass: 825, manualPerKid: 60, manualPerClass: 600, kidsPerParent: 2, classesPerTeacher: 1.3, reqPerParent: 420, reqPerTeacher: 5500, reqIncluded: 10e6, reqPerMillionUsd: 0.3, r2PerParent: 80, otpPerParent: 35, domain: 25000, znsPerParent: 1300, tax: 0.07 };
 
-function model({ students, plusRate, yearly, pro, znsPerKid, fx }) {
-  // Plus mua theo tài khoản bố/mẹ: tỉ lệ tính trên số GIA ĐÌNH; mỗi gia đình ~1,2 con đều có Plus (chi phí AI tính theo bé).
-  const families = Math.round((students / UNIT.kidsPerFamily) * plusRate);
-  const plus = Math.round(families * UNIT.kidsPerFamily);
-  const classes = Math.ceil(students / UNIT.studentsPerClass);
+function model({ parents, plusRate, teachers, yearly, pro, zns, fx }) {
+  const plusAcc = Math.round(parents * plusRate);
+  const plusKids = plusAcc * UNIT.kidsPerParent;
+  const classes = Math.ceil(teachers * UNIT.classesPerTeacher);
+  const proAcc = Math.min(pro, teachers);
   const plusPrice = PRICE.plusMonth * (1 - yearly) + PRICE.plusYear * yearly;
   const proPrice = PRICE.proMonth * (1 - yearly) + PRICE.proYear * yearly;
-  const requests = students * UNIT.reqPerStudent;
-  const reqOver = Math.max(0, requests - UNIT.reqIncluded) / 1e6 * UNIT.reqPerMillionUsd * fx;
+  const requests = parents * UNIT.reqPerParent + teachers * UNIT.reqPerTeacher;
+  const reqOver = (Math.max(0, requests - UNIT.reqIncluded) / 1e6) * UNIT.reqPerMillionUsd * fx;
   const costs = [
     ['Cloudflare Workers Paid', 5 * fx, '#f38020', 'gồm D1, R2 10GB, Queues, Cron, 10 triệu request'],
-    ['Workers request vượt hạn mức', reqOver, '#c2410c', `~${(requests / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 })} triệu request/tháng (kể cả chuông của cô)`],
-    ['Workers AI — báo cáo của bé', plus * UNIT.aiPerPlus, '#6b5bd6', '≈165đ/bé Plus/tháng (tự động thứ Sáu hằng tuần)'],
-    ['Workers AI — báo cáo của lớp', classes * UNIT.aiPerClass, '#8b7cf0', `${classes} lớp × ≈825đ (cả lớp + từng môn)`],
-    ['Workers AI — bấm "Cập nhật báo cáo"', plus * UNIT.manualPerPlus + classes * UNIT.manualPerClass, '#b4a9f7', 'ước tính 1–2 lần/tháng, tối đa 3 lần/ngày'],
-    ['R2 ảnh bài làm', students * UNIT.r2PerStudent, '#16a3a3', '15–70k / 1.000 HS, lấy giữa'],
-    ['OTP kích hoạt + quên mật khẩu', students * UNIT.otpPerStudent, '#3474e0', '30–40k / 1.000 HS'],
-    ['Zalo ZNS cho Plus', families * znsPerKid * UNIT.znsPerParent, '#fbb22e', '1.300đ / phụ huynh của gia đình Plus'],
+    ['Workers request vượt hạn mức', reqOver, '#c2410c', `~${(requests / 1e6).toLocaleString('vi-VN', { maximumFractionDigits: 1 })} triệu request/tháng (kể cả chuông của giáo viên)`],
+    ['Workers AI — báo cáo cho phụ huynh Plus', plusKids * UNIT.aiPerKid, '#6b5bd6', '2 con × ≈165đ = ≈330đ / tài khoản Plus / tháng (tự động thứ Sáu hằng tuần)'],
+    ['Workers AI — báo cáo lớp của giáo viên', classes * UNIT.aiPerClass, '#8b7cf0', `${classes} lớp × ≈825đ (cả lớp + từng môn)`],
+    ['Workers AI — bấm "Cập nhật báo cáo"', plusKids * UNIT.manualPerKid + classes * UNIT.manualPerClass, '#b4a9f7', 'ước tính 1–2 lần/tháng, tối đa 3 lần/ngày'],
+    ['R2 ảnh bài làm', parents * UNIT.r2PerParent, '#16a3a3', '~80đ / tài khoản phụ huynh (2 con)'],
+    ['OTP kích hoạt + quên mật khẩu', parents * UNIT.otpPerParent, '#3474e0', '~35đ / tài khoản phụ huynh'],
+    ['Zalo ZNS cho Plus', plusAcc * zns * UNIT.znsPerParent, '#fbb22e', '1.300đ / người nhận / tháng'],
     ['Tên miền', UNIT.domain, '#9aa3b8', ''],
   ];
   const cost = costs.reduce((s, c) => s + c[1], 0);
-  const revenue = families * plusPrice + pro * proPrice;
+  const revenue = plusAcc * plusPrice + proAcc * proPrice;
   const tax = revenue * UNIT.tax;
   const profit = revenue - tax - cost;
-  // Hoà vốn chỉ tính bằng phụ huynh Plus (không trông vào gói Pro của giáo viên), đơn vị: gia đình.
-  const fixed = 5 * fx + reqOver + UNIT.domain + students * (UNIT.r2PerStudent + UNIT.otpPerStudent) + classes * (UNIT.aiPerClass + UNIT.manualPerClass);
-  const marginPerFamily = plusPrice * (1 - UNIT.tax) - UNIT.kidsPerFamily * (UNIT.aiPerPlus + UNIT.manualPerPlus) - znsPerKid * UNIT.znsPerParent;
-  const breakEven = marginPerFamily > 0 ? Math.ceil(fixed / marginPerFamily) : Infinity;
-  return { plus, families, classes, costs, cost, revenue, tax, profit, breakEven, plusPrice, proPrice };
+  // Hoà vốn chỉ tính bằng phụ huynh Plus (không trông vào gói Pro của giáo viên), đơn vị: tài khoản phụ huynh.
+  const fixed = 5 * fx + reqOver + UNIT.domain + parents * (UNIT.r2PerParent + UNIT.otpPerParent) + classes * (UNIT.aiPerClass + UNIT.manualPerClass);
+  const marginPerAcc = plusPrice * (1 - UNIT.tax) - UNIT.kidsPerParent * (UNIT.aiPerKid + UNIT.manualPerKid) - zns * UNIT.znsPerParent;
+  const breakEven = marginPerAcc > 0 ? Math.ceil(fixed / marginPerAcc) : Infinity;
+  return { plusAcc, proAcc, classes, costs, cost, revenue, tax, profit, breakEven, plusPrice, proPrice };
 }
 
 function read() {
   return {
-    students: +$('i-students').value,
+    parents: +$('i-parents').value,
     plusRate: +$('i-plus').value / 100,
+    teachers: +$('i-teachers').value,
     yearly: +$('i-yearly').value / 100,
     pro: +$('i-pro').value,
-    znsPerKid: +$('i-zns').value,
+    zns: +$('i-zns').value,
     fx: +$('i-fx').value || 26000,
   };
 }
 
 function render() {
   const p = read();
-  $('o-students').textContent = p.students.toLocaleString('vi-VN');
+  $('o-parents').textContent = p.parents.toLocaleString('vi-VN');
   $('o-plus').textContent = Math.round(p.plusRate * 100) + '%';
+  $('o-teachers').textContent = p.teachers.toLocaleString('vi-VN');
   $('o-yearly').textContent = Math.round(p.yearly * 100) + '%';
-  $('o-pro').textContent = p.pro;
-  $('o-zns').textContent = p.znsPerKid;
+  $('o-pro').textContent = Math.min(p.pro, p.teachers);
+  $('o-zns').textContent = p.zns;
   const m = model(p);
   $('k-cost').textContent = short(m.cost);
   $('k-rev').textContent = short(m.revenue);
   $('k-profit').textContent = short(m.profit);
   $('k-profit').className = 'v ' + (m.profit >= 0 ? 'good' : 'bad');
-  $('k-be').textContent = Number.isFinite(m.breakEven) ? m.breakEven.toLocaleString('vi-VN') + ' gia đình Plus' : '—';
+  $('k-be').textContent = Number.isFinite(m.breakEven) ? m.breakEven.toLocaleString('vi-VN') + ' tài khoản Plus' : '—';
   $('cost-bars').innerHTML = m.costs.map((c) => `<span title="${c[0]}: ${vnd(c[1])}" style="width:${(c[1] / m.cost) * 100}%;background:${c[2]}"></span>`).join('');
   $('cost-legend').innerHTML = m.costs.map((c) => `<span><i style="background:${c[2]}"></i>${c[0]}</span>`).join('');
   $('cost-table').innerHTML =
     `<tr><th>Khoản chi / tháng</th><th>Cách tính</th><th class="num">Số tiền</th></tr>` +
     m.costs.map((c) => `<tr><td>${c[0]}</td><td class="muted small">${c[3]}</td><td class="num">${vnd(c[1])}</td></tr>`).join('') +
     `<tr class="total"><td>Tổng chi phí</td><td></td><td class="num">${vnd(m.cost)}</td></tr>` +
-    `<tr><td>Doanh thu Plus</td><td class="muted small">${m.families.toLocaleString('vi-VN')} gia đình (${m.plus.toLocaleString('vi-VN')} bé) × ${vnd(m.plusPrice)}</td><td class="num">${vnd(m.families * m.plusPrice)}</td></tr>` +
-    `<tr><td>Doanh thu Pro</td><td class="muted small">${p.pro} cô × ${vnd(m.proPrice)}</td><td class="num">${vnd(p.pro * m.proPrice)}</td></tr>` +
+    `<tr><td>Doanh thu Plus</td><td class="muted small">${m.plusAcc.toLocaleString('vi-VN')} tài khoản phụ huynh × ${vnd(m.plusPrice)}</td><td class="num">${vnd(m.plusAcc * m.plusPrice)}</td></tr>` +
+    `<tr><td>Doanh thu Pro</td><td class="muted small">${m.proAcc} giáo viên × ${vnd(m.proPrice)}</td><td class="num">${vnd(m.proAcc * m.proPrice)}</td></tr>` +
     `<tr><td>Thuế ~7%</td><td></td><td class="num">−${vnd(m.tax)}</td></tr>` +
     `<tr class="total"><td>Lãi / tháng</td><td></td><td class="num" style="color:${m.profit >= 0 ? 'var(--good)' : 'var(--bad)'}">${vnd(m.profit)}</td></tr>`;
 }
 
 function scenarios() {
   const fx = +$('i-fx').value || 26000;
-  const rows = [500, 1000, 5000, 20000].map((students) => ({ students, ...model({ students, plusRate: 0.05, yearly: 0.6, pro: Math.round(students / 200), znsPerKid: 1, fx }) }));
+  const rows = [500, 1000, 5000, 20000].map((parents) => {
+    const teachers = Math.round(parents / 25);
+    return { parents, teachers, ...model({ parents, plusRate: 0.05, teachers, yearly: 0.6, pro: Math.round(teachers * 0.1), zns: 1, fx }) };
+  });
   $('scenarios').innerHTML =
-    `<tr><th>Học sinh</th><th class="num">Bé Plus</th><th class="num">Gia đình Plus</th><th class="num">GV Pro</th><th class="num">Chi phí</th><th class="num">Doanh thu</th><th class="num">Lãi sau thuế</th><th class="num">Hoà vốn (chỉ Plus)</th></tr>` +
-    rows.map((r) => `<tr><td>${r.students.toLocaleString('vi-VN')}</td><td class="num">${r.plus}</td><td class="num">${r.families}</td><td class="num">${Math.round(r.students / 200)}</td><td class="num">${vnd(r.cost)}</td><td class="num">${vnd(r.revenue)}</td><td class="num">${vnd(r.profit)}</td><td class="num">${r.breakEven.toLocaleString('vi-VN')} gia đình (~${Math.round((r.breakEven / (r.students / UNIT.kidsPerFamily)) * 100)}% gia đình)</td></tr>`).join('');
+    `<tr><th>Tài khoản phụ huynh</th><th class="num">Giáo viên</th><th class="num">Phụ huynh Plus</th><th class="num">Giáo viên Pro</th><th class="num">Chi phí</th><th class="num">Doanh thu</th><th class="num">Lãi sau thuế</th><th class="num">Hoà vốn (chỉ Plus)</th></tr>` +
+    rows.map((r) => `<tr><td>${r.parents.toLocaleString('vi-VN')}</td><td class="num">${r.teachers.toLocaleString('vi-VN')}</td><td class="num">${r.plusAcc}</td><td class="num">${r.proAcc}</td><td class="num">${vnd(r.cost)}</td><td class="num">${vnd(r.revenue)}</td><td class="num">${vnd(r.profit)}</td><td class="num">${r.breakEven.toLocaleString('vi-VN')} tài khoản (~${Math.round((r.breakEven / r.parents) * 1000) / 10}%)</td></tr>`).join('');
 }
 
 document.querySelectorAll('.inputs input').forEach((i) => i.addEventListener('input', () => { render(); scenarios(); }));
