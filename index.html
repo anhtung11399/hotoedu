@@ -249,7 +249,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     <div class="eyebrow">Luồng nghiệp vụ</div>
     <h2>Từ lúc cô tạo lớp đến lúc phụ huynh thấy con</h2>
     <p class="lead">Mỗi lớp có một link + QR. Link chia sẻ công khai trong nhóm Zalo vẫn an toàn: phải có SĐT nằm trong
-      danh sách lớp và nhận được OTP về đúng số đó mới thấy được bé.</p>
+      danh sách lớp và nhận được OTP về đúng số đó mới thấy được học sinh.</p>
 
     <h3>1. Khởi tạo lớp và mời phụ huynh</h3>
     <figure class="fig">
@@ -268,7 +268,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
         <h3>Quy tắc</h3>
         <ul class="clean small">
           <li>Form chỉ có <b>SĐT + Mật khẩu + Đăng nhập</b>, dưới cùng "Bạn chưa có tài khoản? Đăng ký ngay" (dành cho giáo viên).</li>
-          <li>Mật khẩu người lớn ≥ 8 ký tự, mật khẩu của bé đúng 6 ký tự, bắt buộc có cả chữ và số (chỉ số thì dễ đoán từ SĐT bố/mẹ) → hệ thống tự biết ai đang đăng nhập.</li>
+          <li>Mật khẩu người lớn ≥ 8 ký tự, mật khẩu của học sinh đúng 6 ký tự, bắt buộc có cả chữ và số (chỉ số thì dễ đoán từ SĐT bố/mẹ) → hệ thống tự biết ai đang đăng nhập.</li>
           <li>Phụ huynh lần đầu không phải đăng ký: API trả <code>NOT_ACTIVATED</code>, giao diện tự gửi OTP rồi cho đặt mật khẩu.</li>
           <li>Số không có trong lớp nào → báo "vui lòng báo cô thêm số", <b>không gửi OTP</b> (đỡ tốn tiền, chống dò số).</li>
           <li>Phiên 90 ngày trượt, cookie httpOnly. Không bắt OTP lại vì trình duyệt Zalo hay mất phiên.</li>
@@ -277,33 +277,33 @@ CLAUDE.md    quy ước + việc còn lại</pre>
       </div>
     </div>
 
-    <h3 class="mt">3. Nối bé vào tài khoản phụ huynh</h3>
+    <h3 class="mt">3. Nối học sinh vào tài khoản phụ huynh</h3>
     <div class="grid g2">
       <div class="card">
-        <p class="small muted" style="margin-top:0">Bài, điểm, điểm danh gắn với <b>chỗ trong lớp</b> (<code>roster_entry</code>), bé (<code>child</code>) được nối vào chỗ đó.
-          Nhờ vậy cô làm việc được ngay sau khi tải danh sách, và gộp/tách bé chỉ là sửa một cột.
+        <p class="small muted" style="margin-top:0">Bài, điểm, điểm danh gắn với <b>chỗ trong lớp</b> (<code>roster_entry</code>), học sinh (<code>child</code>) được nối vào chỗ đó.
+          Nhờ vậy cô làm việc được ngay sau khi tải danh sách, và gộp/tách học sinh chỉ là sửa một cột.
           Chạy khi phụ huynh kích hoạt, mỗi lần đăng nhập và khi mở link lớp mới.</p>
         <div class="tbl"><table>
-          <tr><th>Dòng danh sách</th><th>So với bé đã có</th><th>Kết quả</th></tr>
-          <tr><td>Đã có bé</td><td>Bé chưa đủ 2 phụ huynh</td><td>Thêm làm phụ huynh thứ hai</td></tr>
-          <tr><td>Chưa có bé</td><td>Trùng ngày sinh, tên gần giống (≥ 0,85)</td><td>Hỏi xác nhận "có phải là một bé?"</td></tr>
-          <tr><td>Chưa có bé</td><td>Trùng ngày sinh, tên khác hẳn</td><td>Hỏi xác nhận (có thể sinh đôi)</td></tr>
-          <tr><td>Chưa có bé</td><td>Một bên thiếu ngày sinh, tên gần giống</td><td>Hỏi xác nhận</td></tr>
-          <tr><td>Chưa có bé</td><td>Khác ngày sinh</td><td>Tạo bé mới (anh chị em)</td></tr>
-          <tr><td>Chưa có bé</td><td>Phụ huynh chưa có bé nào</td><td>Tạo bé mới, nối luôn</td></tr>
+          <tr><th>Dòng danh sách</th><th>So với học sinh đã có</th><th>Kết quả</th></tr>
+          <tr><td>Đã có học sinh</td><td>Học sinh chưa đủ 2 phụ huynh</td><td>Thêm làm phụ huynh thứ hai</td></tr>
+          <tr><td>Chưa có học sinh</td><td>Trùng ngày sinh, tên gần giống (≥ 0,85)</td><td>Hỏi xác nhận "có phải là một học sinh?"</td></tr>
+          <tr><td>Chưa có học sinh</td><td>Trùng ngày sinh, tên khác hẳn</td><td>Hỏi xác nhận (có thể sinh đôi)</td></tr>
+          <tr><td>Chưa có học sinh</td><td>Một bên thiếu ngày sinh, tên gần giống</td><td>Hỏi xác nhận</td></tr>
+          <tr><td>Chưa có học sinh</td><td>Khác ngày sinh</td><td>Tạo học sinh mới (anh chị em)</td></tr>
+          <tr><td>Chưa có học sinh</td><td>Phụ huynh chưa có học sinh nào</td><td>Tạo học sinh mới, nối luôn</td></tr>
         </table></div>
       </div>
       <div class="card">
         <h3>Độ giống tên</h3>
         <p class="small muted">Jaro-Winkler trên tên đã bỏ dấu, chữ thường. Cùng tên gọi (từ cuối) được cộng điểm;
-          <b>khác tên gọi thì nhân thêm độ giống của tên gọi</b> để "Nguyễn Văn An" và "Nguyễn Văn Bình" (anh em chung họ, tên đệm) không bị coi là một bé.</p>
+          <b>khác tên gọi thì nhân thêm độ giống của tên gọi</b> để "Nguyễn Văn An" và "Nguyễn Văn Bình" (anh em chung họ, tên đệm) không bị coi là một học sinh.</p>
         <div class="tbl"><table>
           <tr><th>Tên A</th><th>Tên B</th><th class="num">Kết luận</th></tr>
-          <tr><td>Nguyen Van An</td><td>Nguyễn Văn An</td><td class="num"><span class="pill p-good">một bé</span></td></tr>
+          <tr><td>Nguyen Van An</td><td>Nguyễn Văn An</td><td class="num"><span class="pill p-good">một học sinh</span></td></tr>
           <tr><td>Trần Thị Minh Anh</td><td>Tran Minh Anh</td><td class="num"><span class="pill p-warn">hỏi xác nhận</span></td></tr>
-          <tr><td>Nguyễn Văn An</td><td>Nguyễn Văn Bình</td><td class="num"><span class="pill p-mute">khác bé</span></td></tr>
+          <tr><td>Nguyễn Văn An</td><td>Nguyễn Văn Bình</td><td class="num"><span class="pill p-mute">khác học sinh</span></td></tr>
         </table></div>
-        <p class="small muted">Tối đa 2 phụ huynh mỗi bé. Phụ huynh không tự gỡ được nhau (tránh tranh chấp gia đình): cô của lớp hoặc quản trị gỡ, ghi nhật ký.</p>
+        <p class="small muted">Tối đa 2 phụ huynh mỗi học sinh. Phụ huynh không tự gỡ được nhau (tránh tranh chấp gia đình): cô của lớp hoặc quản trị gỡ, ghi nhật ký.</p>
       </div>
     </div>
 
@@ -311,7 +311,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     <figure class="fig">
       <div class="hint">← Vuốt ngang để xem hết sơ đồ →</div>
       <div class="fig-scroll"><svg id="d-homework" viewBox="0 0 1120 470" role="img" aria-label="Vòng bài tập"></svg></div>
-      <figcaption>Bé không có tài khoản học sinh thì cô cập nhật tay: tích bé đã nộp (hoặc Muộn / Không nộp / Miễn) rồi lưu một lần — không tích sẵn. Bé nộp qua web được tích sẵn và khoá. Ở màn Chấm bài, cô tích từng bài con đã nộp; phụ huynh thấy "Đã làm a/N bài".</figcaption>
+      <figcaption>Học sinh không có tài khoản học sinh thì cô cập nhật tay: tích học sinh đã nộp (hoặc Muộn / Không nộp / Miễn) rồi lưu một lần — không tích sẵn. Học sinh nộp qua web được tích sẵn và khoá. Ở màn Chấm bài, cô tích từng bài con đã nộp; phụ huynh thấy "Đã làm a/N bài".</figcaption>
     </figure>
     <div class="card mt">
       <h3>Trạng thái nộp bài (tính ra, không lưu)</h3>
@@ -319,8 +319,8 @@ CLAUDE.md    quy ước + việc còn lại</pre>
         <tr><th>Điều kiện</th><th>Hiển thị</th></tr>
         <tr><td>Có bản ghi nộp bài đúng hạn / muộn / không nộp / được miễn</td><td><span class="pill p-good">Đã nộp</span> <span class="pill p-warn">Nộp muộn</span> <span class="pill" style="background:var(--bad-soft);color:var(--bad)">Chưa nộp</span> <span class="pill p-mute">Được miễn</span></td></tr>
         <tr><td>Chưa có bản ghi, chưa tới hạn / hạn hôm nay</td><td><span class="pill p-warn">Chưa đến hạn</span> <span class="pill p-warn">Hạn hôm nay</span></td></tr>
-        <tr><td>Quá hạn, bé có tài khoản (nộp online được)</td><td><span class="pill" style="background:var(--bad-soft);color:var(--bad)">Chưa nộp</span></td></tr>
-        <tr><td>Quá hạn, bé không có tài khoản</td><td><span class="pill p-mute">Cô chưa cập nhật</span></td></tr>
+        <tr><td>Quá hạn, học sinh có tài khoản (nộp online được)</td><td><span class="pill" style="background:var(--bad-soft);color:var(--bad)">Chưa nộp</span></td></tr>
+        <tr><td>Quá hạn, học sinh không có tài khoản</td><td><span class="pill p-mute">Cô chưa cập nhật</span></td></tr>
         <tr><td>Đã nộp, bài có chấm, chưa có điểm</td><td>thêm nhãn <span class="pill p-info">Chờ chấm</span></td></tr>
       </table></div>
     </div>
@@ -343,14 +343,14 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     <figure class="fig">
       <div class="hint">← Vuốt ngang để xem hết sơ đồ →</div>
       <div class="fig-scroll"><svg id="d-ai" viewBox="0 0 1120 330" role="img" aria-label="Luồng báo cáo AI"></svg></div>
-      <figcaption>Tự động 1 lần/tuần: thứ Sáu 19:00 (tuần vừa có tháng / học kỳ kết thúc thì tạo thêm báo cáo tháng / kỳ). Cô và phụ huynh Plus bấm "Cập nhật báo cáo" tối đa 3 lần/ngày. Chỉ gửi tên gọi của bé ("An") cho AI, không gửi họ tên, SĐT, trường.</figcaption>
+      <figcaption>Tự động 1 lần/tuần: thứ Sáu 19:00 (tuần vừa có tháng / học kỳ kết thúc thì tạo thêm báo cáo tháng / kỳ). Cô và phụ huynh Plus bấm "Cập nhật báo cáo" tối đa 3 lần/ngày. Chỉ gửi tên gọi của học sinh ("An") cho AI, không gửi họ tên, SĐT, trường.</figcaption>
     </figure>
 
     <h3 class="mt">8. Vòng đời dữ liệu một năm học</h3>
     <figure class="fig">
       <div class="hint">← Vuốt ngang để xem hết sơ đồ →</div>
       <div class="fig-scroll"><svg id="d-year" viewBox="0 0 1120 210" role="img" aria-label="Vòng đời năm học"></svg></div>
-      <figcaption>Xoá theo lớp (danh sách, bài, nộp bài, điểm danh, báo cáo lớp, file R2). Giữ tài khoản, hồ sơ bé, phụ huynh, gói còn hạn. Năm sau cô tải danh sách mới, phụ huynh đăng nhập là thấy ngay.</figcaption>
+      <figcaption>Xoá theo lớp (danh sách, bài, nộp bài, điểm danh, báo cáo lớp, file R2). Giữ tài khoản, hồ sơ học sinh, phụ huynh, gói còn hạn. Năm sau cô tải danh sách mới, phụ huynh đăng nhập là thấy ngay.</figcaption>
     </figure>
   </section>
 
@@ -373,10 +373,10 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     <h2>Ai thấy gì</h2>
     <div class="card">
       <div class="tbl"><table>
-        <tr><th>Dữ liệu</th><th>Cô của lớp</th><th>Cô lớp khác</th><th>Phụ huynh của bé</th><th>Phụ huynh bé khác</th><th>Bé</th></tr>
-        <tr><td>Danh sách, bài tập của lớp</td><td class="yes">✓</td><td class="no">✕</td><td class="yes">✓</td><td class="no">✕</td><td class="yes">✓ bài của bé</td></tr>
-        <tr><td>Trạng thái nộp bài của bé</td><td class="yes">✓</td><td class="no">✕</td><td class="yes">✓ (miễn phí)</td><td class="no">✕</td><td class="yes">✓</td></tr>
-        <tr><td>Điểm, nhận xét của bé</td><td class="yes">✓</td><td class="no">✕</td><td class="yes">✓ Plus</td><td class="no">✕ không bao giờ</td><td class="yes">✓</td></tr>
+        <tr><th>Dữ liệu</th><th>Cô của lớp</th><th>Cô lớp khác</th><th>Phụ huynh của học sinh</th><th>Phụ huynh học sinh khác</th><th>Học sinh</th></tr>
+        <tr><td>Danh sách, bài tập của lớp</td><td class="yes">✓</td><td class="no">✕</td><td class="yes">✓</td><td class="no">✕</td><td class="yes">✓ bài của học sinh</td></tr>
+        <tr><td>Trạng thái nộp bài của học sinh</td><td class="yes">✓</td><td class="no">✕</td><td class="yes">✓ (miễn phí)</td><td class="no">✕</td><td class="yes">✓</td></tr>
+        <tr><td>Điểm, nhận xét của học sinh</td><td class="yes">✓</td><td class="no">✕</td><td class="yes">✓ Plus</td><td class="no">✕ không bao giờ</td><td class="yes">✓</td></tr>
         <tr><td>Biểu đồ, báo cáo AI</td><td class="yes">✓</td><td class="no">✕</td><td class="yes">✓ Plus</td><td class="no">✕</td><td class="no">✕</td></tr>
         <tr><td>Tên bạn cùng lớp trên sơ đồ</td><td class="yes">✓</td><td class="no">✕</td><td class="yes">✓ Plus</td><td>—</td><td class="no">✕</td></tr>
         <tr><td>Lý do nghỉ của bạn khác</td><td class="yes">✓ chi tiết</td><td class="no">✕</td><td>chỉ loại lý do</td><td>—</td><td class="no">✕</td></tr>
@@ -386,9 +386,9 @@ CLAUDE.md    quy ước + việc còn lại</pre>
       <div class="card small"><b>Xác thực</b><ul class="clean muted">
         <li>Mật khẩu PBKDF2-SHA256 100.000 vòng, salt 16 byte</li><li>Cookie phiên httpOnly, Secure, SameSite=Lax; DB chỉ lưu SHA-256 của token</li><li>OTP lưu hash, token xác minh ký HMAC, dùng một lần</li></ul></div>
       <div class="card small"><b>Phân quyền ở server</b><ul class="clean muted">
-        <li>Mọi truy vấn của cô lọc theo <code>teacher_id = me</code>; của phụ huynh theo bảng phụ huynh–bé</li><li>Gói miễn phí: API không trả điểm/nhận xét/ảnh (không chỉ ẩn ở giao diện)</li><li>Kiểm tra Origin trên mọi request ghi (chống CSRF)</li><li>Mỗi quy tắc quyền có test tự động</li></ul></div>
+        <li>Mọi truy vấn của cô lọc theo <code>teacher_id = me</code>; của phụ huynh theo bảng phụ huynh–học sinh</li><li>Gói miễn phí: API không trả điểm/nhận xét/ảnh (không chỉ ẩn ở giao diện)</li><li>Kiểm tra Origin trên mọi request ghi (chống CSRF)</li><li>Mỗi quy tắc quyền có test tự động</li></ul></div>
       <div class="card small"><b>Nghị định 13/2023</b><ul class="clean muted">
-        <li>Phụ huynh tích đồng ý điều khoản khi kích hoạt, ghi lại thời điểm</li><li>Có trang chính sách, nút "Xoá hồ sơ bé"</li><li>File R2 chỉ đọc qua API sau khi kiểm tra quyền</li><li>Dữ liệu lớp tự xoá sau năm học</li></ul></div>
+        <li>Phụ huynh tích đồng ý điều khoản khi kích hoạt, ghi lại thời điểm</li><li>Có trang chính sách, nút "Xoá hồ sơ học sinh"</li><li>File R2 chỉ đọc qua API sau khi kiểm tra quyền</li><li>Dữ liệu lớp tự xoá sau năm học</li></ul></div>
     </div>
   </section>
 
@@ -401,7 +401,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
       <div class="card plan"><h3>Giáo viên miễn phí</h3><div class="price">0đ</div><p class="small muted"><b>1 lớp</b> đang hoạt động, đầy đủ chức năng kể cả báo cáo AI của lớp. Lớp thứ 2 trở đi chưa kích hoạt (chỉ xem).</p></div>
       <div class="card plan"><h3>Giáo viên Pro</h3><div class="price">49.000đ <small>/tháng</small></div><p class="small muted">hoặc <b>399.000đ/năm</b> (12 tháng). Không giới hạn số lớp.</p></div>
       <div class="card plan g"><h3>Phụ huynh miễn phí</h3><div class="price">0đ</div><p class="small muted">Danh sách bài + trạng thái nộp ("đã làm a/N bài"), tổng hợp hôm nay/tuần/tháng. <b>Không nhận thông báo.</b></p></div>
-      <div class="card plan y"><h3>Phụ huynh Plus</h3><div class="price">39.000đ <small>/tháng</small></div><p class="small muted">hoặc <b>269.000đ/năm</b> (12 tháng), tính cho <b>tài khoản bố/mẹ</b>: mọi con đều có Plus, ở mọi lớp; bố/mẹ còn lại của bé cũng xem được.</p></div>
+      <div class="card plan y"><h3>Phụ huynh Plus</h3><div class="price">39.000đ <small>/tháng</small></div><p class="small muted">hoặc <b>269.000đ/năm</b> (12 tháng), tính cho <b>tài khoản bố/mẹ</b>: mọi con đều có Plus, ở mọi lớp; bố/mẹ còn lại của học sinh cũng xem được.</p></div>
     </div>
     <div class="card mt">
       <div class="tbl"><table>
@@ -433,9 +433,9 @@ CLAUDE.md    quy ước + việc còn lại</pre>
         <tr><th>Thay đổi</th><th>Ảnh hưởng</th></tr>
         <tr><td>Giá Plus: <b>39.000đ/tháng</b> (trước 29.000đ), <b>269.000đ/năm</b> (trước 199.000đ)</td><td>Doanh thu mỗi gia đình Plus tăng ~35% (gói tháng)</td></tr>
         <tr><td>Gói năm = <b>12 tháng</b> từ ngày kích hoạt (trước: năm học 9 tháng, hết 31/05)</td><td>Gói năm tính ra ~22.400đ/tháng (Plus) và ~33.250đ/tháng (Pro); gói trung tâm năm = 12 × giá tháng</td></tr>
-        <tr><td>Plus tính cho <b>tài khoản bố/mẹ</b> (mọi con), bỏ giảm 50% bé thứ 2</td><td>Doanh thu và tỉ lệ mua tính theo <b>tài khoản phụ huynh</b>; mỗi tài khoản tính 2 con (tối đa) nên chi phí AI nhân 2.</td></tr>
+        <tr><td>Plus tính cho <b>tài khoản phụ huynh</b> (mọi con), không giảm giá theo số con</td><td>Doanh thu và tỉ lệ mua tính theo <b>tài khoản phụ huynh</b>; mỗi tài khoản tính 2 con (tối đa) nên chi phí AI nhân 2.</td></tr>
         <tr><td>Báo cáo AI <b>của lớp</b> (cả lớp + từng môn) — bản trước chưa tính</td><td>+~825đ / lớp / tháng (lớp ~30 HS, 4 môn: 5 báo cáo × ~5,5 kỳ/tháng × ~30đ)</td></tr>
-        <tr><td>Nút "Cập nhật báo cáo" cho cô và phụ huynh Plus (≤ 3 lần/ngày)</td><td>Ước tính +60đ / bé Plus và +600đ / lớp mỗi tháng (giả định bấm 1–2 lần/tháng)</td></tr>
+        <tr><td>Nút "Cập nhật báo cáo" cho cô và phụ huynh Plus (≤ 3 lần/ngày)</td><td>Ước tính +60đ / học sinh Plus và +600đ / lớp mỗi tháng (giả định bấm 1–2 lần/tháng)</td></tr>
         <tr><td>Chuông thông báo của cô (hỏi 3 phút/lần khi đang mở web)</td><td>Thêm ~3.500 lượt gọi / cô / tháng, đọc ≤ 125 dòng/lần — vẫn trong 10 triệu request và 25 tỉ dòng đọc đã gồm</td></tr>
         <tr><td>Phụ huynh miễn phí không nhận thông báo; thông báo gửi theo lô</td><td>Không đổi chi phí (Web Push miễn phí), giảm số câu truy vấn khi gửi</td></tr>
         <tr><td>Sửa vòng lặp gọi API ở trang lớp, thêm chỉ mục, số "Chấm bài" dùng API nhẹ</td><td>Bản demo từng đọc ~109 triệu dòng/ngày chỉ với 1 người dùng; nay về mức bình thường — tránh vượt hạn mức D1 khi đông người</td></tr>
@@ -515,15 +515,15 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     <div class="steps">
       <div class="step done"><div class="n">1</div><div><b>Nền tảng</b><span class="d">Monorepo, Worker, D1, đăng nhập (OTP, mật khẩu, học sinh mật khẩu 6 ký tự chữ + số), giao diện đăng nhập, PWA</span></div><span class="pill p-good">Xong</span></div>
       <div class="step done"><div class="n">2</div><div><b>Giáo viên</b><span class="d">Tạo lớp + khoá theo hạn mức 1 lớp, môn/chủ đề, nhập Excel, link/QR mời phụ huynh, cài đặt lớp (2 cột, tab trên điện thoại)</span></div><span class="pill p-good">Xong</span></div>
-      <div class="step done"><div class="n">3</div><div><b>Phụ huynh</b><span class="d">Nối bé + màn xác nhận, gộp/tách, phụ huynh thứ hai; tổng quan dạng thẻ khi có nhiều con</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">3</div><div><b>Phụ huynh</b><span class="d">Nối học sinh + màn xác nhận, gộp/tách, phụ huynh thứ hai; tổng quan dạng thẻ khi có nhiều con</span></div><span class="pill p-good">Xong</span></div>
       <div class="step done"><div class="n">4</div><div><b>Bài tập</b><span class="d">Giao bài theo số bài con (form trong hộp nổi), danh sách bài dạng thẻ, cập nhật nộp bài tay (không tích sẵn), phụ huynh xem "Đã làm a/N bài"</span></div><span class="pill p-good">Xong</span></div>
       <div class="step done"><div class="n">5</div><div><b>Học sinh</b><span class="d">Mật khẩu 6 ký tự chữ + số, chế độ con, tự nộp bài: chụp ảnh hoặc chọn ảnh có sẵn, tối đa 5 ảnh/bài con, mỗi file ≤ 5MB</span></div><span class="pill p-good">Xong</span></div>
-      <div class="step done"><div class="n">6</div><div><b>Chấm bài + phân tích</b><span class="d">Chấm theo bài tập lớn → từng em, tích bài con đã nộp, biểu đồ, màn lớp, chi tiết bé</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">6</div><div><b>Chấm bài + phân tích</b><span class="d">Chấm theo bài tập lớn → từng em, tích bài con đã nộp, biểu đồ, màn lớp, chi tiết học sinh</span></div><span class="pill p-good">Xong</span></div>
       <div class="step done"><div class="n">7</div><div><b>Điểm danh + sơ đồ chỗ ngồi</b><span class="d">Xin nghỉ cho con, bố trí bàn</span></div><span class="pill p-good">Xong</span></div>
       <div class="step done"><div class="n">8</div><div><b>Thanh toán + quyền lợi</b><span class="d">VietQR + SePay webhook; Plus theo tài khoản bố/mẹ; gói tháng / gói năm 12 tháng; khoá theo gói ở API</span></div><span class="pill p-good">Xong</span></div>
       <div class="step done"><div class="n">9</div><div><b>AI</b><span class="d">Báo cáo tự động thứ Sáu 19:00 hằng tuần, nút "Cập nhật báo cáo" ≤ 3 lần/ngày, kiểm tra đầu ra, văn mẫu dự phòng</span></div><span class="pill p-good">Xong</span></div>
       <div class="step done"><div class="n">10</div><div><b>Thông báo</b><span class="d">Web Push (phụ huynh Plus, cô, học sinh), chuông thông báo của cô khi học sinh nộp bài, ZNS/SMS</span></div><span class="pill p-good">Xong</span></div>
-      <div class="step done"><div class="n">11</div><div><b>Dọn năm học, xuất file, chính sách, admin</b><span class="d">Xoá dữ liệu lớp 31/07, CSV điểm, tổng kết năm in/PDF, xoá hồ sơ bé, trang quản trị</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">11</div><div><b>Dọn năm học, xuất file, chính sách, admin</b><span class="d">Xoá dữ liệu lớp 31/07, CSV điểm, tổng kết năm in/PDF, xoá hồ sơ học sinh, trang quản trị</span></div><span class="pill p-good">Xong</span></div>
       <div class="step done"><div class="n">12</div><div><b>Gói trung tâm</b><span class="d">Trung tâm trả theo số học sinh; giáo viên được Pro, lớp của trung tâm được Plus</span></div><span class="pill p-good">Xong</span></div>
     </div>
     <div class="card mt">
@@ -633,19 +633,19 @@ function diagram(id) {
   const d = diagram('d-infra');
   const pv = d.box(20, 70, 190, 70, 'Phụ huynh', 'Zalo webview / PWA', 'user');
   const gv = d.box(20, 200, 190, 70, 'Giáo viên', 'Trình duyệt / PWA', 'user');
-  const hs = d.box(20, 330, 190, 70, 'Học sinh', 'Máy của bố mẹ', 'user');
+  const hs = d.box(20, 330, 190, 70, 'Học sinh', 'SĐT bố/mẹ + mật khẩu riêng', 'user');
   d.group(270, 20, 540, 560, 'CLOUDFLARE · WORKERS PAID ($5/THÁNG)', 'cf');
   d.box(300, 60, 480, 54, 'Tên miền riêng + HTTPS + CDN', 'một domain cho cả web và API', 'worker');
   d.group(300, 140, 480, 210, 'WORKER "sbt"', 'orange');
   const st = d.box(320, 180, 210, 150, 'Static Assets', 'Angular PWA đã build\nHTML · JS · CSS · ảnh\nmiễn phí, không giới hạn', 'worker');
-  const api = d.box(550, 180, 210, 150, 'Hono API /api/*', 'auth · teacher · parent\nstudent · payments\nphân quyền · validate zod\ncookie phiên httpOnly', 'worker', { bold: true });
-  const db = d.box(300, 390, 140, 74, 'D1', 'SQLite · dữ liệu', 'data');
-  const r2 = d.box(460, 390, 140, 74, 'R2', 'ảnh bài làm, file', 'data');
+  const api = d.box(550, 180, 210, 150, 'Hono API /api/*', 'auth · teacher · parent · student\npayments · schedule · notifications\nphân quyền · validate zod\ncookie phiên httpOnly', 'worker', { bold: true });
+  const db = d.box(300, 390, 140, 74, 'D1', 'SQLite · dữ liệu\nthông báo (chuông)', 'data');
+  const r2 = d.box(460, 390, 140, 74, 'R2', 'ảnh bài làm ≤ 5MB\nfile cô giao ≤ 25MB', 'data');
   const q = d.box(620, 390, 160, 74, 'Queues', 'job báo cáo AI', 'data');
   const ai = d.box(620, 490, 160, 70, 'Workers AI', 'Gemma 3 12B', 'data');
-  const cron = d.box(300, 490, 300, 70, 'Cron Triggers', 'tuần / tháng / kỳ · hết hạn đơn · dọn năm học', 'data');
+  const cron = d.box(300, 490, 300, 70, 'Cron Triggers', 'AI thứ Sáu 19:00 · nhắc 8:00 hằng ngày\n10 phút: hết hạn đơn, dọn dữ liệu', 'data');
   const zns = d.box(870, 60, 210, 70, 'Zalo ZNS / SMS', 'OTP · tin cho phụ huynh Plus', 'ext');
-  const push = d.box(870, 170, 210, 70, 'Web Push (VAPID)', 'bài mới · chưa nộp · báo cáo', 'ext');
+  const push = d.box(870, 170, 210, 70, 'Web Push (VAPID)', 'cô · học sinh · phụ huynh Plus\n(phụ huynh miễn phí: không)', 'ext');
   const bank = d.box(870, 300, 210, 70, 'Ngân hàng · VietQR', 'phụ huynh / cô quét QR', 'ext');
   const sepay = d.box(870, 420, 210, 70, 'SePay / Casso', 'báo biến động số dư', 'ext');
   // người dùng → edge
@@ -664,6 +664,8 @@ function diagram(id) {
   d.arrow([[sepay.x, sepay.cy], [800, sepay.cy], [800, 300], [api.r, 300]], 'webhook', { color: '#6b5bd6', at: 0, dy: -7 });
   d.arrow([[bank.cx, bank.b], [bank.cx, sepay.y]], '', { color: '#6b5bd6' });
   d.text(985, 400, 'tiền vào', 'lbl', 'start');
+  // Chuông của cô: web hỏi API 3 phút/lần khi tab đang mở (không cần dịch vụ ngoài)
+  d.text(540, 365, 'Chuông của cô: web hỏi /api 3 phút/lần khi đang mở', 'lbl');
 })();
 
 /* ---------------- 2. Khởi tạo lớp ---------------- */
@@ -677,9 +679,9 @@ function diagram(id) {
   const c = d.box(500, 35, 170, 70, 'Tải Excel danh sách', 'họ tên, ngày sinh, SĐT', 'user');
   const e = d.box(700, 35, 180, 70, 'Gửi link / QR vào Zalo', 'tin nhắn soạn sẵn', 'user');
   const q = d.box(310, 170, 160, 80, 'Kiểm hạn mức', 'lớp thứ 2+ khi chưa Pro\n→ chưa kích hoạt', 'orange');
-  const p = d.box(500, 170, 170, 80, 'Đọc + kiểm tra', 'SĐT, ngày sinh, trùng\nso khác biệt khi upload lại', 'orange');
+  const p = d.box(500, 170, 170, 80, 'Đọc + kiểm tra', 'SĐT, ngày sinh, trùng\n≤ 2 học sinh / SĐT', 'orange');
   const x = d.box(700, 170, 180, 80, 'Kiểm tra SĐT', 'có trong danh sách lớp?', 'orange');
-  const n = d.box(910, 170, 180, 80, 'Nối bé', 'tạo / nối hồ sơ bé\nhỏi xác nhận nếu nghi trùng', 'orange');
+  const n = d.box(910, 170, 180, 80, 'Nối học sinh', 'tạo / nối hồ sơ học sinh\nhỏi xác nhận nếu nghi trùng', 'orange');
   const f = d.box(700, 320, 180, 70, 'Bấm link, nhập SĐT', '+ mật khẩu → Đăng nhập', 'good');
   const g = d.box(500, 320, 170, 70, 'Lần đầu: OTP', 'đặt mật khẩu, đồng ý điều khoản', 'good');
   const h = d.box(910, 320, 180, 70, 'Thấy con ở mọi lớp', 'bài tập + trạng thái nộp', 'good', { bold: true });
@@ -702,7 +704,7 @@ function diagram(id) {
   const d = diagram('d-login');
   const s = d.box(250, 20, 260, 60, 'Nhập SĐT + mật khẩu', 'bấm Đăng nhập', 'acc');
   const k = d.diamond(380, 145, 260, 76, 'Mật khẩu 6 ký tự?');
-  const child = d.box(560, 115, 180, 60, 'Học sinh', 'tìm bé của SĐT có PIN khớp', 'teal');
+  const child = d.box(560, 115, 180, 60, 'Học sinh', 'tìm học sinh của SĐT có PIN khớp', 'teal');
   const api = d.box(250, 215, 260, 56, 'POST /auth/login', '', 'orange');
   const ok = d.box(20, 320, 200, 64, 'Vào trang vai trò', 'cô → /gv · phụ huynh → /ph', 'good', { bold: true });
   const na = d.box(270, 320, 220, 64, 'NOT_ACTIVATED', 'số có trong lớp, chưa có mật khẩu', 'warn');
@@ -719,7 +721,7 @@ function diagram(id) {
   d.arrow([[api.r - 40, api.b], [api.r - 40, 296], [nr.cx, 296], [nr.cx, nr.y]], '', {});
   d.arrow([[na.cx, na.b], [otp.cx, otp.y]]);
   d.arrow([[otp.cx, otp.b], [pw.cx, pw.y]]);
-  d.arrow([[pw.x, pw.cy], [ok.cx, pw.cy], [ok.cx, ok.b]], 'nối bé', { at: 0 });
+  d.arrow([[pw.x, pw.cy], [ok.cx, pw.cy], [ok.cx, ok.b]], 'nối học sinh', { at: 0 });
 })();
 
 /* ---------------- 4. Bài tập ---------------- */
@@ -730,7 +732,7 @@ function diagram(id) {
   d.lane(240, 105, 'Học sinh', 1100, 'teal');
   d.lane(355, 105, 'Phụ huynh', 1100, 'good');
   const g = d.box(130, 30, 170, 66, 'Giao bài', 'môn + chủ đề bắt buộc\nhạn: ngày học tiếp theo', 'user');
-  const u = d.box(560, 30, 190, 66, 'Cập nhật nộp bài', 'tích bé đã nộp\n(không tích sẵn) → lưu', 'user');
+  const u = d.box(560, 30, 190, 66, 'Cập nhật nộp bài', 'tích học sinh đã nộp\n(không tích sẵn) → lưu', 'user');
   const c = d.box(800, 30, 160, 66, 'Chấm bài', 'điểm 0–10, nhận xét', 'user');
   const p = d.box(320, 145, 180, 66, 'Push "bài mới"', 'phụ huynh + học sinh', 'orange');
   const st = d.box(560, 145, 190, 66, 'computeStatus()', 'đã nộp / muộn / chưa nộp\ncô chưa cập nhật', 'orange');
@@ -770,9 +772,9 @@ function diagram(id) {
     d.box(xs[i] - w / 2, y - 16, w, 32, label, '', kind, { rx: 8 });
     y += 42;
   };
-  msg(0, 1, 'chọn gói + kỳ hạn + bé');
+  msg(0, 1, 'chọn gói + kỳ hạn (1 tháng / 12 tháng)');
   msg(1, 2, 'POST /payments');
-  note(2, 300, 'tính giá ở server (bé thứ 2 −50%)', 'orange');
+  note(2, 330, 'tính giá ở server (Plus: 1 gói cho tài khoản)', 'orange');
   msg(2, 3, 'payments: pending, mã SBTxxxxxx, 30 phút', { color: '#16a3a3' });
   msg(2, 1, 'QR VietQR (số TK, số tiền, nội dung = mã đơn)', { dash: true });
   msg(0, 4, 'quét QR, chuyển khoản');
@@ -782,14 +784,14 @@ function diagram(id) {
   msg(2, 3, 'db.batch: payment = paid + tạo/gia hạn gói', { color: '#16a3a3' });
   msg(2, 5, '200 OK ngay (push gửi sau)', { dash: true, color: '#6b5bd6' });
   msg(1, 2, 'hỏi trạng thái mỗi 3 giây', { gap: 34 });
-  msg(2, 1, '"Đã kích hoạt Plus cho bé An đến 31/05/2027"', { dash: true });
+  msg(2, 1, '"Đã kích hoạt gói Plus đến 21/10/2027" (12 tháng)', { dash: true });
 })();
 
 /* ---------------- 7. AI ---------------- */
 (() => {
   const d = diagram('d-ai');
   const c = d.box(10, 40, 130, 70, 'Cron', 'thứ Sáu 19:00\n1 lần/tuần', 'teal');
-  const q = d.box(170, 40, 130, 70, 'Queue', '1 job / bé Plus\n1 job / lớp-môn', 'teal');
+  const q = d.box(170, 40, 130, 70, 'Queue', '1 job / học sinh Plus\n1 job / lớp-môn', 'teal');
   const m = d.box(330, 40, 170, 70, 'Tính số liệu (code)', 'TB 3 tuần, delta, chủ đề\nyếu/mạnh, tỉ lệ nộp', 'orange');
   const v = d.box(530, 40, 150, 70, 'Kết luận (code)', 'tiến / lùi / ổn định\ntiến ở X, lùi ở Y', 'orange', { bold: true });
   const g = d.box(710, 40, 160, 70, 'Gemma 3 12B', 'chỉ nhận tên gọi + số\nviết tóm tắt, 2–4 gợi ý', 'purple');
@@ -839,7 +841,7 @@ function diagram(id) {
   const T = (x, y, name, cols, kind, w = 190) => d.box(x, y, w, 30 + cols.split('\n').length * 15, name, cols, kind, { rx: 10 });
   const users = T(20, 20, 'users', 'phone · password_hash\nis_teacher · display_name', 'user');
   const children = T(20, 190, 'children', 'full_name · dob\nname_confirmed · pin_hash', 'user');
-  const guardians = T(20, 360, 'guardians (≤ 2/bé)', 'child_id · user_id\nrelation · source', 'user');
+  const guardians = T(20, 360, 'guardians (≤ 2/học sinh)', 'child_id · user_id\nrelation · source', 'user');
   const classes = T(300, 20, 'classes', 'teacher_id · join_code\nstatus active/locked\nschool_year · school_days', 'orange');
   const subjects = T(560, 20, 'class_subjects', 'name · color', 'orange', 170);
   const topics = T(790, 20, 'topics', 'name (phần kiến thức)', 'orange', 170);
@@ -857,14 +859,14 @@ function diagram(id) {
   L([[classes.r, 45], [subjects.x, 45]], '');
   L([[subjects.r, 45], [topics.x, 45]], '');
   L([[classes.cx, classes.b], [roster.cx, roster.y]], '');
-  L([[roster.x, 230], [children.r, 230]], 'nối bé');
+  L([[roster.x, 230], [children.r, 230]], 'nối học sinh');
   L([[subjects.cx, subjects.b], [asg.cx, asg.y]], '');
   L([[asg.cx, asg.b], [sub.cx, sub.y]], '');
   L([[roster.r, roster.b - 12], [530, roster.b - 12], [530, sub.cy], [sub.x, sub.cy]], 'chỗ trong lớp');
   L([[roster.cx, roster.b], [abs.cx, abs.y]], '');
   L([[users.r, 70], [255, 70], [255, 150], [840, 150], [840, subs.cy], [subs.x, subs.cy]], 'Plus theo tài khoản bố/mẹ', { at: 2 });
   L([[pay.cx, pay.y], [subs.cx, subs.b]], '');
-  d.text(20, 545, 'Bài, điểm, điểm danh gắn với chỗ trong lớp (roster_entry), không gắn trực tiếp với bé → cô làm việc được ngay, gộp/tách bé chỉ sửa child_id.', 'lbl', 'start');
+  d.text(20, 545, 'Bài, điểm, điểm danh gắn với chỗ trong lớp (roster_entry), không gắn trực tiếp với học sinh → cô làm việc được ngay, gộp/tách học sinh chỉ sửa child_id.', 'lbl', 'start');
 })();
 
 /* ======================================================================
