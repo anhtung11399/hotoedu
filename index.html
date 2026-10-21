@@ -185,14 +185,14 @@ tr.total td { font-weight: 800; border-top: 2px solid var(--ink); }
       <div class="row"><span>Hạ tầng</span><b>1 Worker Cloudflare, không máy chủ riêng</b></div>
       <div class="row"><span>Chi phí nền</span><b>~130.000đ/tháng ($5)</b></div>
       <div class="row"><span>Thu tiền</span><b>Gói Pro (cô) · Plus (phụ huynh)</b></div>
-      <div class="row"><span>Tiến độ</span><b>Bước 2/12 xong</b></div>
+      <div class="row"><span>Tiến độ</span><b>12/12 bước xong · chạy thử</b></div>
     </div>
   </section>
 
   <div class="grid g3">
     <div class="card"><h3>👩‍🏫 Giáo viên</h3><p class="muted small">Tạo lớp, tải danh sách học sinh từ Excel, giao bài, cập nhật nộp bài, chấm điểm, điểm danh, xếp chỗ ngồi. <b>Chỉ giáo viên đăng ký tài khoản.</b></p></div>
     <div class="card"><h3>👨‍👩‍👧 Phụ huynh</h3><p class="muted small">Được cô thêm SĐT vào danh sách lớp. Lần đầu bấm Đăng nhập → nhận OTP → đặt mật khẩu → thấy con ở mọi lớp. Gói Plus xem điểm, biểu đồ, báo cáo AI, chỗ ngồi.</p></div>
-    <div class="card"><h3>🎒 Học sinh</h3><p class="muted small">Đăng nhập trên cùng form bằng SĐT bố/mẹ + mật khẩu 6 số. Xem bài cần làm, tự nộp bài (ảnh), xem điểm và nhận xét của cô. Miễn phí.</p></div>
+    <div class="card"><h3>🎒 Học sinh</h3><p class="muted small">Đăng nhập trên cùng form bằng SĐT bố/mẹ + mật khẩu 6 ký tự (có cả chữ và số). Xem bài cần làm, tự nộp bài (ảnh), xem điểm và nhận xét của cô. Miễn phí.</p></div>
   </div>
   <div class="callout mt"><b>Không làm:</b> nhắn tin / chat (Zalo vẫn là kênh liên lạc), AI hỏi đáp (AI chỉ viết báo cáo định kỳ), app di động riêng, tích hợp vnEdu/SMAS.</div>
 
@@ -268,7 +268,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
         <h3>Quy tắc</h3>
         <ul class="clean small">
           <li>Form chỉ có <b>SĐT + Mật khẩu + Đăng nhập</b>, dưới cùng "Bạn chưa có tài khoản? Đăng ký ngay" (dành cho giáo viên).</li>
-          <li>Mật khẩu người lớn ≥ 8 ký tự, mật khẩu của bé đúng 6 số → hệ thống tự biết ai đang đăng nhập.</li>
+          <li>Mật khẩu người lớn ≥ 8 ký tự, mật khẩu của bé đúng 6 ký tự, bắt buộc có cả chữ và số (chỉ số thì dễ đoán từ SĐT bố/mẹ) → hệ thống tự biết ai đang đăng nhập.</li>
           <li>Phụ huynh lần đầu không phải đăng ký: API trả <code>NOT_ACTIVATED</code>, giao diện tự gửi OTP rồi cho đặt mật khẩu.</li>
           <li>Số không có trong lớp nào → báo "vui lòng báo cô thêm số", <b>không gửi OTP</b> (đỡ tốn tiền, chống dò số).</li>
           <li>Phiên 90 ngày trượt, cookie httpOnly. Không bắt OTP lại vì trình duyệt Zalo hay mất phiên.</li>
@@ -311,7 +311,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     <figure class="fig">
       <div class="hint">← Vuốt ngang để xem hết sơ đồ →</div>
       <div class="fig-scroll"><svg id="d-homework" viewBox="0 0 1120 470" role="img" aria-label="Vòng bài tập"></svg></div>
-      <figcaption>Bé không có tài khoản học sinh thì cô cập nhật tay: cả lớp được tích sẵn "đã nộp", cô chỉ chạm vào bé chưa nộp rồi lưu một lần.</figcaption>
+      <figcaption>Bé không có tài khoản học sinh thì cô cập nhật tay: tích bé đã nộp (hoặc Muộn / Không nộp / Miễn) rồi lưu một lần — không tích sẵn. Bé nộp qua web được tích sẵn và khoá. Ở màn Chấm bài, cô tích từng bài con đã nộp; phụ huynh thấy "Đã làm a/N bài".</figcaption>
     </figure>
     <div class="card mt">
       <h3>Trạng thái nộp bài (tính ra, không lưu)</h3>
@@ -343,7 +343,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     <figure class="fig">
       <div class="hint">← Vuốt ngang để xem hết sơ đồ →</div>
       <div class="fig-scroll"><svg id="d-ai" viewBox="0 0 1120 330" role="img" aria-label="Luồng báo cáo AI"></svg></div>
-      <figcaption>Tuần: Chủ nhật 20:00 · Tháng: ngày 1 lúc 06:00 · Kỳ: sáng hôm sau ngày kết thúc kỳ. Chỉ gửi tên gọi của bé ("An") cho AI, không gửi họ tên, SĐT, trường.</figcaption>
+      <figcaption>Tự động 1 lần/tuần: thứ Sáu 19:00 (tuần vừa có tháng / học kỳ kết thúc thì tạo thêm báo cáo tháng / kỳ). Cô và phụ huynh Plus bấm "Cập nhật báo cáo" tối đa 3 lần/ngày. Chỉ gửi tên gọi của bé ("An") cho AI, không gửi họ tên, SĐT, trường.</figcaption>
     </figure>
 
     <h3 class="mt">8. Vòng đời dữ liệu một năm học</h3>
@@ -363,7 +363,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     <figure class="fig">
       <div class="hint">← Vuốt ngang để xem hết sơ đồ →</div>
       <div class="fig-scroll"><svg id="d-er" viewBox="0 0 1120 560" role="img" aria-label="Sơ đồ dữ liệu"></svg></div>
-      <figcaption>Xanh: tài khoản. Cam: lớp học. Tím: bài tập & điểm danh. Xanh ngọc: thanh toán & báo cáo. Ngoài ra: sessions, otp_codes, link_prompts, guardian_invites, push_subscriptions, notification_prefs, audit_log, rate_limits.</figcaption>
+      <figcaption>Xanh: tài khoản. Cam: lớp học. Tím: bài tập & điểm danh. Xanh ngọc: thanh toán & báo cáo. Ngoài ra: sessions, otp_codes, link_prompts, guardian_invites, push_subscriptions, notification_prefs, notifications (chuông của cô), teacher_slots (lịch dạy riêng), timetable_* / class_events (thời khoá biểu), feedback, audit_log, rate_limits.</figcaption>
     </figure>
   </section>
 
@@ -415,7 +415,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
         <tr><td>Sơ đồ chỗ ngồi, lịch sử điểm danh, xin nghỉ cho con</td><td class="no">✕</td><td class="yes">✓</td></tr>
         <tr><td>Tin Zalo ZNS: con nghỉ không phép, quên nộp bài, báo cáo tuần</td><td class="no">✕</td><td class="yes">✓</td></tr>
       </table></div>
-      <p class="small muted" style="margin:10px 0 0">Học sinh luôn miễn phí. Giai đoạn 2: gói trung tâm 5.000–10.000đ/học sinh/tháng (mọi cô được Pro, mọi phụ huynh trong lớp của trung tâm được Plus).</p>
+      <p class="small muted" style="margin:10px 0 0">Học sinh luôn miễn phí. Gói trung tâm: 8.000đ/học sinh/tháng (tối thiểu 20 HS), gói năm = 12 tháng; mọi cô của trung tâm được Pro, phụ huynh trong lớp của trung tâm được Plus.</p>
     </div>
   </section>
 
@@ -433,7 +433,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
         <tr><th>Thay đổi</th><th>Ảnh hưởng</th></tr>
         <tr><td>Giá Plus: <b>39.000đ/tháng</b> (trước 29.000đ), <b>269.000đ/năm</b> (trước 199.000đ)</td><td>Doanh thu mỗi gia đình Plus tăng ~35% (gói tháng)</td></tr>
         <tr><td>Gói năm = <b>12 tháng</b> từ ngày kích hoạt (trước: năm học 9 tháng, hết 31/05)</td><td>Gói năm tính ra ~22.400đ/tháng (Plus) và ~33.250đ/tháng (Pro); gói trung tâm năm = 12 × giá tháng</td></tr>
-        <tr><td>Plus tính cho <b>tài khoản bố/mẹ</b> (mọi con), bỏ giảm 50% bé thứ 2</td><td>Doanh thu tính theo <b>gia đình</b>: với ~1,2 con/gia đình, cùng số bé Plus thì doanh thu Plus thấp hơn ~17%. Chi phí AI vẫn tính theo bé.</td></tr>
+        <tr><td>Plus tính cho <b>tài khoản bố/mẹ</b> (mọi con), bỏ giảm 50% bé thứ 2</td><td>Doanh thu và tỉ lệ mua tính theo <b>gia đình</b> (≈ số học sinh ÷ 1,2 con); chi phí AI vẫn tính theo số bé được Plus.</td></tr>
         <tr><td>Báo cáo AI <b>của lớp</b> (cả lớp + từng môn) — bản trước chưa tính</td><td>+~825đ / lớp / tháng (lớp ~30 HS, 4 môn: 5 báo cáo × ~5,5 kỳ/tháng × ~30đ)</td></tr>
         <tr><td>Nút "Cập nhật báo cáo" cho cô và phụ huynh Plus (≤ 3 lần/ngày)</td><td>Ước tính +60đ / bé Plus và +600đ / lớp mỗi tháng (giả định bấm 1–2 lần/tháng)</td></tr>
         <tr><td>Chuông thông báo của cô (hỏi 3 phút/lần khi đang mở web)</td><td>Thêm ~3.500 lượt gọi / cô / tháng, đọc ≤ 125 dòng/lần — vẫn trong 10 triệu request và 25 tỉ dòng đọc đã gồm</td></tr>
@@ -447,8 +447,8 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     <div class="calc">
       <div class="card inputs">
         <label>Số học sinh <span class="v" id="o-students"></span><input type="range" id="i-students" min="50" max="20000" step="50" value="1000"></label>
-        <label>Tỉ lệ bé có Plus <span class="v" id="o-plus"></span><input type="range" id="i-plus" min="0" max="60" step="1" value="5">
-          <span class="note">Plus mua theo gia đình: số gia đình Plus ≈ số bé Plus ÷ 1,2 con</span></label>
+        <label>Tỉ lệ gia đình mua Plus <span class="v" id="o-plus"></span><input type="range" id="i-plus" min="0" max="60" step="1" value="5">
+          <span class="note">Plus mua cho tài khoản bố/mẹ (mọi con đều có). Số gia đình ≈ số học sinh ÷ 1,2 con</span></label>
         <label>Tỉ lệ chọn gói năm <span class="v" id="o-yearly"></span><input type="range" id="i-yearly" min="0" max="100" step="5" value="60">
           <span class="note">Gói năm 269.000đ/12 tháng ≈ 22.400đ/tháng, rẻ hơn gói tháng 39.000đ</span></label>
         <label>Số giáo viên Pro <span class="v" id="o-pro"></span><input type="range" id="i-pro" min="0" max="500" step="1" value="5"></label>
@@ -471,7 +471,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     </div>
 
     <div class="card mt">
-      <h3>Các kịch bản (5% bé có Plus, 60% chọn gói năm, 1 phụ huynh nhận ZNS mỗi gia đình)</h3>
+      <h3>Các kịch bản (5% gia đình mua Plus, 60% chọn gói năm, 1 phụ huynh nhận ZNS mỗi gia đình)</h3>
       <div class="tbl"><table id="scenarios"></table></div>
     </div>
 
@@ -497,7 +497,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
           <tr><td>Tên miền</td><td>~25.000đ / tháng</td><td>Trả theo năm</td></tr>
           <tr><td>OTP (ZNS mẫu OTP, dự phòng SMS)</td><td>~30.000–40.000đ / 1.000 HS / tháng</td><td>Chỉ khi kích hoạt và quên mật khẩu; đăng nhập thường dùng mật khẩu</td></tr>
           <tr><td>Zalo ZNS cho Plus</td><td>~1.300đ / phụ huynh Plus / tháng</td><td>Chỉ gửi cho gia đình có Plus</td></tr>
-          <tr><td>Cổng thanh toán VietQR + SePay</td><td>~0đ / giao dịch</td><td>Giai đoạn 2: payOS rất thấp; ZaloPay/MoMo ~1–2,5%</td></tr>
+          <tr><td>Cổng thanh toán VietQR + SePay</td><td>~0đ / giao dịch</td><td>Sau này: payOS rất thấp; ZaloPay/MoMo ~1–2,5%</td></tr>
           <tr><td>Thuế hộ kinh doanh dịch vụ</td><td>~7% doanh thu</td><td>Hỏi lại kế toán</td></tr>
           <tr><td>Web Push</td><td>0đ</td><td>Cô, học sinh và phụ huynh Plus (phụ huynh miễn phí không nhận)</td></tr>
           <tr><td>Chuông thông báo của cô</td><td>0đ</td><td>Trong hạn mức Workers + D1 đã gồm</td></tr>
@@ -509,24 +509,33 @@ CLAUDE.md    quy ước + việc còn lại</pre>
   <!-- ================================================================ LỘ TRÌNH -->
   <section class="block" id="lo-trinh">
     <div class="eyebrow">Lộ trình</div>
-    <h2>12 bước, đang ở bước 3</h2>
+    <h2>12/12 bước đã xong · đang chạy thử bản demo</h2>
     <div class="steps">
-      <div class="step done"><div class="n">1</div><div><b>Nền tảng</b><span class="d">Monorepo, Worker, D1, đăng nhập (OTP, mật khẩu, học sinh 6 số), giao diện đăng nhập, PWA</span></div><span class="pill p-good">Xong</span></div>
-      <div class="step done"><div class="n">2</div><div><b>Giáo viên</b><span class="d">Tạo lớp + khoá theo hạn mức 1 lớp, môn/chủ đề, nhập Excel (xem trước, sửa lỗi, upload lại), link/QR mời phụ huynh</span></div><span class="pill p-good">Xong</span></div>
-      <div class="step"><div class="n">3</div><div><b>Phụ huynh</b><span class="d">Nối bé + màn xác nhận, gộp/tách, phụ huynh thứ hai</span></div><span class="pill p-info">Tiếp theo</span></div>
-      <div class="step"><div class="n">4</div><div><b>Bài tập</b><span class="d">Giao bài, cập nhật nộp bài tay, tổng quan + bài tập phụ huynh (miễn phí)</span></div><span class="pill p-mute">Chưa làm</span></div>
-      <div class="step"><div class="n">5</div><div><b>Học sinh</b><span class="d">Mật khẩu bé, chế độ con, tự nộp bài + ảnh R2</span></div><span class="pill p-mute">Chưa làm</span></div>
-      <div class="step"><div class="n">6</div><div><b>Chấm bài + phân tích</b><span class="d">Chấm, nhập điểm hàng loạt, biểu đồ, màn lớp, chi tiết bé</span></div><span class="pill p-mute">Chưa làm</span></div>
-      <div class="step"><div class="n">7</div><div><b>Điểm danh + sơ đồ chỗ ngồi</b><span class="d">Xin nghỉ cho con</span></div><span class="pill p-mute">Chưa làm</span></div>
-      <div class="step"><div class="n">8</div><div><b>Thanh toán + quyền lợi</b><span class="d">VietQR + webhook, khoá theo gói ở API và giao diện</span></div><span class="pill p-mute">Chưa làm</span></div>
-      <div class="step"><div class="n">9</div><div><b>AI</b><span class="d">Cron, queue, prompt, kiểm tra đầu ra, văn mẫu dự phòng</span></div><span class="pill p-mute">Chưa làm</span></div>
-      <div class="step"><div class="n">10</div><div><b>Thông báo</b><span class="d">Web Push, ZNS/SMS thật, tuỳ chọn thông báo</span></div><span class="pill p-mute">Chưa làm</span></div>
-      <div class="step"><div class="n">11</div><div><b>Dọn năm học, xuất file, chính sách, admin</b></div><span class="pill p-mute">Chưa làm</span></div>
-      <div class="step"><div class="n">12</div><div><b>Gói trung tâm</b><span class="d">Giai đoạn 2</span></div><span class="pill p-mute">Chưa làm</span></div>
+      <div class="step done"><div class="n">1</div><div><b>Nền tảng</b><span class="d">Monorepo, Worker, D1, đăng nhập (OTP, mật khẩu, học sinh mật khẩu 6 ký tự chữ + số), giao diện đăng nhập, PWA</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">2</div><div><b>Giáo viên</b><span class="d">Tạo lớp + khoá theo hạn mức 1 lớp, môn/chủ đề, nhập Excel, link/QR mời phụ huynh, cài đặt lớp (2 cột, tab trên điện thoại)</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">3</div><div><b>Phụ huynh</b><span class="d">Nối bé + màn xác nhận, gộp/tách, phụ huynh thứ hai; tổng quan dạng thẻ khi có nhiều con</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">4</div><div><b>Bài tập</b><span class="d">Giao bài theo số bài con (form trong hộp nổi), danh sách bài dạng thẻ, cập nhật nộp bài tay (không tích sẵn), phụ huynh xem "Đã làm a/N bài"</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">5</div><div><b>Học sinh</b><span class="d">Mật khẩu 6 ký tự chữ + số, chế độ con, tự nộp bài: chụp ảnh hoặc chọn ảnh có sẵn, tối đa 5 ảnh/bài con, mỗi file ≤ 5MB</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">6</div><div><b>Chấm bài + phân tích</b><span class="d">Chấm theo bài tập lớn → từng em, tích bài con đã nộp, biểu đồ, màn lớp, chi tiết bé</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">7</div><div><b>Điểm danh + sơ đồ chỗ ngồi</b><span class="d">Xin nghỉ cho con, bố trí bàn</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">8</div><div><b>Thanh toán + quyền lợi</b><span class="d">VietQR + SePay webhook; Plus theo tài khoản bố/mẹ; gói tháng / gói năm 12 tháng; khoá theo gói ở API</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">9</div><div><b>AI</b><span class="d">Báo cáo tự động thứ Sáu 19:00 hằng tuần, nút "Cập nhật báo cáo" ≤ 3 lần/ngày, kiểm tra đầu ra, văn mẫu dự phòng</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">10</div><div><b>Thông báo</b><span class="d">Web Push (phụ huynh Plus, cô, học sinh), chuông thông báo của cô khi học sinh nộp bài, ZNS/SMS</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">11</div><div><b>Dọn năm học, xuất file, chính sách, admin</b><span class="d">Xoá dữ liệu lớp 31/07, CSV điểm, tổng kết năm in/PDF, xoá hồ sơ bé, trang quản trị</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step done"><div class="n">12</div><div><b>Gói trung tâm</b><span class="d">Trung tâm trả theo số học sinh; giáo viên được Pro, lớp của trung tâm được Plus</span></div><span class="pill p-good">Xong</span></div>
+    </div>
+    <div class="card mt">
+      <h3>Đã làm thêm sau 12 bước</h3>
+      <ul class="small">
+        <li>Thời khoá biểu + sự kiện của lớp (phụ huynh mọi gói xem được); lịch dạy riêng của cô (ghi cả lớp không dùng HoToEdu)</li>
+        <li>Trợ giúp & hướng dẫn, phản ánh / kiến nghị, trang giới thiệu (landing), trang 404 / máy chủ bận, thanh báo mất mạng</li>
+        <li>Giới hạn ký tự mọi ô nhập kèm bộ đếm, giới hạn dung lượng file (giao bài ≤ 25MB/lần)</li>
+        <li>Cập nhật số liệu ngay trên giao diện sau mỗi thao tác; tối ưu truy vấn (gửi thông báo theo lô, chỉ mục, sửa vòng lặp gọi API)</li>
+      </ul>
     </div>
   </section>
 
-  <div class="foot">HoToEdu · tài liệu tổng quan, cập nhật 19/10/2026.</div>
+  <div class="foot">HoToEdu · tài liệu tổng quan, cập nhật 21/10/2026.</div>
 </main>
 
 <script>
@@ -690,7 +699,7 @@ function diagram(id) {
 (() => {
   const d = diagram('d-login');
   const s = d.box(250, 20, 260, 60, 'Nhập SĐT + mật khẩu', 'bấm Đăng nhập', 'acc');
-  const k = d.diamond(380, 145, 260, 76, 'Mật khẩu đúng 6 số?');
+  const k = d.diamond(380, 145, 260, 76, 'Mật khẩu 6 ký tự?');
   const child = d.box(560, 115, 180, 60, 'Học sinh', 'tìm bé của SĐT có PIN khớp', 'teal');
   const api = d.box(250, 215, 260, 56, 'POST /auth/login', '', 'orange');
   const ok = d.box(20, 320, 200, 64, 'Vào trang vai trò', 'cô → /gv · phụ huynh → /ph', 'good', { bold: true });
@@ -719,7 +728,7 @@ function diagram(id) {
   d.lane(240, 105, 'Học sinh', 1100, 'teal');
   d.lane(355, 105, 'Phụ huynh', 1100, 'good');
   const g = d.box(130, 30, 170, 66, 'Giao bài', 'môn + chủ đề bắt buộc\nhạn: ngày học tiếp theo', 'user');
-  const u = d.box(560, 30, 190, 66, 'Cập nhật nộp bài', 'tích sẵn "đã nộp"\nchạm bé chưa nộp → lưu', 'user');
+  const u = d.box(560, 30, 190, 66, 'Cập nhật nộp bài', 'tích bé đã nộp\n(không tích sẵn) → lưu', 'user');
   const c = d.box(800, 30, 160, 66, 'Chấm bài', 'điểm 0–10, nhận xét', 'user');
   const p = d.box(320, 145, 180, 66, 'Push "bài mới"', 'phụ huynh + học sinh', 'orange');
   const st = d.box(560, 145, 190, 66, 'computeStatus()', 'đã nộp / muộn / chưa nộp\ncô chưa cập nhật', 'orange');
@@ -777,7 +786,7 @@ function diagram(id) {
 /* ---------------- 7. AI ---------------- */
 (() => {
   const d = diagram('d-ai');
-  const c = d.box(10, 40, 130, 70, 'Cron', 'CN 20:00 · ngày 1\nsau ngày cuối kỳ', 'teal');
+  const c = d.box(10, 40, 130, 70, 'Cron', 'thứ Sáu 19:00\n1 lần/tuần', 'teal');
   const q = d.box(170, 40, 130, 70, 'Queue', '1 job / bé Plus\n1 job / lớp-môn', 'teal');
   const m = d.box(330, 40, 170, 70, 'Tính số liệu (code)', 'TB 3 tuần, delta, chủ đề\nyếu/mạnh, tỉ lệ nộp', 'orange');
   const v = d.box(530, 40, 150, 70, 'Kết luận (code)', 'tiến / lùi / ổn định\ntiến ở X, lùi ở Y', 'orange', { bold: true });
@@ -834,9 +843,9 @@ function diagram(id) {
   const topics = T(790, 20, 'topics', 'name (phần kiến thức)', 'orange', 170);
   const roster = T(300, 190, 'roster_entries', 'raw_name · raw_dob\nphone1 · phone2\nchild_id · seat_index', 'orange');
   const asg = T(560, 190, 'assignments', 'subject · topic\ndue_date · graded', 'purple', 170);
-  const sub = T(560, 360, 'submissions', 'status · score\ncomment · source', 'purple', 170);
+  const sub = T(560, 360, 'submissions', 'status · score · comment\nsource · exercises (bài con)', 'purple', 170);
   const abs = T(300, 380, 'absences', 'date · type p/kp\ncategory · reason', 'purple');
-  const subs = T(870, 190, 'subscriptions', 'plan · child_id / user_id\nstarts_at · ends_at', 'teal', 220);
+  const subs = T(870, 190, 'subscriptions', 'plan · user_id (Plus: tài khoản)\nstarts_at · ends_at · cancelled_at', 'teal', 220);
   const pay = T(870, 360, 'payments', 'order_code · amount\nstatus · provider_ref', 'teal', 220);
   const rep = T(870, 470, 'reports', 'scope · period · verdict\nmetrics_json · text_json', 'teal', 220);
   const L = (pts, label, o = {}) => d.arrow(pts, label, { w: 1.4, ...o });
@@ -851,7 +860,7 @@ function diagram(id) {
   L([[asg.cx, asg.b], [sub.cx, sub.y]], '');
   L([[roster.r, roster.b - 12], [530, roster.b - 12], [530, sub.cy], [sub.x, sub.cy]], 'chỗ trong lớp');
   L([[roster.cx, roster.b], [abs.cx, abs.y]], '');
-  L([[children.r, children.y + 14], [255, children.y + 14], [255, 150], [840, 150], [840, subs.cy], [subs.x, subs.cy]], 'Plus theo bé', { at: 2 });
+  L([[users.r, 70], [255, 70], [255, 150], [840, 150], [840, subs.cy], [subs.x, subs.cy]], 'Plus theo tài khoản bố/mẹ', { at: 2 });
   L([[pay.cx, pay.y], [subs.cx, subs.b]], '');
   d.text(20, 545, 'Bài, điểm, điểm danh gắn với chỗ trong lớp (roster_entry), không gắn trực tiếp với bé → cô làm việc được ngay, gộp/tách bé chỉ sửa child_id.', 'lbl', 'start');
 })();
@@ -871,9 +880,9 @@ const PRICE = { plusMonth: 39000, plusYear: 269000 / 12, proMonth: 49000, proYea
 const UNIT = { aiPerPlus: 165, aiPerClass: 825, manualPerPlus: 60, manualPerClass: 600, studentsPerClass: 30, kidsPerFamily: 1.2, reqPerStudent: 350, reqIncluded: 10e6, reqPerMillionUsd: 0.3, r2PerStudent: 40, otpPerStudent: 35, domain: 25000, znsPerParent: 1300, tax: 0.07 };
 
 function model({ students, plusRate, yearly, pro, znsPerKid, fx }) {
-  const plus = Math.round(students * plusRate);
-  // Plus mua theo tài khoản bố/mẹ: một gia đình ~1,2 con đều có Plus.
-  const families = Math.round(plus / UNIT.kidsPerFamily);
+  // Plus mua theo tài khoản bố/mẹ: tỉ lệ tính trên số GIA ĐÌNH; mỗi gia đình ~1,2 con đều có Plus (chi phí AI tính theo bé).
+  const families = Math.round((students / UNIT.kidsPerFamily) * plusRate);
+  const plus = Math.round(families * UNIT.kidsPerFamily);
   const classes = Math.ceil(students / UNIT.studentsPerClass);
   const plusPrice = PRICE.plusMonth * (1 - yearly) + PRICE.plusYear * yearly;
   const proPrice = PRICE.proMonth * (1 - yearly) + PRICE.proYear * yearly;
@@ -942,7 +951,7 @@ function scenarios() {
   const rows = [500, 1000, 5000, 20000].map((students) => ({ students, ...model({ students, plusRate: 0.05, yearly: 0.6, pro: Math.round(students / 200), znsPerKid: 1, fx }) }));
   $('scenarios').innerHTML =
     `<tr><th>Học sinh</th><th class="num">Bé Plus</th><th class="num">Gia đình Plus</th><th class="num">GV Pro</th><th class="num">Chi phí</th><th class="num">Doanh thu</th><th class="num">Lãi sau thuế</th><th class="num">Hoà vốn (chỉ Plus)</th></tr>` +
-    rows.map((r) => `<tr><td>${r.students.toLocaleString('vi-VN')}</td><td class="num">${r.plus}</td><td class="num">${r.families}</td><td class="num">${Math.round(r.students / 200)}</td><td class="num">${vnd(r.cost)}</td><td class="num">${vnd(r.revenue)}</td><td class="num">${vnd(r.profit)}</td><td class="num">${r.breakEven.toLocaleString('vi-VN')} gia đình (~${Math.round((r.breakEven * UNIT.kidsPerFamily / r.students) * 100)}% HS)</td></tr>`).join('');
+    rows.map((r) => `<tr><td>${r.students.toLocaleString('vi-VN')}</td><td class="num">${r.plus}</td><td class="num">${r.families}</td><td class="num">${Math.round(r.students / 200)}</td><td class="num">${vnd(r.cost)}</td><td class="num">${vnd(r.revenue)}</td><td class="num">${vnd(r.profit)}</td><td class="num">${r.breakEven.toLocaleString('vi-VN')} gia đình (~${Math.round((r.breakEven / (r.students / UNIT.kidsPerFamily)) * 100)}% gia đình)</td></tr>`).join('');
 }
 
 document.querySelectorAll('.inputs input').forEach((i) => i.addEventListener('input', () => { render(); scenarios(); }));
