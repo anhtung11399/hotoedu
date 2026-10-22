@@ -335,8 +335,13 @@ CLAUDE.md    quy ước + việc còn lại</pre>
     <h3 class="mt">6. Thanh toán VietQR (không qua App Store, không mất 15–30%)</h3>
     <figure class="fig">
       <div class="hint">← Vuốt ngang để xem hết sơ đồ →</div>
-      <div class="fig-scroll"><svg id="d-pay" viewBox="0 0 1120 600" role="img" aria-label="Luồng thanh toán"></svg></div>
-      <figcaption>Giá tính ở server (không tin số tiền từ trình duyệt). Webhook lặp lại → bỏ qua. Chuyển thiếu → giữ chờ, quản trị xử lý. Đơn hết hạn mà tiền vẫn tới → vẫn kích hoạt.</figcaption>
+      <div class="fig-scroll"><svg id="d-pay" viewBox="0 0 1120 960" role="img" aria-label="Luồng thanh toán"></svg></div>
+      <figcaption>Giá tính ở server (không tin số tiền từ trình duyệt). <b>Mọi</b> tiền vào đều được lưu vào bảng <code>bank_transactions</code> trước khi xử lý
+        (kể cả không khớp đơn) để đối soát. Mỗi giao dịch ngân hàng xử lý đúng một lần (<code>provider_ref</code> UNIQUE); mỗi đơn chỉ kích hoạt
+        gói một lần (đơn <code>pending|expired → paid</code> có điều kiện + gói tạo khi chính câu đó vừa đổi đơn + UNIQUE <code>subscriptions.payment_id</code>),
+        kể cả khi chuyển khoản 2 lần, webhook gửi lại hay quản trị kích hoạt tay cùng lúc. Hạn mới = max(hạn cũ, hôm nay) + kỳ hạn. Lỗi giữa chừng → 500,
+        SePay gửi lại, giao dịch còn <code>received</code> thì xử lý tiếp. Chỉ nhận tiền vào đúng tài khoản in trên QR. Chuyển thiếu / không có mã đơn /
+        đơn đã trả → không kích hoạt, chờ quản trị gán đơn hoặc bỏ qua (hoàn tiền). Đơn hết hạn mà tiền khớp mã + đủ tiền vẫn tới → vẫn kích hoạt.</figcaption>
     </figure>
 
     <h3 class="mt">7. Báo cáo AI định kỳ: code quyết định, AI chỉ viết lời</h3>
@@ -415,7 +420,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
         <tr><td>Sơ đồ chỗ ngồi, lịch sử điểm danh, xin nghỉ cho con</td><td class="no">✕</td><td class="yes">✓</td></tr>
         <tr><td>Tin Zalo ZNS: con nghỉ không phép, quên nộp bài, báo cáo tuần</td><td class="no">✕</td><td class="yes">✓</td></tr>
       </table></div>
-      <p class="small muted" style="margin:10px 0 0">Học sinh luôn miễn phí. Gói trung tâm: 8.000đ/học sinh/tháng (tối thiểu 20 HS), gói năm = 12 tháng; mọi cô của trung tâm được Pro, phụ huynh trong lớp của trung tâm được Plus.</p>
+      <p class="small muted" style="margin:10px 0 0">Học sinh luôn miễn phí.</p>
     </div>
   </section>
 
@@ -432,7 +437,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
       <div class="tbl"><table>
         <tr><th>Thay đổi</th><th>Ảnh hưởng</th></tr>
         <tr><td>Giá Plus: <b>39.000đ/tháng</b> (trước 29.000đ), <b>269.000đ/năm</b> (trước 199.000đ)</td><td>Doanh thu mỗi gia đình Plus tăng ~35% (gói tháng)</td></tr>
-        <tr><td>Gói năm = <b>12 tháng</b> từ ngày kích hoạt (trước: năm học 9 tháng, hết 31/05)</td><td>Gói năm tính ra ~22.400đ/tháng (Plus) và ~33.250đ/tháng (Pro); gói trung tâm năm = 12 × giá tháng</td></tr>
+        <tr><td>Gói năm = <b>12 tháng</b> từ ngày kích hoạt (trước: năm học 9 tháng, hết 31/05)</td><td>Gói năm tính ra ~22.400đ/tháng (Plus) và ~33.250đ/tháng (Pro)</td></tr>
         <tr><td>Plus tính cho <b>tài khoản phụ huynh</b> (mọi con), không giảm giá theo số con</td><td>Doanh thu và tỉ lệ mua tính theo <b>tài khoản phụ huynh</b>; mỗi tài khoản tính 2 con (tối đa) nên chi phí AI nhân 2.</td></tr>
         <tr><td>Báo cáo AI <b>của lớp</b> (cả lớp + từng môn) — bản trước chưa tính</td><td>+~825đ / lớp / tháng (lớp ~30 HS, 4 môn: 5 báo cáo × ~5,5 kỳ/tháng × ~30đ)</td></tr>
         <tr><td>Nút "Cập nhật báo cáo" cho cô và phụ huynh Plus (≤ 3 lần/ngày)</td><td>Ước tính +60đ / học sinh Plus và +600đ / lớp mỗi tháng (giả định bấm 1–2 lần/tháng)</td></tr>
@@ -524,7 +529,7 @@ CLAUDE.md    quy ước + việc còn lại</pre>
       <div class="step done"><div class="n">9</div><div><b>AI</b><span class="d">Báo cáo tự động thứ Sáu 19:00 hằng tuần, nút "Cập nhật báo cáo" ≤ 3 lần/ngày, kiểm tra đầu ra, văn mẫu dự phòng</span></div><span class="pill p-good">Xong</span></div>
       <div class="step done"><div class="n">10</div><div><b>Thông báo</b><span class="d">Web Push (phụ huynh Plus, cô, học sinh), chuông thông báo của cô khi học sinh nộp bài, ZNS/SMS</span></div><span class="pill p-good">Xong</span></div>
       <div class="step done"><div class="n">11</div><div><b>Dọn năm học, xuất file, chính sách, admin</b><span class="d">Xoá dữ liệu lớp 31/07, CSV điểm, tổng kết năm in/PDF, xoá hồ sơ học sinh, trang quản trị</span></div><span class="pill p-good">Xong</span></div>
-      <div class="step done"><div class="n">12</div><div><b>Gói trung tâm</b><span class="d">Trung tâm trả theo số học sinh; giáo viên được Pro, lớp của trung tâm được Plus</span></div><span class="pill p-good">Xong</span></div>
+      <div class="step"><div class="n">12</div><div><b>Gói trung tâm</b><span class="d">Đã bỏ tính năng (21/10/2026): chỉ còn gói Pro cho giáo viên và Plus cho phụ huynh</span></div><span class="pill">Đã bỏ</span></div>
     </div>
     <div class="card mt">
       <h3>Đã làm thêm sau 12 bước</h3>
@@ -757,34 +762,46 @@ function diagram(id) {
 /* ---------------- 6. Thanh toán (sequence) ---------------- */
 (() => {
   const d = diagram('d-pay');
-  const actors = [['Phụ huynh / cô', 'user'], ['Web', 'user'], ['API Worker', 'orange'], ['D1', 'teal'], ['Ngân hàng', 'purple'], ['SePay', 'purple']];
-  const xs = actors.map((_, i) => 90 + i * 188);
+  const actors = [['Phụ huynh / cô', 'user'], ['Web', 'user'], ['API Worker', 'orange'], ['D1', 'teal'], ['Ngân hàng', 'purple'], ['SePay', 'purple'], ['Quản trị', 'user']];
+  const xs = actors.map((_, i) => 80 + i * 160);
   actors.forEach(([name, kind], i) => {
-    d.box(xs[i] - 75, 14, 150, 44, name, '', kind);
-    d.arrow([[xs[i], 58], [xs[i], 585]], '', { w: 1, dash: true });
+    d.box(xs[i] - 72, 14, 144, 44, name, '', kind);
+    d.arrow([[xs[i], 58], [xs[i], 945]], '', { w: 1, dash: true });
   });
   let y = 90;
   const msg = (from, to, label, opts = {}) => {
     d.arrow([[xs[from], y], [xs[to] + (to > from ? -2 : 2), y]], label, { color: opts.color ?? '#3474e0', dash: opts.dash, dy: -7 });
-    y += opts.gap ?? 42;
+    y += opts.gap ?? 40;
   };
-  const note = (i, w, label, kind = 'warn') => {
-    d.box(xs[i] - w / 2, y - 16, w, 32, label, '', kind, { rx: 8 });
-    y += 42;
+  // Ô ghi chú tự rộng theo chữ (chữ đậm ~8,6px / ký tự), không vượt khung sơ đồ.
+  const note = (i, w, label, kind = 'warn', dx = 0) => {
+    const width = Math.max(w, Math.ceil(label.length * 8.6) + 28);
+    const x = Math.min(Math.max(8, xs[i] - width / 2 + dx), 1112 - width);
+    d.box(x, y - 16, width, 32, label, '', kind, { rx: 8 });
+    y += 40;
   };
+  const teal = '#16a3a3', purple = '#6b5bd6';
   msg(0, 1, 'chọn gói + kỳ hạn (1 tháng / 12 tháng)');
   msg(1, 2, 'POST /payments');
-  note(2, 330, 'tính giá ở server (Plus: 1 gói cho tài khoản)', 'orange');
-  msg(2, 3, 'payments: pending, mã SBTxxxxxx, 30 phút', { color: '#16a3a3' });
+  note(2, 300, 'tính giá ở server (Plus: 1 gói cho tài khoản)', 'orange', 40);
+  msg(2, 3, 'payments: pending · mã SBTxxxxxx · 30 phút', { color: teal });
   msg(2, 1, 'QR VietQR (số TK, số tiền, nội dung = mã đơn)', { dash: true });
   msg(0, 4, 'quét QR, chuyển khoản');
-  msg(4, 5, 'biến động số dư', { color: '#6b5bd6' });
-  msg(5, 2, 'webhook (kiểm chữ ký)', { color: '#6b5bd6' });
-  note(2, 330, 'tìm mã đơn · so số tiền · chống webhook lặp', 'orange');
-  msg(2, 3, 'db.batch: payment = paid + tạo/gia hạn gói', { color: '#16a3a3' });
-  msg(2, 5, '200 OK ngay (push gửi sau)', { dash: true, color: '#6b5bd6' });
-  msg(1, 2, 'hỏi trạng thái mỗi 3 giây', { gap: 34 });
-  msg(2, 1, '"Đã kích hoạt gói Plus đến 21/10/2027" (12 tháng)', { dash: true });
+  msg(4, 5, 'biến động số dư', { color: purple });
+  msg(5, 2, 'webhook (header Apikey)', { color: purple });
+  note(2, 340, 'kiểm Apikey (sai → 401) · đúng tài khoản nhận tiền', 'orange', 40);
+  msg(2, 3, 'LƯU giao dịch: bank_transactions = received', { color: teal });
+  note(3, 360, 'provider_ref UNIQUE → webhook gửi lại không ghi trùng', 'teal', -40);
+  note(2, 360, 'đã xử lý xong trước đó → 200, bỏ qua · còn received → xử lý tiếp', 'warn', 60);
+  note(2, 360, 'tìm mã đơn trong nội dung · so số tiền với đơn', 'orange', 60);
+  msg(2, 3, 'db.batch: đơn pending|expired → paid (1 lần) + tạo gói', { color: teal });
+  note(3, 380, 'gói chỉ tạo khi đơn vừa đổi · UNIQUE payment_id · hạn = max(cũ, nay) + kỳ', 'teal', -20);
+  msg(2, 3, 'bank_transactions → matched / underpaid / unmatched', { color: teal });
+  msg(2, 5, '200 OK (lỗi giữa chừng → 500, SePay gửi lại)', { dash: true, color: purple });
+  msg(1, 2, 'hỏi trạng thái mỗi 3 giây (chỉ chủ đơn xem được)', { gap: 34 });
+  msg(2, 1, '"Đã kích hoạt gói Plus đến …" — hết hạn / đã trả thì thôi hỏi', { dash: true });
+  msg(6, 3, 'xem giao dịch cần rà soát (thiếu tiền, không mã, trả 2 lần, lỗi xử lý)', { color: '#7a8396' });
+  msg(6, 2, 'gán giao dịch vào đơn / kích hoạt tay / bỏ qua (hoàn tiền)', { color: '#7a8396' });
 })();
 
 /* ---------------- 7. AI ---------------- */
@@ -849,8 +866,9 @@ function diagram(id) {
   const asg = T(560, 190, 'assignments', 'subject · topic\ndue_date · graded', 'purple', 170);
   const sub = T(560, 360, 'submissions', 'status · score · comment\nsource · exercises (bài con)', 'purple', 170);
   const abs = T(300, 380, 'absences', 'date · type p/kp\ncategory · reason', 'purple');
-  const subs = T(870, 190, 'subscriptions', 'plan · user_id (Plus: tài khoản)\nstarts_at · ends_at · cancelled_at', 'teal', 220);
-  const pay = T(870, 360, 'payments', 'order_code · amount\nstatus · provider_ref', 'teal', 220);
+  const subs = T(870, 190, 'subscriptions', 'plan · user_id (Plus: tài khoản)\nstarts_at · ends_at · cancelled_at\npayment_id (UNIQUE: 1 gói / đơn)', 'teal', 220);
+  const pay = T(870, 360, 'payments', 'order_code · amount\nstatus pending/paid/expired/refunded\nprovider_ref (UNIQUE)', 'teal', 220);
+  const btx = T(560, 455, 'bank_transactions', 'MỌI tiền vào · provider_ref UNIQUE\nstatus received/matched/… · payment_id', 'teal', 270);
   const rep = T(870, 470, 'reports', 'scope · period · verdict\nmetrics_json · text_json', 'teal', 220);
   const L = (pts, label, o = {}) => d.arrow(pts, label, { w: 1.4, ...o });
   L([[users.r, 45], [classes.x, 45]], 'dạy');
@@ -866,6 +884,7 @@ function diagram(id) {
   L([[roster.cx, roster.b], [abs.cx, abs.y]], '');
   L([[users.r, 70], [255, 70], [255, 150], [840, 150], [840, subs.cy], [subs.x, subs.cy]], 'Plus theo tài khoản bố/mẹ', { at: 2 });
   L([[pay.cx, pay.y], [subs.cx, subs.b]], '');
+  L([[btx.r, btx.cy], [850, btx.cy], [850, pay.cy], [pay.x, pay.cy]], '');
   d.text(20, 545, 'Bài, điểm, điểm danh gắn với chỗ trong lớp (roster_entry), không gắn trực tiếp với học sinh → cô làm việc được ngay, gộp/tách học sinh chỉ sửa child_id.', 'lbl', 'start');
 })();
 
